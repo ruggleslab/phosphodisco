@@ -65,7 +65,8 @@ def column_normalize(df: DataFrame, method: str) -> Optional[DataFrame]:
         'twocomp_median.'
     )
     return None
-
+#TODO add filtering
+#TODO change function to not take files, dfs
 
 def prepare_phospho(
         ph_file: str,
