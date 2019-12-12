@@ -17,7 +17,6 @@ PhDc uses optimized clustering to find co-regulated phosphosite modules. Then, P
 
 ### PhDc can be run in 3 clustering modes:
 1. Full optimization: Compares all clustering algorithms from scikit-learn, and runs through many hyper parameters for each using grid search. 
-**TODO: figure out which different values to use for optimization.**
 2. Fast optimization: Compares only fastest algorithms and runs through hyper parameters for those. e.g. k-means. 
 3. Defined clustering (fastest): Runs clustering with user-input parameters. 
 
@@ -29,9 +28,9 @@ For either mode 1 or 2, PhDc can also be used to find reproducibly clustered sit
 **TODO: is there a way to set thresholds here? found with all parameters? Found with 80% of parameters? How to accumulate clustering results?**
 
 ### Following clustering, PhDc can be used for these analyses:
-1. Nominate regulators: given protein and phosphoprotein abundanes of kinases and phosphatases, PhDc can find the most correlated putative regulators for each module. 
+1. Nominate regulators: given protein and phosphoprotein abundances of kinases and phosphatases, PhDc can find the most correlated putative regulators for each module. 
 **TODO: use multiple regressions here (linear, SVM, random forest), maybe auto ML? This will be a small problem, so it shouldn't be computationally heavy.**
-
+**TODO: build in dose-response model, which is sigmoid/logistic!**  
 2. Correlate module scores with clinical continuous and categorical features. Identify modules most high correlated with each feature.  
 
 ## Input data
@@ -63,20 +62,27 @@ l = # putative regulators, i.e. kinases and phosphatases
 ## Package structure
 ```
 src
-|_normalize.py
-|_clustering.py
-|_analyze_clusters.py
-|_visualize.py
+|_autocluster
+    |_clustering.py
+|_phosreg
+    |_parsers.py
+    |_classes.py
+    |_analyze_clusters.py
+    |_visualize.py
 |_cli.py
 data
 |_kinase_list.tst
 |_phosphatase_list.txt
 |_all_list.txt
+|_acetylase_list.txt
+|_deacetylase_list.txt
 tests
-|_test_normalize.py
-|_test_clustering.py
-|_test_analyze_clusters.py
-|_test_visualize.py
+|_test_autocluster
+    |_test_clustering.py
+|_test_phosreg
+    |_test_parsers.py
+    |_test_analyze_clusters.py
+    |_test_visualize.py
 |_test_cli.py
 |_test_integration.py
 docs

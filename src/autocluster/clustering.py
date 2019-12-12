@@ -71,6 +71,7 @@ inherent_metric = [
     'daviesbouldin'
 ]
 
+
 min_or_max = {
     'adjrand':max,
     'adjmutualinfo':max,
@@ -81,6 +82,7 @@ min_or_max = {
     'calinskiharabasz':max,
     'daviesbouldin':min
 }
+
 
 def cluster(clusterer_name, data, **params):
     clusterer = clusterers[clusterer_name](**params)

@@ -6,6 +6,7 @@ from sklearn.linear_model import RidgeCV
 
 datatype_label = 'datatype_label'
 
+
 def norm_line_to_residuals(
         ph_line: Iterable,
         prot_line: Iterable,
@@ -69,7 +70,6 @@ class ProteomicsData:
         )
 
         self.normed_phospho = residuals
-
 
 
 class Clusters:
