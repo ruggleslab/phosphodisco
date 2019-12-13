@@ -1,9 +1,12 @@
 from pandas import DataFrame, Series
 import numpy as np
+import pandas as pd
 import logging
 import warnings
 from typing import Iterable, Optional
 from sklearn.linear_model import RidgeCV
+from itertools import product
+
 
 datatype_label = 'datatype_label'
 
@@ -67,7 +70,9 @@ class ProteomicsData:
         data = target.append(features).transpose()
 
         residuals = data.apply(
-            lambda row: norm_line_to_residuals(row[0], row[1], ridge_cv_alphas, min_values_in_common)
+            lambda row: norm_line_to_residuals(
+                row[0], row[1], ridge_cv_alphas, self.min_values_in_common
+            )
         )
 
         self.normed_phospho: DataFrame = residuals
@@ -80,17 +85,42 @@ class Clusters:
         self.abundances = abundances
         self.nmembers_per_cluster = cluster_labels.value_counts()
         self.cluster_scores: Optional[DataFrame] = None
+        self.anticorrelated_collapsed: Optional[bool] = None
 
     def calculate_cluster_scores(
             self,
             combine_anti_regulated: bool=True,
             anti_corr_threshold: float=0.9
     ):
+        """
+
+        Args:
+            combine_anti_regulated:
+            anti_corr_threshold:
+
+        Returns: Samples x scores dataframe
+
+        """
         abundances = self.abundances.reindex(self.cluster_labels.index)
         scores = abundances.groupby(self.cluster_labels).agg(mean)
-        if combine_anti_regulated:
-            pass
-            #TODO finish fn here
 
-            scores.corr()
-        self.cluster_scores = scores
+        if combine_anti_regulated:
+            self.anticorrelated_collapsed = True
+            corr = {
+                (ind1, ind2): corrNA(scores.loc[ind1, :], scores.loc[ind2, :])[0]
+                for ind1, ind2 in product(scores.index, scores.index)
+                if -corrNA(scores.loc[ind1, :], scores.loc[ind2, :])[0] > anti_corr_threshold
+            }
+            if corr:
+                for clusters_labs in corr.keys():
+                    nmems = {k: self.nmembers_per_cluster[k] for k in clusters_labs}
+                    major_cluster = max(nmems, key=lambda key: nmems[key])
+                    minor_cluster = set(clusters_labs).difference({major_cluster})
+                    line = (scores.loc[major_cluster, :]*nmems[major_cluster]).subtract(
+                        (scores.loc[minor, :] * nmems[minor_cluster])
+                    ).divide((nmems[major_cluster]+nmems[minor_cluster]))
+                    line.name = '-'.join(clusters_labs)
+                    scores = scores.drop(clusters_labs, axis=0).append(line)
+        else:
+            self.anticorrelated_collapsed = False
+        self.cluster_scores = scores.transpose()

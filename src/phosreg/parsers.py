@@ -6,7 +6,7 @@ from typing import Optional, Iterable
 from .classes import ProteomicsData
 
 
-def get_sep(file_path: str):
+def get_sep(file_path: str) -> str:
     if file_path[-4:] == '.tsv':
         return '\t'
     elif file_path[-4:] == '.csv':
@@ -14,11 +14,15 @@ def get_sep(file_path: str):
     raise ValueError('Input file is not a .csv or .tsv')
 
 
-def read_protein(file_path: str) -> Optional[DataFrame]:
+def read_protein(file_path: str) -> DataFrame:
     sep = get_sep(file_path)
     return pd.read_csv(file_path, sep=sep, index_col=0).replace(
         ['na', 'NA', 'NAN', 'nan', 'NaN', 'Na'], np.nan
     ).astype(float)
+
+
+def read_annotation(file_path: str) -> DataFrame:
+    return read_protein(file_path)
 
 
 def read_phospho(file_path: str) -> Optional[DataFrame]:

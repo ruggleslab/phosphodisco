@@ -5,6 +5,7 @@ from itertools import product
 from sklearn import linear_model
 from typing import Iterable, Optional
 
+
 reg_models = {
     'linear':linear_model.RidgeCV,
     'sigmoid':linear_model.LogisticRegressionCV
@@ -17,9 +18,20 @@ def notna(array):
     return ~np.isnan(array)
 
 
-def corrNA(array1, array2):
+continuous_methods = {
+    'pearsonr':scipy.stats.pearsonr,
+    'spearman':scipy.stats.spearmanr
+}
+
+
+def corrNA(array1, array2, corr_method: str = 'pearsonr'):
+    if corr_method not in continuous_methods.keys():
+        raise ValueError(
+            'Method %s is a valid correlation method, must be: %s'
+            % (corr_method, ','.join(continuous_methods.keys()))
+        )
     nonull = notna(array1) & notna(array2)
-    return scipy.stats.pearsonr(array1[nonull], array2[nonull])
+    return continuous_methods[corr_method](array1[nonull], array2[nonull])
 
 
 def collect_putative_regulators(protdata: ProteomicsData, put_reg_list) -> DataFrame:
