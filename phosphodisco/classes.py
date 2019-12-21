@@ -8,18 +8,17 @@ from sklearn.linear_model import RidgeCV
 from itertools import product
 
 
-datatype_label = 'datatype_label'
-
-
 def norm_line_to_residuals(
         ph_line: Iterable,
         prot_line: Iterable,
-        regularization_values: Optional[Iterable] = [2 ** i for i in range(-10, 10, 1)],
+        regularization_values: Optional[Iterable] = None,
         cv: Optional[int] = 5
 ) -> Series:
+    if regularization_values is None:
+        regularization_values = [2 ** i for i in range(-10, 10, 1)]
 
     warnings.filterwarnings("ignore", category=DeprecationWarning)
-    nonull = (ph_line.notnull() & prot_line.not_null())
+    nonull = (~np.isnan(ph_line) & ~np.isnan(prot_line))
     if sum(nonull) < cv:
         return np.empty(len(ph_line))
 
@@ -39,43 +38,54 @@ class ProteomicsData:
     ):
         self.min_values_in_common = min_common_values
 
-        common_prots = phospho.index.get_level_values(0).intersection(protein.index)
+        common_prots = list(set(phospho.index.get_level_values(0).intersection(protein.index)))
         common_samples = phospho.columns.intersection(protein.columns)
         self.phospho = phospho[common_samples]
         self.protein = protein[common_samples]
+        self.common_prots = common_prots
+        self.common_samples = common_samples
 
-        logging.INFO('Phospho and protein data have %s proteins in common' % len(common_prots))
-        logging.INFO('Phospho and protein data have %s samples in common, reindexed to only '
+        logging.info('Phospho and protein data have %s proteins in common' % len(common_prots))
+        logging.info('Phospho and protein data have %s samples in common, re-indexed to only '
                      'common samples.' %
                      len(common_samples))
 
-        normalizable_rows = ((phospho.loc[common_prots, common_samples].notnull() &
-                             protein.loc[common_prots, common_samples].notnull()).sum(axis=1)
-                             > min_common_values)
+        common_phospho = self.phospho.loc[common_prots,:]
+        common_prot = self.protein.reindex(common_phospho.index.get_level_values(0))
+        common_prot.index = common_phospho.index
+        normalizable_rows = common_phospho.index[
+            ((common_phospho.notnull() & common_prot.notnull()).sum(axis=1) >= min_common_values)
+            ]
+
         self.normalizable_rows = normalizable_rows
-        logging.INFO('There are %s rows with at least %s non-null values in both phospho and '
-                     'protein' % (normalizable_rows, len(normalizable_rows)))
+        logging.info('There are %s rows with at least %s non-null values in both phospho and '
+                     'protein' % (len(normalizable_rows), min_common_values))
+        self.normed_phospho = None
 
-
-    def normalize_phospho_by_protein(self, ridge_cv_alphas: Optional[Iterable]):
-        #TODO test this, make sure index 0 and 1 goes away.
-        target = self.phopsho.loc[self.normalizable_rows]
-        features = self.prot.loc[target.index.get_index_values(0)]
-
+    def normalize_phospho_by_protein(self, ridge_cv_alphas: Optional[Iterable] = None):
+        # TODO test this, make sure datatype_label goes away.
+        target = self.phospho.loc[self.normalizable_rows]
+        features = self.protein.reindex(target.index.get_level_values(0))
+        features.index = target.index
         target = target.transpose()
         features = features.transpose()
 
+        datatype_label = 'datatype_label'
         target[datatype_label] = 0
         features[datatype_label] = 1
-        data = target.append(features).transpose()
+
+        data = target.append(features)
+        data = data.set_index(datatype_label, append=True)
+        data.index = data.index.swaplevel(0, 1)
+        data = data.transpose()
 
         residuals = data.apply(
             lambda row: norm_line_to_residuals(
                 row[0], row[1], ridge_cv_alphas, self.min_values_in_common
-            )
+            ), axis=1
         )
 
-        self.normed_phospho: DataFrame = residuals
+        self.normed_phospho = residuals
 
 
 class Clusters:
@@ -86,11 +96,12 @@ class Clusters:
         self.nmembers_per_cluster = cluster_labels.value_counts()
         self.cluster_scores: Optional[DataFrame] = None
         self.anticorrelated_collapsed: Optional[bool] = None
+        self.anticorrelated_collapsed = None
 
     def calculate_cluster_scores(
             self,
-            combine_anti_regulated: bool=True,
-            anti_corr_threshold: float=0.9
+            combine_anti_regulated: bool = True,
+            anti_corr_threshold: float = 0.9
     ):
         """
 
@@ -116,9 +127,9 @@ class Clusters:
                     nmems = {k: self.nmembers_per_cluster[k] for k in clusters_labs}
                     major_cluster = max(nmems, key=lambda key: nmems[key])
                     minor_cluster = set(clusters_labs).difference({major_cluster})
-                    line = (scores.loc[major_cluster, :]*nmems[major_cluster]).subtract(
+                    line = (scores.loc[major_cluster, :] * nmems[major_cluster]).subtract(
                         (scores.loc[minor, :] * nmems[minor_cluster])
-                    ).divide((nmems[major_cluster]+nmems[minor_cluster]))
+                    ).divide((nmems[major_cluster] + nmems[minor_cluster]))
                     line.name = '-'.join(clusters_labs)
                     scores = scores.drop(clusters_labs, axis=0).append(line)
         else:

@@ -7,7 +7,7 @@ import seaborn as sns
 from .catheat import heatmap as catheat
 
 
-def computeOrder(
+def compute_order(
         df,
         optimal=True,
         dist_method="euclidean",
@@ -46,13 +46,13 @@ def visualize_cluster_heatmaps(
         df = values.loc[sites, :]
 
         if row_cluster:
-            row_order = computeOrder(df, **cluster_kws)
+            row_order = compute_order(df, **cluster_kws)
             row_order = [df.index[i] for i in row_order]
         else:
             row_order = df.index
 
         if col_cluster:
-            col_order = computeOrder(df.transpose(), **cluster_kws)
+            col_order = compute_order(df.transpose(), **cluster_kws)
             col_order = [df.columns[i] for i in col_order]
         else:
             col_order = df.columns

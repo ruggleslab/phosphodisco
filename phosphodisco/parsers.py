@@ -54,7 +54,7 @@ def column_normalize(df: DataFrame, method: str) -> Optional[DataFrame]:
     if method == "twocomp_median":
         pass
 
-    logging.ERROR(
+    logging.error(
         'Passed method not valid. Must be one of: median_of_ratios, median, upper_quartile, '
         'twocomp_median.'
     )
