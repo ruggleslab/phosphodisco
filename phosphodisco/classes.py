@@ -6,6 +6,23 @@ import warnings
 from typing import Iterable, Optional
 from sklearn.linear_model import RidgeCV
 from itertools import product
+from .constants import continuous_methods
+
+
+def not_na(array):
+    if isinstance(array, pd.Series):
+        return ~array.isna()
+    return ~np.isnan(array)
+
+
+def corr_na(array1, array2, corr_method: str = 'pearsonr'):
+    if corr_method not in ['pearsonr', 'spearmanr']:
+        raise ValueError(
+            'Method %s is a valid correlation method, must be: %s'
+            % (corr_method, ','.join(continuous_methods.keys()))
+        )
+    nonull = not_na(array1) & not_na(array2)
+    return continuous_methods[corr_method](array1[nonull], array2[nonull])
 
 
 def norm_line_to_residuals(
@@ -34,7 +51,9 @@ def norm_line_to_residuals(
 class ProteomicsData:
 
     def __init__(
-            self, phospho: DataFrame, protein: DataFrame, min_common_values: Optional[int] = 5
+            self, phospho: DataFrame,
+            protein: DataFrame,
+            min_common_values: Optional[int] = 5
     ):
         self.min_values_in_common = min_common_values
 
@@ -89,7 +108,12 @@ class ProteomicsData:
 
 
 class Clusters:
-    def __init__(self, cluster_labels: Series, abundances: DataFrame, parameters: dict):
+    def __init__(
+            self,
+            cluster_labels: Series,
+            abundances: DataFrame,
+            parameters: Optional[dict]  = None
+    ):
         self.cluster_labels = cluster_labels
         self.parameters = parameters
         self.abundances = abundances
@@ -118,9 +142,9 @@ class Clusters:
         if combine_anti_regulated:
             self.anticorrelated_collapsed = True
             corr = {
-                (ind1, ind2): corrNA(scores.loc[ind1, :], scores.loc[ind2, :])[0]
+                (ind1, ind2): corr_na(scores.loc[ind1, :], scores.loc[ind2, :])[0]
                 for ind1, ind2 in product(scores.index, scores.index)
-                if -corrNA(scores.loc[ind1, :], scores.loc[ind2, :])[0] > anti_corr_threshold
+                if -corr_na(scores.loc[ind1, :], scores.loc[ind2, :])[0] > anti_corr_threshold
             }
             if corr:
                 for clusters_labs in corr.keys():

@@ -1,37 +1,10 @@
-from .classes import Clusters, ProteomicsData
+from .classes import Clusters, ProteomicsData, corr_na
+from .constants import reg_models
+import pandas as pd
+import numpy as np
 from pandas import DataFrame
-import scipy.stats
 from itertools import product
-from sklearn import linear_model
 from typing import Iterable, Optional
-
-
-reg_models = {
-    'linear':linear_model.RidgeCV,
-    'sigmoid':linear_model.LogisticRegressionCV
-}
-
-
-def notna(array):
-    if isinstance(array, pd.Series):
-        return ~array.isna()
-    return ~np.isnan(array)
-
-
-continuous_methods = {
-    'pearsonr':scipy.stats.pearsonr,
-    'spearman':scipy.stats.spearmanr
-}
-
-
-def corrNA(array1, array2, corr_method: str = 'pearsonr'):
-    if corr_method not in continuous_methods.keys():
-        raise ValueError(
-            'Method %s is a valid correlation method, must be: %s'
-            % (corr_method, ','.join(continuous_methods.keys()))
-        )
-    nonull = notna(array1) & notna(array2)
-    return continuous_methods[corr_method](array1[nonull], array2[nonull])
 
 
 def collect_putative_regulators(protdata: ProteomicsData, put_reg_list) -> DataFrame:
@@ -46,9 +19,9 @@ def collect_putative_regulators(protdata: ProteomicsData, put_reg_list) -> DataF
 def collapse_putative_regulators(reg_data: DataFrame, corr_threshold: float = 0.9) -> DataFrame:
 
     corr = {
-        (ind1, ind2): corrNA(reg_data.loc[ind1, :], reg_data.loc[ind2, :])[0]
+        (ind1, ind2): corr_na(reg_data.loc[ind1, :], reg_data.loc[ind2, :])[0]
         for ind1, ind2 in product(reg_data.index, reg_data.index)
-        if corrNA(reg_data.loc[ind1, :], reg_data.loc[ind2, :])[0] > corr_threshold
+        if corr_na(reg_data.loc[ind1, :], reg_data.loc[ind2, :])[0] > corr_threshold
     }
     high_corr_inds = list(set([i[0] for i in corr.keys()]+[i[1] for i in corr.keys()]))
     low_corr_inds = reg_data.difference(high_corr_inds)
@@ -60,9 +33,9 @@ def collapse_putative_regulators(reg_data: DataFrame, corr_threshold: float = 0.
             grouped = grouped.append(pd.Series(reg_data.loc[list(inds),:].mean(), name=name))
 
         corr = {
-            (ind1, ind2): corrNA(grouped.loc[ind1, :], grouped.loc[ind2, :])[0]
+            (ind1, ind2): corr_na(grouped.loc[ind1, :], grouped.loc[ind2, :])[0]
             for ind1, ind2 in product(grouped.index, grouped.index)
-            if corrNA(grouped.loc[ind1, :], grouped.loc[ind2, :])[0] > corr_threshold
+            if corr_na(grouped.loc[ind1, :], grouped.loc[ind2, :])[0] > corr_threshold
         }
         high_corr_inds = list(set([i[0] for i in corr.keys()] + [i[1] for i in corr.keys()]))
         low_corr_inds = reg_data.difference(high_corr_inds)

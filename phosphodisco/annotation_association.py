@@ -1,5 +1,5 @@
 from .classes import Clusters
-from .nominate_regulators import corrNA
+from .nominate_regulators import corr_na
 from typing import Iterable, Tuple
 from pandas import DataFrame
 import pandas as pd
@@ -83,7 +83,7 @@ def continuous_score_association(
     results = pd.DataFrame(index=scores.index)
     for col in annotations.columns:
         results[col] = scores.apply(
-            lambda row: corrNA(annotations[col], row, corr_method=corr_method)[1]
+            lambda row: corr_na(annotations[col], row, corr_method=corr_method)[1]
         )
     return results
 
