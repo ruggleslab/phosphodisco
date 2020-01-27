@@ -23,6 +23,17 @@ def compute_order(
         dist_method="euclidean",
         cluster_method="average"
 ):
+    """
+
+    Args:
+        df:
+        optimal:
+        dist_method:
+        cluster_method:
+
+    Returns:
+
+    """
     dist_mat = pdist(df, metric=dist_method)
     link_mat = hierarchy.linkage(dist_mat, method=cluster_method)
 
@@ -42,6 +53,21 @@ def visualize_modules(
         heatmap_kws: dict = {},
         file_prefix: str = 'heatmap'
 ):
+    """
+
+    Args:
+        data:
+        annotations:
+        col_cluster:
+        row_cluster:
+        cluster_kws:
+        annot_kws:
+        heatmap_kws:
+        file_prefix:
+
+    Returns:
+
+    """
 
     cluster_sets = data.modules
     cluster_sets = {
@@ -116,13 +142,15 @@ def visualize_modules(
 
 def visualize_regulator_coefficients(
         data: ProteomicsData,
-        coefficient_percentile_cutoff: float = 95
+        coefficient_percentile_cutoff: float = 95,
+        **heatmap_kwargs
 ):
     pass
 
 
 def visualize_annotation_associations(
         data: ProteomicsData,
-        coefficient_percentile_cutoff: float = 0
+        coefficient_percentile_cutoff: float = 0,
+        **heatmap_kwargs
 ):
     pass

@@ -8,30 +8,34 @@ from statsmodels.stats.multitest import multipletests
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
 from .utils import norm_line_to_residuals
-from .constants import module_combiner_delim, annotation_column_map
+from .constants import module_combiner_delim, annotation_column_map, datatype_label
 from .annotation_association import (
     corr_na, binarize_categorical, continuous_score_association, categorical_score_association
 )
 from .nominate_regulators import collapse_putative_regulators, calculate_regulator_coefficients
 
 
-
 class ProteomicsData:
+    """
+
+    Args:
+        phospho:
+        protein:
+        min_common_values:
+        normed_phospho:
+        modules:
+        clustering_parameters_for_modules:
+        putative_regulator_list:
+    """
     def __init__(
             self,
             phospho: DataFrame,
             protein: DataFrame,
             min_common_values: Optional[int] = 5,
             normed_phospho: Optional[DataFrame] = None,
-            categorical_annotations: Optional[DataFrame] = None,
-            continuous_annotations: Optional[DataFrame] = None,
             modules: Optional[Iterable] = None,
             clustering_parameters_for_modules: Optional[dict] = None,
             putative_regulator_list: Optional[list] = None,
-            putative_regulator_data: Optional[DataFrame] = None,
-            module_scores: Optional[DataFrame] = None,
-            anticorrelated_collapsed: Optional[bool] = None,
-            regulator_coefficients: Optional[DataFrame] = None
     ):
         self.min_values_in_common = min_common_values
 
@@ -39,13 +43,10 @@ class ProteomicsData:
         common_samples = phospho.columns.intersection(protein.columns)
         self.phospho = phospho[common_samples]
         self.protein = protein[common_samples]
-        self.categorical_annotations = categorical_annotations
-        self.continuous_annotations = continuous_annotations
         self.common_prots = common_prots
         self.common_samples = common_samples
         self.clustering_parameters_for_modules = clustering_parameters_for_modules
         self.putative_regulator_list = putative_regulator_list
-        self.putative_regulator_data = putative_regulator_data
 
         logging.info('Phospho and protein data have %s proteins in common' % len(common_prots))
         logging.info(
@@ -68,22 +69,30 @@ class ProteomicsData:
             )
         )
         self.normed_phospho = normed_phospho
-        self.modules = modules
-        self.anticorrelated_collapsed = anticorrelated_collapsed
-        self.module_scores = module_scores
-        self.regulator_coefficients = regulator_coefficients
 
-    def normalize_phospho_by_protein(self, ridge_cv_alphas: Optional[Iterable] = None):
-        if self.normed_phospho is not None:
-            logging.warning('Overwriting protein-normalized phospho abundances. ')
-        # TODO test this, make sure datatype_label goes away.
+        if modules is not None:
+            self.assign_modules(modules)
+
+    def normalize_phospho_by_protein(
+            self,
+            ridge_cv_alphas: Optional[Iterable] = None,
+            **ridgecv_kwargs
+    ):
+        """
+
+        Args:
+            ridge_cv_alphas:
+            **ridgecv_kwargs:
+
+        Returns:
+
+        """
         target = self.phospho.loc[self.normalizable_rows]
         features = self.protein.reindex(target.index.get_level_values(0))
         features.index = target.index
         target = target.transpose()
         features = features.transpose()
 
-        datatype_label = 'datatype_label'
         target[datatype_label] = 0
         features[datatype_label] = 1
 
@@ -94,7 +103,9 @@ class ProteomicsData:
 
         residuals = data.apply(
             lambda row: norm_line_to_residuals(
-                row[0], row[1], ridge_cv_alphas, self.min_values_in_common
+                row[0], row[1],
+                ridge_cv_alphas,
+                **ridgecv_kwargs
             ), axis=1
         )
 
@@ -108,6 +119,17 @@ class ProteomicsData:
             min_or_max: Optional[str] = None,
             **multiautocluster_kwargs
     ):
+        """
+
+        Args:
+            modules:
+            method_to_pick_best_labels:
+            min_or_max:
+            **multiautocluster_kwargs:
+
+        Returns:
+
+        """
         if modules is not None:
             self.modules = modules
         if self.modules is None:
@@ -135,6 +157,15 @@ class ProteomicsData:
             combine_anti_regulated: bool = True,
             anti_corr_threshold: float = 0.9
     ):
+        """
+
+        Args:
+            combine_anti_regulated:
+            anti_corr_threshold:
+
+        Returns:
+
+        """
         abundances = self.normed_phospho.reindex(self.modules.index)
         scores = abundances.groupby(self.modules).agg('mean')
 
@@ -160,6 +191,15 @@ class ProteomicsData:
         return self
 
     def collect_putative_regulators(self, possible_regulator_list, corr_threshold: float = 0.9):
+        """
+
+        Args:
+            possible_regulator_list:
+            corr_threshold:
+
+        Returns:
+
+        """
         self.putative_regulator_list = possible_regulator_list
         subset = self.protein.loc[possible_regulator_list, :]
         subset[1] = np.nan
@@ -175,6 +215,14 @@ class ProteomicsData:
             self,
             **kwargs
     ):
+        """
+
+        Args:
+            **kwargs:
+
+        Returns:
+
+        """
         self.regulator_coefficients = calculate_regulator_coefficients(
             self.putative_regulator_data,
             self.module_scores,
@@ -183,6 +231,15 @@ class ProteomicsData:
         return self
 
     def add_annotations(self, annotations: DataFrame, column_types: Series):
+        """
+
+        Args:
+            annotations:
+            column_types:
+
+        Returns:
+
+        """
         if self.categorical_annotations is not None or self.continuous_annotations is not None:
             logging.warning('Overwriting annotation data')
         common_samples = annotations.index.intersection(self.normed_phospho.columns)
@@ -208,8 +265,18 @@ class ProteomicsData:
             self,
             cat_method: Optional[str] = None,
             cont_method: Optional[str] = None,
-            **mt_kwargs
+            **multitest_kwargs
     ):
+        """
+
+        Args:
+            cat_method:
+            cont_method:
+            **multitest_kwargs:
+
+        Returns:
+
+        """
         if self.categorical_annotations is None or self.continuous_annotations is None:
             raise ValueError(
                 'Annotations are not defined. Provide annotation table to add_annotation method.'
@@ -227,9 +294,9 @@ class ProteomicsData:
         annotation_association = pd.concat([cont, cat], join='outer', axis=1)
         self.annotation_association = annotation_association
 
-        mt_kwargs['method'] = mt_kwargs.get('method', 'fdr_bh')
+        multitest_kwargs['method'] = multitest_kwargs.get('method', 'fdr_bh')
         fdr = pd.DataFrame(index=annotation_association.index)
         for col in annotation_association.columns:
-            fdr.loc[:, col] = multipletests(annotation_association[col], **mt_kwargs)[1]
+            fdr.loc[:, col] = multipletests(annotation_association[col], **multitest_kwargs)[1]
         self.annotation_association_FDR = fdr
         return self

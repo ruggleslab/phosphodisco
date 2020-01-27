@@ -13,10 +13,25 @@ def norm_line_to_residuals(
         ph_line: Iterable,
         prot_line: Iterable,
         regularization_values: Optional[Iterable] = None,
-        cv: Optional[int] = 5
+        cv: Optional[int] = None,
+        **ridgecv_kwargs
 ) -> Series:
+    """
+
+    Args:
+        ph_line:
+        prot_line:
+        regularization_values:
+        cv:
+        **ridgecv_kwargs:
+
+    Returns:
+
+    """
     if regularization_values is None:
         regularization_values = [2 ** i for i in range(-10, 10, 1)]
+    if cv is None:
+        cv = 5
 
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     nonull = (~np.isnan(ph_line) & ~np.isnan(prot_line))
@@ -25,7 +40,10 @@ def norm_line_to_residuals(
 
     features = prot_line[nonull].values.reshape(-1, 1)
     labels = ph_line[nonull].values
-    model = RidgeCV(alphas=regularization_values, cv=cv).fit(features, labels)
+
+    ridgecv_kwargs['alphas'] = regularization_values
+    ridgecv_kwargs['cv'] = cv
+    model = RidgeCV(**ridgecv_kwargs).fit(features, labels)
     prediction = model.predict(features)
     residuals = labels - prediction
 
@@ -35,7 +53,7 @@ def norm_line_to_residuals(
 # Adapted from https://github.com/alexmill/alexmill.github.io/tree/91be34d6fafa90cf5d78e7f934328a060c8a70c0/_site/posts/linear-model-custom-loss-function-regularization-python
 class SigmoidRegression:
     """
-    Linear model: Y = XB, fit by minimizing the provided loss_function
+    Linear model: Y = B*(1/1+e**X), fit by minimizing the provided loss_function
     with L2 regularization
     """
 
@@ -56,20 +74,49 @@ class SigmoidRegression:
         self.Y = Y
 
     def predict(self, X):
+        """
+
+        Args:
+            X:
+
+        Returns:
+
+        """
         prediction = np.matmul((1/np.exp(1+X)), self.coef_)
         return (prediction)
 
     def model_error(self):
+        """
+
+        Returns:
+
+        """
         error = self.loss_function(
             self.Y, self.predict(self.X), sample_weight=self.sample_weight
         )
         return error
 
     def l2_regularized_loss(self, coef_):
+        """
+
+        Args:
+            coef_:
+
+        Returns:
+
+        """
         self.coef_ = coef_
         return self.model_error() + sum(self.regularization * np.array(self.coef_) ** 2)
 
     def fit_no_cv(self, maxiter=250):
+        """
+
+        Args:
+            maxiter:
+
+        Returns:
+
+        """
         # Initialize coef estimates (you may need to normalize
         # your data and choose smarter initialization values
         # depending on the shape of your loss function)
@@ -90,9 +137,13 @@ class SigmoidRegression:
 
 
 class CustomCrossValidator:
-    """
-    Cross validates arbitrary model using MAPE criterion on
-    list of alphas.
+    """Cross validates arbitrary model using MAPE criterion on list of alphas.
+    Args:
+        X:
+        Y:
+        model_class:
+        sample_weight:
+        loss_function:
     """
 
     def __init__(self, X, Y, model_class,
@@ -105,10 +156,10 @@ class CustomCrossValidator:
         self.loss_function = loss_function
         self.sample_weight = sample_weight
 
-    def cross_validate(self, alphas, num_folds=10):
+    def cross_validate(self, alphas, cv=5):
         """
         alphas: set of regularization parameters to try
-        num_folds: number of folds to cross-validate against
+        cv: number of folds to cross-validate against
         """
 
         self.alphas = alphas
@@ -126,7 +177,7 @@ class CustomCrossValidator:
         for lam in self.alphas:
 
             # Split data into training/holdout sets
-            kf = KFold(n_splits=num_folds, shuffle=True)
+            kf = KFold(n_splits=cv, shuffle=True)
             kf.get_n_splits(X)
 
             # Keep track of the error for each holdout fold
@@ -185,8 +236,25 @@ class CustomCrossValidator:
 
 
 class SigmoidCV (SigmoidRegression):
-    def __init__(self, loss_function=mean_squared_error, sample_weight=None,
-                 coef_init=None, regularization=0.00012, cv=5, alphas=None):
+    def __init__(
+            self,
+            loss_function=mean_squared_error,
+            sample_weight=None,
+            coef_init=None,
+            regularization=0.00012,
+            cv=5,
+            alphas=None
+    ):
+        """
+
+        Args:
+            loss_function:
+            sample_weight:
+            coef_init:
+            regularization:
+            cv:
+            alphas:
+        """
         super().__init__(loss_function, sample_weight, coef_init, regularization, cv, alphas)
         if alphas is None:
             alphas = [2 ** i for i in range(-10, 10, 1)]
@@ -205,7 +273,7 @@ class SigmoidCV (SigmoidRegression):
             X, Y, SigmoidRegression,
             loss_function=self.loss_function
         )
-        cross_validator.cross_validate(self.alphas, num_folds=self.cv)
+        cross_validator.cross_validate(self.alphas, cv=self.cv)
         alpha_star = cross_validator.alpha_star
 
         self.regularization = alpha_star
