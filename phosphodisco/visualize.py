@@ -1,4 +1,4 @@
-from .classes import Clusters
+from .classes import ProteomicsData
 from pandas import DataFrame
 import pandas as pd
 import numpy as np
@@ -9,6 +9,12 @@ import seaborn as sns
 from .catheat import heatmap as catheat
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import pdist
+
+
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
+sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
+matplotlib.rcParams.update({'savefig.bbox': 'tight'})
 
 
 def compute_order(
@@ -26,8 +32,8 @@ def compute_order(
         return hierarchy.leaves_list(link_mat)
 
 
-def visualize_cluster_heatmaps(
-        clusters: Clusters,
+def visualize_modules(
+        data: ProteomicsData,
         annotations: Optional[DataFrame] = None,
         col_cluster=True,
         row_cluster=True,
@@ -36,17 +42,13 @@ def visualize_cluster_heatmaps(
         heatmap_kws: dict = {},
         file_prefix: str = 'heatmap'
 ):
-    matplotlib.rcParams["pdf.fonttype"] = 42
-    matplotlib.rcParams["ps.fonttype"] = 42
-    sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
-    matplotlib.rcParams.update({'savefig.bbox': 'tight'})
 
-    cluster_sets = clusters.cluster_labels
+    cluster_sets = data.modules
     cluster_sets = {
         cluster_name: cluster_sets.index[cluster_sets==cluster_name] for cluster_name in
-        clusters.nmembers_per_cluster.keys() if cluster_name != -1
+        data.modules.unique() if cluster_name != -1
     }
-    values = clusters.abundances
+    values = data.normed_phospho
 
     for cluster_name, sites in cluster_sets.items():
         df = values.loc[sites, :]
@@ -110,3 +112,17 @@ def visualize_cluster_heatmaps(
         plt.savefig('%s.cluster%s.pdf' % (file_prefix, cluster_name))
         plt.show()
         plt.close()
+
+
+def visualize_regulator_coefficients(
+        data: ProteomicsData,
+        coefficient_percentile_cutoff: float = 95
+):
+    pass
+
+
+def visualize_annotation_associations(
+        data: ProteomicsData,
+        coefficient_percentile_cutoff: float = 0
+):
+    pass
