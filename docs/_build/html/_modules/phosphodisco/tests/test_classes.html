@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>phosphodisco.tests.test_classes &mdash; PhosphoDisco 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> PhosphoDisco
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../phosphodisco.html">phosphodisco package</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Welcome to PhosphoDisco’s documentation!</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PhosphoDisco</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>phosphodisco.tests.test_classes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for phosphodisco.tests.test_classes</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">phosphodisco</span> <span class="k">as</span> <span class="nn">phdc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">log_loss</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">prot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">makeDataFrame</span><span class="p">()</span>
+<span class="n">phospho</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">makeDataFrame</span><span class="p">()</span>
+<span class="n">phospho</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span>
+    <span class="p">[(</span><span class="n">prot</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">)],</span> <span class="n">ind</span><span class="p">)</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">phospho</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="test_classes_regulators"><a class="viewcode-back" href="../../../phosphodisco.tests.html#phosphodisco.tests.test_classes.test_classes_regulators">[docs]</a><span class="k">def</span> <span class="nf">test_classes_regulators</span><span class="p">():</span>
+    <span class="n">proteomics</span> <span class="o">=</span> <span class="n">phdc</span><span class="o">.</span><span class="n">ProteomicsData</span><span class="p">(</span>
+        <span class="n">phospho</span><span class="p">,</span> <span class="n">prot</span><span class="p">,</span> <span class="n">min_common_values</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">normalize_phospho_by_protein</span><span class="p">()</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">assign_modules</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;test;param-1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)]},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">proteomics</span><span class="o">.</span><span class="n">normed_phospho</span><span class="o">.</span><span class="n">index</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">calculate_module_scores</span><span class="p">()</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">collect_putative_regulators</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">phospho</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">))),</span> <span class="n">corr_threshold</span><span class="o">=</span><span class="mf">0.98</span><span class="p">)</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">calculate_regulator_coefficients</span><span class="p">(</span><span class="n">cv_fold</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">proteomics</span></div>
+
+
+<div class="viewcode-block" id="test_classes_annotations"><a class="viewcode-back" href="../../../phosphodisco.tests.html#phosphodisco.tests.test_classes.test_classes_annotations">[docs]</a><span class="k">def</span> <span class="nf">test_classes_annotations</span><span class="p">():</span>
+    <span class="n">proteomics</span> <span class="o">=</span> <span class="n">phdc</span><span class="o">.</span><span class="n">ProteomicsData</span><span class="p">(</span>
+        <span class="n">phospho</span><span class="p">,</span> <span class="n">prot</span><span class="p">,</span> <span class="n">min_common_values</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">normalize_phospho_by_protein</span><span class="p">()</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">assign_modules</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;test;param-1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)]},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">proteomics</span><span class="o">.</span><span class="n">normed_phospho</span><span class="o">.</span><span class="n">index</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">annotations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;cat1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;cat2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;cont1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.115</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span>
+                <span class="s1">&#39;cont2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">proteomics</span><span class="o">.</span><span class="n">protein</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">)</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">calculate_module_scores</span><span class="p">()</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">add_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;continuous&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">proteomics</span><span class="o">.</span><span class="n">annotation_association</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">proteomics</span><span class="o">.</span><span class="n">annotation_association_FDR</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">proteomics</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ruggleslab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
