@@ -2,7 +2,7 @@ import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-files = []
+files = ["data/*"]
 setuptools.setup(
     name="phosphodisco",
     version="0.0.1",
