@@ -1,4 +1,4 @@
-from .classes import Clusters
+from .classes import ProteomicsData
 from pandas import DataFrame
 import pandas as pd
 import numpy as np
@@ -9,6 +9,15 @@ import seaborn as sns
 from .catheat import heatmap as catheat
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import pdist
+<<<<<<< HEAD
+=======
+
+
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
+sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
+matplotlib.rcParams.update({'savefig.bbox': 'tight'})
+>>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087
 
 
 def compute_order(
@@ -17,6 +26,17 @@ def compute_order(
         dist_method="euclidean",
         cluster_method="average"
 ):
+    """
+
+    Args:
+        df:
+        optimal:
+        dist_method:
+        cluster_method:
+
+    Returns:
+
+    """
     dist_mat = pdist(df, metric=dist_method)
     link_mat = hierarchy.linkage(dist_mat, method=cluster_method)
 
@@ -26,8 +46,8 @@ def compute_order(
         return hierarchy.leaves_list(link_mat)
 
 
-def visualize_cluster_heatmaps(
-        clusters: Clusters,
+def visualize_modules(
+        data: ProteomicsData,
         annotations: Optional[DataFrame] = None,
         col_cluster=True,
         row_cluster=True,
@@ -36,19 +56,44 @@ def visualize_cluster_heatmaps(
         heatmap_kws: dict = {},
         file_prefix: str = 'heatmap'
 ):
+<<<<<<< HEAD
     matplotlib.rcParams["pdf.fonttype"] = 42
     matplotlib.rcParams["ps.fonttype"] = 42
     sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
     matplotlib.rcParams.update({'savefig.bbox': 'tight'})
+=======
+    """
+>>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087
 
-    cluster_sets = clusters.cluster_labels
+    Args:
+        data:
+        annotations:
+        col_cluster:
+        row_cluster:
+        cluster_kws:
+        annot_kws:
+        heatmap_kws:
+        file_prefix:
+
+    Returns:
+
+    """
+
+    cluster_sets = data.modules
     cluster_sets = {
         cluster_name: cluster_sets.index[cluster_sets==cluster_name] for cluster_name in
+<<<<<<< HEAD
         clusters.nmembers_per_cluster.keys() if cluster_name != -1
+=======
+        data.modules.unique() if cluster_name != -1
+>>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087
     }
-    values = clusters.abundances
+    values = data.normed_phospho
 
     for cluster_name, sites in cluster_sets.items():
+        if int(cluster_name) == -1:
+            continue
+
         df = values.loc[sites, :]
 
         if row_cluster:
@@ -110,3 +155,47 @@ def visualize_cluster_heatmaps(
         plt.savefig('%s.cluster%s.pdf' % (file_prefix, cluster_name))
         plt.show()
         plt.close()
+<<<<<<< HEAD
+=======
+
+
+def visualize_regulator_coefficients(
+        data: ProteomicsData,
+        value_percentile_cutoff: float = 95,
+        savefig_prefix: Optional[str] = None,
+        **heatmap_kwargs
+):
+    if data.regulator_coefficients is None:
+        raise KeyError(
+            'Must calculate regulator coefficients using '
+            'ProteomicsData.calculate_regulator_coefficients before visualizing. '
+        )
+    cut_off = np.nanpercentile(
+        data.regulator_coefficients.values.flatten(), value_percentile_cutoff
+    )
+    subset = data.regulator_coefficients[(data.regulator_coefficients > cut_off).any(axis=1)]
+    ax = sns.heatmap(subset, **heatmap_kwargs)
+    if savefig_prefix:
+        plt.savefig('%s.pdf' % savefig_prefix)
+    return ax
+
+
+def visualize_annotation_associations(
+        data: ProteomicsData,
+        value_percentile_cutoff: float = 0,
+        savefig_prefix: Optional[str] = None,
+        **heatmap_kwargs
+):
+    if data.annotation_association_FDR is None:
+        raise KeyError(
+            'Must calculate regulator coefficients using '
+            'ProteomicsData.calculate_regulator_coefficients before visualizing. '
+        )
+    temp = -np.log10(data.annotation_association_FDR)
+    cut_off = np.nanpercentile(temp.values.flatten(), value_percentile_cutoff)
+    subset = temp[(temp > cut_off).any(axis=1)]
+    ax = sns.heatmap(subset, **heatmap_kwargs)
+    if savefig_prefix:
+        plt.savefig('%s.pdf' % savefig_prefix)
+    return ax
+>>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087

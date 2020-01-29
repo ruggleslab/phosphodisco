@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>phosphodisco package &mdash; PhosphoDisco 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to PhosphoDisco’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PhosphoDisco
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">phosphodisco package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.annotation_association">phosphodisco.annotation_association module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.catheat">phosphodisco.catheat module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.classes">phosphodisco.classes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.constants">phosphodisco.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.nominate_regulators">phosphodisco.nominate_regulators module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.parsers">phosphodisco.parsers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.utils">phosphodisco.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-phosphodisco.visualize">phosphodisco.visualize module</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to PhosphoDisco’s documentation!</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PhosphoDisco</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>phosphodisco package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/phosphodisco.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-phosphodisco">
+<span id="phosphodisco-package"></span><h1>phosphodisco package<a class="headerlink" href="#module-phosphodisco" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="phosphodisco.ProteomicsData">
+<em class="property">class </em><code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">ProteomicsData</code><span class="sig-paren">(</span><em class="sig-param">phospho: pandas.core.frame.DataFrame</em>, <em class="sig-param">protein: pandas.core.frame.DataFrame</em>, <em class="sig-param">min_common_values: Optional[int] = 5</em>, <em class="sig-param">normed_phospho: Optional[pandas.core.frame.DataFrame] = None</em>, <em class="sig-param">modules: Optional[Iterable] = None</em>, <em class="sig-param">clustering_parameters_for_modules: Optional[dict] = None</em>, <em class="sig-param">putative_regulator_list: Optional[list] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phospho</strong> – </p></li>
+<li><p><strong>protein</strong> – </p></li>
+<li><p><strong>min_common_values</strong> – </p></li>
+<li><p><strong>normed_phospho</strong> – </p></li>
+<li><p><strong>modules</strong> – </p></li>
+<li><p><strong>clustering_parameters_for_modules</strong> – </p></li>
+<li><p><strong>putative_regulator_list</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.add_annotations">
+<code class="sig-name descname">add_annotations</code><span class="sig-paren">(</span><em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">column_types: pandas.core.series.Series</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.add_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.add_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>annotations</strong> – </p></li>
+<li><p><strong>column_types</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.annotation_association">
+<code class="sig-name descname">annotation_association</code><span class="sig-paren">(</span><em class="sig-param">cat_method: Optional[str] = None</em>, <em class="sig-param">cont_method: Optional[str] = None</em>, <em class="sig-param">**multitest_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.annotation_association"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.annotation_association" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cat_method</strong> – </p></li>
+<li><p><strong>cont_method</strong> – </p></li>
+<li><p><strong>**multitest_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.assign_modules">
+<code class="sig-name descname">assign_modules</code><span class="sig-paren">(</span><em class="sig-param">modules: Optional[pandas.core.frame.DataFrame] = None</em>, <em class="sig-param">method_to_pick_best_labels: Optional[str] = None</em>, <em class="sig-param">min_or_max: Optional[str] = None</em>, <em class="sig-param">**multiautocluster_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.assign_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.assign_modules" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modules</strong> – </p></li>
+<li><p><strong>method_to_pick_best_labels</strong> – </p></li>
+<li><p><strong>min_or_max</strong> – </p></li>
+<li><p><strong>**multiautocluster_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.calculate_module_scores">
+<code class="sig-name descname">calculate_module_scores</code><span class="sig-paren">(</span><em class="sig-param">combine_anti_regulated: bool = True</em>, <em class="sig-param">anti_corr_threshold: float = 0.9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.calculate_module_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.calculate_module_scores" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combine_anti_regulated</strong> – </p></li>
+<li><p><strong>anti_corr_threshold</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.calculate_regulator_coefficients">
+<code class="sig-name descname">calculate_regulator_coefficients</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.calculate_regulator_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.calculate_regulator_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.collect_putative_regulators">
+<code class="sig-name descname">collect_putative_regulators</code><span class="sig-paren">(</span><em class="sig-param">possible_regulator_list</em>, <em class="sig-param">corr_threshold: float = 0.9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.collect_putative_regulators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.collect_putative_regulators" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>possible_regulator_list</strong> – </p></li>
+<li><p><strong>corr_threshold</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.ProteomicsData.normalize_phospho_by_protein">
+<code class="sig-name descname">normalize_phospho_by_protein</code><span class="sig-paren">(</span><em class="sig-param">ridge_cv_alphas: Optional[Iterable] = None</em>, <em class="sig-param">**ridgecv_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.normalize_phospho_by_protein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.ProteomicsData.normalize_phospho_by_protein" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ridge_cv_alphas</strong> – </p></li>
+<li><p><strong>**ridgecv_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.read_protein">
+<code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">read_protein</code><span class="sig-paren">(</span><em class="sig-param">file_path: str</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/parsers.html#read_protein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.read_protein" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.read_phospho">
+<code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">read_phospho</code><span class="sig-paren">(</span><em class="sig-param">file_path: str</em><span class="sig-paren">)</span> &#x2192; Optional[pandas.core.frame.DataFrame]<a class="reference internal" href="_modules/phosphodisco/parsers.html#read_phospho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.read_phospho" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.column_normalize">
+<code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">column_normalize</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">method: str</em><span class="sig-paren">)</span> &#x2192; Optional[pandas.core.frame.DataFrame]<a class="reference internal" href="_modules/phosphodisco/parsers.html#column_normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.column_normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides several
+:param df:
+:param method:</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.prepare_phospho">
+<code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">prepare_phospho</code><span class="sig-paren">(</span><em class="sig-param">ph_file: str</em>, <em class="sig-param">prot_file: str</em>, <em class="sig-param">normalize_method: Optional[str] = None</em>, <em class="sig-param">min_common_values: int = 5</em>, <em class="sig-param">ridge_cv_alphas: Optional[Iterable] = None</em><span class="sig-paren">)</span> &#x2192; phosphodisco.classes.ProteomicsData<a class="reference internal" href="_modules/phosphodisco/parsers.html#prepare_phospho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.prepare_phospho" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.collapse_putative_regulators">
+<code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">collapse_putative_regulators</code><span class="sig-paren">(</span><em class="sig-param">reg_data: pandas.core.frame.DataFrame</em>, <em class="sig-param">corr_threshold: float = 0.9</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/nominate_regulators.html#collapse_putative_regulators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.collapse_putative_regulators" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.calculate_regulator_coefficients">
+<code class="sig-prename descclassname">phosphodisco.</code><code class="sig-name descname">calculate_regulator_coefficients</code><span class="sig-paren">(</span><em class="sig-param">reg_data: pandas.core.frame.DataFrame</em>, <em class="sig-param">cluster_scores: pandas.core.frame.DataFrame</em>, <em class="sig-param">model: str = 'sigmoid'</em>, <em class="sig-param">regularization_values: Optional[Iterable] = None</em>, <em class="sig-param">cv_fold: int = 5</em>, <em class="sig-param">**model_kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/nominate_regulators.html#calculate_regulator_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.calculate_regulator_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-phosphodisco.annotation_association">
+<span id="phosphodisco-annotation-association-module"></span><h2>phosphodisco.annotation_association module<a class="headerlink" href="#module-phosphodisco.annotation_association" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="phosphodisco.annotation_association.RRA">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">RRA</code><span class="sig-paren">(</span><em class="sig-param">a: Iterable</em>, <em class="sig-param">b: Iterable</em><span class="sig-paren">)</span> &#x2192; Tuple[float]<a class="reference internal" href="_modules/phosphodisco/annotation_association.html#RRA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.RRA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.annotation_association.binarize_categorical">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">binarize_categorical</code><span class="sig-paren">(</span><em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">columns: Iterable</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/annotation_association.html#binarize_categorical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.binarize_categorical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.annotation_association.categorical_score_association">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">categorical_score_association</code><span class="sig-paren">(</span><em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">module_scores: pandas.core.frame.DataFrame</em>, <em class="sig-param">cat_method: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/annotation_association.html#categorical_score_association"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.categorical_score_association" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.annotation_association.continuous_score_association">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">continuous_score_association</code><span class="sig-paren">(</span><em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">module_scores: pandas.core.frame.DataFrame</em>, <em class="sig-param">cont_method: Optional[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/annotation_association.html#continuous_score_association"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.continuous_score_association" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.annotation_association.corr_na">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">corr_na</code><span class="sig-paren">(</span><em class="sig-param">array1</em>, <em class="sig-param">array2</em>, <em class="sig-param">corr_method: str = 'pearsonr'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/annotation_association.html#corr_na"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.corr_na" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.annotation_association.not_na">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">not_na</code><span class="sig-paren">(</span><em class="sig-param">array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/annotation_association.html#not_na"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.not_na" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.annotation_association.rho_p">
+<code class="sig-prename descclassname">phosphodisco.annotation_association.</code><code class="sig-name descname">rho_p</code><span class="sig-paren">(</span><em class="sig-param">rank_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/annotation_association.html#rho_p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.annotation_association.rho_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares each element in the vector to its corresponding value in the null distribution vector,
+using the probability mass function of the binomial distribution.
+Assigns a p-value to each element in the vector, creating the betaScore vector.
+Uses minimum betaScore as rho</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank_vector</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-phosphodisco.catheat">
+<span id="phosphodisco-catheat-module"></span><h2>phosphodisco.catheat module<a class="headerlink" href="#module-phosphodisco.catheat" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="phosphodisco.catheat.heatmap">
+<code class="sig-prename descclassname">phosphodisco.catheat.</code><code class="sig-name descname">heatmap</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cmap: Optional[dict] = None</em>, <em class="sig-param">palette: str = 'hls'</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">legend: bool = True</em>, <em class="sig-param">leg_pos: str = 'right'</em>, <em class="sig-param">leg_ax=None</em>, <em class="sig-param">leg_kws: Optional[dict] = None</em>, <em class="sig-param">**sns_kws</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/catheat.html#heatmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.catheat.heatmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to plot categorical heatmap using seaborn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>rectangular dataset</em>) – 2D dataset that can be coerced into an ndarray. If a Pandas
+DataFrame is provided, the index/column information will be
+used to label the columns and rows.</p></li>
+<li><p><strong>cmap</strong> (<em>dict</em><em>, </em><em>optional</em>) – Colors for each category in the dataset. Missing colors will
+be added from the palette.</p></li>
+<li><p><strong>palette</strong> (<em>matplotlib/seaborn color palette name</em><em> or </em><em>object</em><em>, </em><em>optional</em>) – Palette to be used for heatmap.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib ax</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>legend</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, plot legend.</p></li>
+<li><p><strong>leg_ax</strong> (<em>matplotlib axis</em><em>, </em><em>optional</em>) – By default, will add legend to same ax as heatmap. Use this
+argument to explicitly set legend ax.</p></li>
+<li><p><strong>leg_pos</strong> (<em>{'right'</em><em>, </em><em>'top'}</em>) – Position of legend. Only relevant if legend ax is not
+explicitly provided via <cite>leg_ax</cite>.</p></li>
+<li><p><strong>leg_kws</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments passed to plt.legend()</p></li>
+<li><p><strong>**sns_kws</strong> – Keyword argumentas passed through to <cite>seaborn.heatmap()</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>matplotlib axis</em> – Heatmap axis as returned by seaborn.heatmap().</p></li>
+<li><p><strong>colormap</strong> (<em>dict</em>) – Colormap mapping categorical values to RGB colours.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-phosphodisco.classes">
+<span id="phosphodisco-classes-module"></span><h2>phosphodisco.classes module<a class="headerlink" href="#module-phosphodisco.classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="phosphodisco.classes.ProteomicsData">
+<em class="property">class </em><code class="sig-prename descclassname">phosphodisco.classes.</code><code class="sig-name descname">ProteomicsData</code><span class="sig-paren">(</span><em class="sig-param">phospho: pandas.core.frame.DataFrame</em>, <em class="sig-param">protein: pandas.core.frame.DataFrame</em>, <em class="sig-param">min_common_values: Optional[int] = 5</em>, <em class="sig-param">normed_phospho: Optional[pandas.core.frame.DataFrame] = None</em>, <em class="sig-param">modules: Optional[Iterable] = None</em>, <em class="sig-param">clustering_parameters_for_modules: Optional[dict] = None</em>, <em class="sig-param">putative_regulator_list: Optional[list] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phospho</strong> – </p></li>
+<li><p><strong>protein</strong> – </p></li>
+<li><p><strong>min_common_values</strong> – </p></li>
+<li><p><strong>normed_phospho</strong> – </p></li>
+<li><p><strong>modules</strong> – </p></li>
+<li><p><strong>clustering_parameters_for_modules</strong> – </p></li>
+<li><p><strong>putative_regulator_list</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.add_annotations">
+<code class="sig-name descname">add_annotations</code><span class="sig-paren">(</span><em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">column_types: pandas.core.series.Series</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.add_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.add_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>annotations</strong> – </p></li>
+<li><p><strong>column_types</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.annotation_association">
+<code class="sig-name descname">annotation_association</code><span class="sig-paren">(</span><em class="sig-param">cat_method: Optional[str] = None</em>, <em class="sig-param">cont_method: Optional[str] = None</em>, <em class="sig-param">**multitest_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.annotation_association"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.annotation_association" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cat_method</strong> – </p></li>
+<li><p><strong>cont_method</strong> – </p></li>
+<li><p><strong>**multitest_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.assign_modules">
+<code class="sig-name descname">assign_modules</code><span class="sig-paren">(</span><em class="sig-param">modules: Optional[pandas.core.frame.DataFrame] = None</em>, <em class="sig-param">method_to_pick_best_labels: Optional[str] = None</em>, <em class="sig-param">min_or_max: Optional[str] = None</em>, <em class="sig-param">**multiautocluster_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.assign_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.assign_modules" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modules</strong> – </p></li>
+<li><p><strong>method_to_pick_best_labels</strong> – </p></li>
+<li><p><strong>min_or_max</strong> – </p></li>
+<li><p><strong>**multiautocluster_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.calculate_module_scores">
+<code class="sig-name descname">calculate_module_scores</code><span class="sig-paren">(</span><em class="sig-param">combine_anti_regulated: bool = True</em>, <em class="sig-param">anti_corr_threshold: float = 0.9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.calculate_module_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.calculate_module_scores" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combine_anti_regulated</strong> – </p></li>
+<li><p><strong>anti_corr_threshold</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.calculate_regulator_coefficients">
+<code class="sig-name descname">calculate_regulator_coefficients</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.calculate_regulator_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.calculate_regulator_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.collect_putative_regulators">
+<code class="sig-name descname">collect_putative_regulators</code><span class="sig-paren">(</span><em class="sig-param">possible_regulator_list</em>, <em class="sig-param">corr_threshold: float = 0.9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.collect_putative_regulators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.collect_putative_regulators" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>possible_regulator_list</strong> – </p></li>
+<li><p><strong>corr_threshold</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.classes.ProteomicsData.normalize_phospho_by_protein">
+<code class="sig-name descname">normalize_phospho_by_protein</code><span class="sig-paren">(</span><em class="sig-param">ridge_cv_alphas: Optional[Iterable] = None</em>, <em class="sig-param">**ridgecv_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/classes.html#ProteomicsData.normalize_phospho_by_protein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.classes.ProteomicsData.normalize_phospho_by_protein" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ridge_cv_alphas</strong> – </p></li>
+<li><p><strong>**ridgecv_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-phosphodisco.constants">
+<span id="phosphodisco-constants-module"></span><h2>phosphodisco.constants module<a class="headerlink" href="#module-phosphodisco.constants" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-phosphodisco.nominate_regulators">
+<span id="phosphodisco-nominate-regulators-module"></span><h2>phosphodisco.nominate_regulators module<a class="headerlink" href="#module-phosphodisco.nominate_regulators" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="phosphodisco.nominate_regulators.calculate_regulator_coefficients">
+<code class="sig-prename descclassname">phosphodisco.nominate_regulators.</code><code class="sig-name descname">calculate_regulator_coefficients</code><span class="sig-paren">(</span><em class="sig-param">reg_data: pandas.core.frame.DataFrame</em>, <em class="sig-param">cluster_scores: pandas.core.frame.DataFrame</em>, <em class="sig-param">model: str = 'sigmoid'</em>, <em class="sig-param">regularization_values: Optional[Iterable] = None</em>, <em class="sig-param">cv_fold: int = 5</em>, <em class="sig-param">**model_kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/nominate_regulators.html#calculate_regulator_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.nominate_regulators.calculate_regulator_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.nominate_regulators.collapse_putative_regulators">
+<code class="sig-prename descclassname">phosphodisco.nominate_regulators.</code><code class="sig-name descname">collapse_putative_regulators</code><span class="sig-paren">(</span><em class="sig-param">reg_data: pandas.core.frame.DataFrame</em>, <em class="sig-param">corr_threshold: float = 0.9</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/nominate_regulators.html#collapse_putative_regulators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.nominate_regulators.collapse_putative_regulators" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-phosphodisco.parsers">
+<span id="phosphodisco-parsers-module"></span><h2>phosphodisco.parsers module<a class="headerlink" href="#module-phosphodisco.parsers" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="phosphodisco.parsers.column_normalize">
+<code class="sig-prename descclassname">phosphodisco.parsers.</code><code class="sig-name descname">column_normalize</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">method: str</em><span class="sig-paren">)</span> &#x2192; Optional[pandas.core.frame.DataFrame]<a class="reference internal" href="_modules/phosphodisco/parsers.html#column_normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.parsers.column_normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides several
+:param df:
+:param method:</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.parsers.get_sep">
+<code class="sig-prename descclassname">phosphodisco.parsers.</code><code class="sig-name descname">get_sep</code><span class="sig-paren">(</span><em class="sig-param">file_path: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/phosphodisco/parsers.html#get_sep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.parsers.get_sep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.parsers.prepare_phospho">
+<code class="sig-prename descclassname">phosphodisco.parsers.</code><code class="sig-name descname">prepare_phospho</code><span class="sig-paren">(</span><em class="sig-param">ph_file: str</em>, <em class="sig-param">prot_file: str</em>, <em class="sig-param">normalize_method: Optional[str] = None</em>, <em class="sig-param">min_common_values: int = 5</em>, <em class="sig-param">ridge_cv_alphas: Optional[Iterable] = None</em><span class="sig-paren">)</span> &#x2192; phosphodisco.classes.ProteomicsData<a class="reference internal" href="_modules/phosphodisco/parsers.html#prepare_phospho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.parsers.prepare_phospho" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.parsers.read_annotation">
+<code class="sig-prename descclassname">phosphodisco.parsers.</code><code class="sig-name descname">read_annotation</code><span class="sig-paren">(</span><em class="sig-param">file_path: str</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/parsers.html#read_annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.parsers.read_annotation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.parsers.read_phospho">
+<code class="sig-prename descclassname">phosphodisco.parsers.</code><code class="sig-name descname">read_phospho</code><span class="sig-paren">(</span><em class="sig-param">file_path: str</em><span class="sig-paren">)</span> &#x2192; Optional[pandas.core.frame.DataFrame]<a class="reference internal" href="_modules/phosphodisco/parsers.html#read_phospho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.parsers.read_phospho" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.parsers.read_protein">
+<code class="sig-prename descclassname">phosphodisco.parsers.</code><code class="sig-name descname">read_protein</code><span class="sig-paren">(</span><em class="sig-param">file_path: str</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/phosphodisco/parsers.html#read_protein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.parsers.read_protein" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-phosphodisco.utils">
+<span id="phosphodisco-utils-module"></span><h2>phosphodisco.utils module<a class="headerlink" href="#module-phosphodisco.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="phosphodisco.utils.CustomCrossValidator">
+<em class="property">class </em><code class="sig-prename descclassname">phosphodisco.utils.</code><code class="sig-name descname">CustomCrossValidator</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">model_class</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">loss_function=&lt;function mean_squared_error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#CustomCrossValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.CustomCrossValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Cross validates arbitrary model using MAPE criterion on list of alphas.
+:param X:
+:param Y:
+:param model_class:
+:param sample_weight:
+:param loss_function:</p>
+<dl class="method">
+<dt id="phosphodisco.utils.CustomCrossValidator.cross_validate">
+<code class="sig-name descname">cross_validate</code><span class="sig-paren">(</span><em class="sig-param">alphas</em>, <em class="sig-param">cv=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#CustomCrossValidator.cross_validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.CustomCrossValidator.cross_validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>alphas: set of regularization parameters to try
+cv: number of folds to cross-validate against</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="phosphodisco.utils.SigmoidCV">
+<em class="property">class </em><code class="sig-prename descclassname">phosphodisco.utils.</code><code class="sig-name descname">SigmoidCV</code><span class="sig-paren">(</span><em class="sig-param">loss_function=&lt;function mean_squared_error&gt;</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">coef_init=None</em>, <em class="sig-param">regularization=0.00012</em>, <em class="sig-param">cv=5</em>, <em class="sig-param">alphas=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidCV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidCV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#phosphodisco.utils.SigmoidRegression" title="phosphodisco.utils.SigmoidRegression"><code class="xref py py-class docutils literal notranslate"><span class="pre">phosphodisco.utils.SigmoidRegression</span></code></a></p>
+<dl class="method">
+<dt id="phosphodisco.utils.SigmoidCV.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidCV.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidCV.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="phosphodisco.utils.SigmoidRegression">
+<em class="property">class </em><code class="sig-prename descclassname">phosphodisco.utils.</code><code class="sig-name descname">SigmoidRegression</code><span class="sig-paren">(</span><em class="sig-param">loss_function=&lt;function mean_squared_error&gt;</em>, <em class="sig-param">X=None</em>, <em class="sig-param">Y=None</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">coef_init=None</em>, <em class="sig-param">regularization=0.00012</em>, <em class="sig-param">cv=5</em>, <em class="sig-param">alphas=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidRegression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Linear model: Y = B*(1/1+e**X), fit by minimizing the provided loss_function
+with L2 regularization</p>
+<dl class="method">
+<dt id="phosphodisco.utils.SigmoidRegression.fit_no_cv">
+<code class="sig-name descname">fit_no_cv</code><span class="sig-paren">(</span><em class="sig-param">maxiter=250</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidRegression.fit_no_cv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidRegression.fit_no_cv" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maxiter</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.utils.SigmoidRegression.l2_regularized_loss">
+<code class="sig-name descname">l2_regularized_loss</code><span class="sig-paren">(</span><em class="sig-param">coef_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidRegression.l2_regularized_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidRegression.l2_regularized_loss" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>coef_</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.utils.SigmoidRegression.model_error">
+<code class="sig-name descname">model_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidRegression.model_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidRegression.model_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phosphodisco.utils.SigmoidRegression.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/utils.html#SigmoidRegression.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.SigmoidRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.utils.norm_line_to_residuals">
+<code class="sig-prename descclassname">phosphodisco.utils.</code><code class="sig-name descname">norm_line_to_residuals</code><span class="sig-paren">(</span><em class="sig-param">ph_line: Iterable</em>, <em class="sig-param">prot_line: Iterable</em>, <em class="sig-param">regularization_values: Optional[Iterable] = None</em>, <em class="sig-param">cv: Optional[int] = None</em>, <em class="sig-param">**ridgecv_kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.series.Series<a class="reference internal" href="_modules/phosphodisco/utils.html#norm_line_to_residuals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.utils.norm_line_to_residuals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ph_line</strong> – </p></li>
+<li><p><strong>prot_line</strong> – </p></li>
+<li><p><strong>regularization_values</strong> – </p></li>
+<li><p><strong>cv</strong> – </p></li>
+<li><p><strong>**ridgecv_kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-phosphodisco.visualize">
+<span id="phosphodisco-visualize-module"></span><h2>phosphodisco.visualize module<a class="headerlink" href="#module-phosphodisco.visualize" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="phosphodisco.visualize.compute_order">
+<code class="sig-prename descclassname">phosphodisco.visualize.</code><code class="sig-name descname">compute_order</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">optimal=True</em>, <em class="sig-param">dist_method='euclidean'</em>, <em class="sig-param">cluster_method='average'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/visualize.html#compute_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.visualize.compute_order" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – </p></li>
+<li><p><strong>optimal</strong> – </p></li>
+<li><p><strong>dist_method</strong> – </p></li>
+<li><p><strong>cluster_method</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.visualize.visualize_annotation_associations">
+<code class="sig-prename descclassname">phosphodisco.visualize.</code><code class="sig-name descname">visualize_annotation_associations</code><span class="sig-paren">(</span><em class="sig-param">data: phosphodisco.classes.ProteomicsData</em>, <em class="sig-param">coefficient_percentile_cutoff: float = 0</em>, <em class="sig-param">**heatmap_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/visualize.html#visualize_annotation_associations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.visualize.visualize_annotation_associations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.visualize.visualize_modules">
+<code class="sig-prename descclassname">phosphodisco.visualize.</code><code class="sig-name descname">visualize_modules</code><span class="sig-paren">(</span><em class="sig-param">data: phosphodisco.classes.ProteomicsData</em>, <em class="sig-param">annotations: Optional[pandas.core.frame.DataFrame] = None</em>, <em class="sig-param">col_cluster=True</em>, <em class="sig-param">row_cluster=True</em>, <em class="sig-param">cluster_kws: dict = {}</em>, <em class="sig-param">annot_kws: dict = {}</em>, <em class="sig-param">heatmap_kws: dict = {}</em>, <em class="sig-param">file_prefix: str = 'heatmap'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/visualize.html#visualize_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.visualize.visualize_modules" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>annotations</strong> – </p></li>
+<li><p><strong>col_cluster</strong> – </p></li>
+<li><p><strong>row_cluster</strong> – </p></li>
+<li><p><strong>cluster_kws</strong> – </p></li>
+<li><p><strong>annot_kws</strong> – </p></li>
+<li><p><strong>heatmap_kws</strong> – </p></li>
+<li><p><strong>file_prefix</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="phosphodisco.visualize.visualize_regulator_coefficients">
+<code class="sig-prename descclassname">phosphodisco.visualize.</code><code class="sig-name descname">visualize_regulator_coefficients</code><span class="sig-paren">(</span><em class="sig-param">data: phosphodisco.classes.ProteomicsData</em>, <em class="sig-param">coefficient_percentile_cutoff: float = 95</em>, <em class="sig-param">**heatmap_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phosphodisco/visualize.html#visualize_regulator_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#phosphodisco.visualize.visualize_regulator_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PhosphoDisco’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ruggleslab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

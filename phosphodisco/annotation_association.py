@@ -1,17 +1,38 @@
-from .classes import Clusters
-from .nominate_regulators import corrNA
-from typing import Iterable, Tuple
-from pandas import DataFrame
+from typing import Iterable, Tuple, Optional
+from pandas import DataFrame, Series
 import pandas as pd
+import numpy as np
 import scipy.stats
+from scipy.stats import ttest_ind, pearsonr, spearmanr, binom
+
+
+def not_na(array):
+    if isinstance(array, Series):
+        return ~array.isna()
+    return ~np.isnan(array)
+
+
+def corr_na(array1, array2, corr_method: str = 'pearsonr'):
+    if corr_method not in ['pearsonr', 'spearmanr']:
+        raise ValueError(
+            'Method %s is a valid correlation method, must be: %s'
+            % (corr_method, ','.join(['pearsonr', 'spearmanr']))
+        )
+    nonull = not_na(array1) & not_na(array2)
+    return eval(corr_method)(array1[nonull], array2[nonull])
 
 
 def rho_p(rank_vector):
-    """
-    Compares each element in the vector to its corresponding value in the null distribution vector,
+    """Compares each element in the vector to its corresponding value in the null distribution vector,
     using the probability mass function of the binomial distribution.
     Assigns a p-value to each element in the vector, creating the betaScore vector.
     Uses minimum betaScore as rho
+
+    Args:
+        rank_vector:
+
+    Returns:
+
     """
     rank_vector = rank_vector.dropna()
     n = len(rank_vector)
@@ -22,30 +43,16 @@ def rho_p(rank_vector):
 
     for i, k in enumerate(sorted_ranks):
         x = rank_vector[k]
-        betaScore = stats.binom.sf(i, n, x, loc=1)
+        betaScore = binom.sf(i, n, x, loc=1)
         betaScores[k] = betaScore
     rho = min(betaScores)
     p = min([rho*n, 1])
-
-    return (rho, p)
+    return rho, p
 
 
 def RRA(a: Iterable, b: Iterable) -> Tuple[float]:
     vec = pd.Series(list(a) + list(b)).rank(pct=True)
     return rho_p(vec)
-
-
-def binarize_categorical(annotations: DataFrame, columns: Iterable) -> DataFrame:
-
-    binarized = pd.DataFrame(index=annotations.index)
-    for col in columns:
-        options = set(annotations[col].value_counts().keys())
-        for opt in options:
-            new_col = '%s.%s' % (col, opt)
-            others = options.difference(set([opt]))
-            binarized.loc[annotations[col] == opt, new_col] = True
-            binarized.loc[annotations[col].isin(others), new_col] = False
-    return binarized
 
 
 categorial_methods = {
@@ -55,35 +62,56 @@ categorial_methods = {
 }
 
 
-def categorial_score_association(
-        annotations: DataFrame,
-        clusters: Clusters,
-        cat_method: str = 'RRA'
-) -> DataFrame:
+def binarize_categorical(annotations: DataFrame, columns: Iterable) -> DataFrame:
 
-    scores = clusters.cluster_scores.transpose()
+    binarized = pd.DataFrame(index=annotations.index)
+    for col in columns:
+        options = set(annotations[col].unique())
+        for opt in options:
+            new_col = '%s.%s' % (col, opt)
+            others = options.difference(set([opt]))
+            binarized.loc[annotations[col] == opt, new_col] = True
+            binarized.loc[annotations[col].isin(others), new_col] = False
+    return binarized
+
+
+def categorical_score_association(
+        annotations: DataFrame,
+        module_scores: DataFrame,
+        cat_method: Optional[str] = None
+) -> DataFrame:
+    if cat_method is None:
+        cat_method = 'RRA'
+    scores = module_scores.transpose()
     results = pd.DataFrame(index=scores.index)
 
     indname = annotations.index.name
-    temp = annotations.reset_index()
+    if indname is None:
+        indname = 'index'
+
     for col in annotations.columns:
-        temp.groupby(col)[indname].apply(list).to_dict()
+        temp = annotations.reset_index()
+        temp = temp.groupby(col)[indname].apply(list)
         results[col] = scores.apply(
-            lambda row: categorial_methods[cat_method](row[True], row[False])[1]
+            lambda row: categorial_methods[cat_method](row[temp[True]], row[temp[False]])[1],
+            axis=1
         )
     return results
 
 
 def continuous_score_association(
         annotations: DataFrame,
-        clusters: Clusters,
-        corr_method: str = 'pearsonr'
+        module_scores: DataFrame,
+        cont_method: Optional[str] = None
 ):
-    scores = clusters.cluster_scores.transpose()
+    if cont_method is None:
+        cont_method = 'pearsonr'
+    scores = module_scores.transpose()
     results = pd.DataFrame(index=scores.index)
     for col in annotations.columns:
         results[col] = scores.apply(
-            lambda row: corrNA(annotations[col], row, corr_method=corr_method)[1]
+            lambda row: corr_na(annotations[col], row, corr_method=cont_method)[1],
+            axis=1
         )
     return results
 
