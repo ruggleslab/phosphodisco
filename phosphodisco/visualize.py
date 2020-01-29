@@ -1,10 +1,14 @@
 from .classes import Clusters
 from pandas import DataFrame
+import pandas as pd
+import numpy as np
 from typing import Optional
 import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 from .catheat import heatmap as catheat
+from scipy.cluster import hierarchy
+from scipy.spatial.distance import pdist
 
 
 def compute_order(
@@ -32,13 +36,15 @@ def visualize_cluster_heatmaps(
         heatmap_kws: dict = {},
         file_prefix: str = 'heatmap'
 ):
+    matplotlib.rcParams["pdf.fonttype"] = 42
+    matplotlib.rcParams["ps.fonttype"] = 42
     sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
     matplotlib.rcParams.update({'savefig.bbox': 'tight'})
 
     cluster_sets = clusters.cluster_labels
     cluster_sets = {
         cluster_name: cluster_sets.index[cluster_sets==cluster_name] for cluster_name in
-        clusters.nmembers_per_cluster.keys()
+        clusters.nmembers_per_cluster.keys() if cluster_name != -1
     }
     values = clusters.abundances
 
@@ -57,7 +63,10 @@ def visualize_cluster_heatmaps(
         else:
             col_order = df.columns
         df = df.reindex(col_order, axis=1).reindex(row_order, axis=0)
-        header = annotations.reindex(col_order).transpose()
+        if annotations is None:
+            header = pd.DataFrame(np.empty(len(col_order)), columns=[''])
+        else:
+            header = annotations.reindex(col_order).transpose()
 
         fig_len = 0.25*(len(df) + len(header))
         fig_width = 0.1*len(col_order)
@@ -65,27 +74,27 @@ def visualize_cluster_heatmaps(
         fig = plt.figure(figsize=(fig_width, fig_len))
         gs = plt.GridSpec(
             nrows=3, ncols=2,
-            height_ratios=[len(header), 2*[len(df)/2]],
+            height_ratios=[len(header)]+2*[len(df)/2],
             width_ratios=[len(col_order), 5],
             hspace=0, wspace=0
         )
 
-        header_ax = plt.subplot(gs[0, 0])
-        leg_ax = plt.subplot(gs[1, 1])
-        leg_ax.axis('off')
         heat_ax = plt.subplot(gs[1:, 0])
         cbar_ax = plt.subplot(gs[-1, -1])
-
-        catheat(
-            header,
-            xticklabels=False, yticklabels=header.index,
-            ax=header_ax, leg_ax=leg_ax, leg_kws=dict(loc=(0,0), labelspacing=0),
-            **annot_kws
-        )
-        header_ax.set_yticklabels(header.index, rotation=0)
-        header_ax.set_title('Cluster %s' % cluster_name)
-        header_ax.set_xlabel('')
-        header_ax.set_ylabel('')
+        if annotations is not None:
+            header_ax = plt.subplot(gs[0, 0])
+            leg_ax = plt.subplot(gs[1, 1])
+            leg_ax.axis('off')
+            catheat(
+                header,
+                xticklabels=False, yticklabels=header.index,
+                ax=header_ax, leg_ax=leg_ax, leg_kws=dict(loc=(0,0), labelspacing=0),
+                **annot_kws
+            )
+            header_ax.set_yticklabels(header.index, rotation=0)
+            header_ax.set_title('Cluster %s' % cluster_name)
+            header_ax.set_xlabel('')
+            header_ax.set_ylabel('')
 
         sns.heatmap(
             df,
@@ -99,5 +108,5 @@ def visualize_cluster_heatmaps(
         heat_ax.set_ylabel('')
 
         plt.savefig('%s.cluster%s.pdf' % (file_prefix, cluster_name))
-
-        return header_ax, leg_ax, heat_ax, cbar_ax
+        plt.show()
+        plt.close()
