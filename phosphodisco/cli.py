@@ -9,7 +9,7 @@ import phosphodisco
 def _make_parser():
     parser = argparse.ArgumentParser(prog="phosphodisco", description="")
     parser.add_argument(
-        "--version", "-v", action="version", version="%(prog)s %s" % phosphodisco.__version__
+        "--version", "-v", action="version", version="%s" % phosphodisco.__version__
     )
     parser.add_argument(
         "output_prefix", type=str,required=True, help=''
