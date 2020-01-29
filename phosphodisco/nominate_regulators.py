@@ -62,9 +62,9 @@ def calculate_regulator_coefficients(
     model_kwargs['cv'] = cv_fold
     model = model(alphas=regularization_values, **model_kwargs)
     features = reg_data.transpose().values
-    targets = cluster_scores
-    for col in targets:
-        y = targets[col].values
+
+    for col in cluster_scores.columns:
+        y = cluster_scores[col].values
         model.fit(features, y)
         weights[col] = model.coef_
     return weights

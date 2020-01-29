@@ -6,6 +6,7 @@ from phosphodisco.nominate_regulators import (
 )
 import phosphodisco
 
+__version__ = "v0.0.1"
 
 __all__ = [
     'ProteomicsData',

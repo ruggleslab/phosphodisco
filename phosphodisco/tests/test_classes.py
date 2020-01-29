@@ -51,7 +51,7 @@ def test_classes_annotations():
     )
     proteomics.calculate_module_scores()
     proteomics.add_annotations(annotations, pd.Series(['categorical', 0, 'continuous', 1]))
-    proteomics.annotation_association()
+    proteomics.calculate_annotation_association()
     print(proteomics.annotation_association_FDR)
     assert False
     return proteomics

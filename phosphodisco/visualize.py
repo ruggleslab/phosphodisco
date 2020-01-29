@@ -77,6 +77,9 @@ def visualize_modules(
     values = data.normed_phospho
 
     for cluster_name, sites in cluster_sets.items():
+        if int(cluster_name) == -1:
+            continue
+
         df = values.loc[sites, :]
 
         if row_cluster:
@@ -142,15 +145,40 @@ def visualize_modules(
 
 def visualize_regulator_coefficients(
         data: ProteomicsData,
-        coefficient_percentile_cutoff: float = 95,
+        value_percentile_cutoff: float = 95,
+        savefig_prefix: Optional[str] = None,
         **heatmap_kwargs
 ):
-    pass
+    if data.regulator_coefficients is None:
+        raise KeyError(
+            'Must calculate regulator coefficients using '
+            'ProteomicsData.calculate_regulator_coefficients before visualizing. '
+        )
+    cut_off = np.nanpercentile(
+        data.regulator_coefficients.values.flatten(), value_percentile_cutoff
+    )
+    subset = data.regulator_coefficients[(data.regulator_coefficients > cut_off).any(axis=1)]
+    ax = sns.heatmap(subset, **heatmap_kwargs)
+    if savefig_prefix:
+        plt.savefig('%s.pdf' % savefig_prefix)
+    return ax
 
 
 def visualize_annotation_associations(
         data: ProteomicsData,
-        coefficient_percentile_cutoff: float = 0,
+        value_percentile_cutoff: float = 0,
+        savefig_prefix: Optional[str] = None,
         **heatmap_kwargs
 ):
-    pass
+    if data.annotation_association_FDR is None:
+        raise KeyError(
+            'Must calculate regulator coefficients using '
+            'ProteomicsData.calculate_regulator_coefficients before visualizing. '
+        )
+    temp = -np.log10(data.annotation_association_FDR)
+    cut_off = np.nanpercentile(temp.values.flatten(), value_percentile_cutoff)
+    subset = temp[(temp > cut_off).any(axis=1)]
+    ax = sns.heatmap(subset, **heatmap_kwargs)
+    if savefig_prefix:
+        plt.savefig('%s.pdf' % savefig_prefix)
+    return ax

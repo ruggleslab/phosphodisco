@@ -31,12 +31,14 @@ class ProteomicsData:
             self,
             phospho: DataFrame,
             protein: DataFrame,
-            min_common_values: Optional[int] = 5,
+            min_common_values: Optional[int] = None,
             normed_phospho: Optional[DataFrame] = None,
             modules: Optional[Iterable] = None,
             clustering_parameters_for_modules: Optional[dict] = None,
             putative_regulator_list: Optional[list] = None,
     ):
+        if min_common_values is None:
+            min_common_values = 5
         self.min_values_in_common = min_common_values
 
         common_prots = list(set(phospho.index.get_level_values(0).intersection(protein.index)))
@@ -117,6 +119,7 @@ class ProteomicsData:
             modules: Optional[DataFrame] = None,
             method_to_pick_best_labels: Optional[str] = None,
             min_or_max: Optional[str] = None,
+            force_choice: bool = False,
             **multiautocluster_kwargs
     ):
         """
@@ -125,6 +128,7 @@ class ProteomicsData:
             modules:
             method_to_pick_best_labels:
             min_or_max:
+            force_choice:
             **multiautocluster_kwargs:
 
         Returns:
@@ -136,20 +140,29 @@ class ProteomicsData:
             modules = hypercluster.MultiAutoClusterer(
                 **multiautocluster_kwargs
             ).fit(self.normed_phospho).pick_best_labels(method_to_pick_best_labels, min_or_max)
-            self.modules = modules
+            self.modules = modules[modules.columns[0]]
 
         if self.modules.shape[1] > 1:
-            raise ValueError(
-                'Too many sets of labels in ProteomicsData.modules, please reassign '
-                'ProteomicsData.modules with a DataFrame with 1 column of labels.'
-            )
-        self.modules = modules[modules.columns[0]]
+            if force_choice is False:
+                raise ValueError(
+                    'Too many sets of labels in ProteomicsData.modules, please reassign '
+                    'ProteomicsData.modules with a DataFrame with 1 column of labels.'
+                )
+            else:
+                self.modules = modules.sample(1, axis=1)
 
-        parameters = self.modules.name.split(param_delim)
-        clss = parameters.pop(0)
-        parameters.append('clusterer%s%s' % (val_delim, clss))
-        parameters = {s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1] for s in parameters}
-        self.clustering_parameters_for_modules = parameters
+        try:
+            parameters = self.modules.name.split(param_delim)
+            clss = parameters.pop(0)
+            parameters.append('clusterer%s%s' % (val_delim, clss))
+            parameters = {s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1] for s in parameters}
+            self.clustering_parameters_for_modules = parameters
+        except AttributeError:
+            logging.error(
+                "Modules names not in hypercluster structure. Cannot assign "
+                "ProteomicsData.clustering_parameters_for_module"
+            )
+
         return self
 
     def calculate_module_scores(
@@ -261,7 +274,7 @@ class ProteomicsData:
         ].astype(float)
         return self
 
-    def annotation_association(
+    def calculate_annotation_association(
             self,
             cat_method: Optional[str] = None,
             cont_method: Optional[str] = None,

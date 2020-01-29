@@ -27,7 +27,7 @@ def read_annotation(file_path: str) -> DataFrame:
 
 def read_phospho(file_path: str) -> Optional[DataFrame]:
     sep = get_sep(file_path)
-    return pd.read_csv(file_path, sep=sep, index_col=[0,1]).replace(
+    return pd.read_csv(file_path, sep=sep, index_col=[0, 1]).replace(
         ['na', 'NA', 'NAN', 'nan', 'NaN', 'Na'], np.nan
     ).astype(float)
 
@@ -59,15 +59,17 @@ def column_normalize(df: DataFrame, method: str) -> Optional[DataFrame]:
         'twocomp_median.'
     )
     return None
-#TODO add filtering
-#TODO change function to not take files, dfs
+
 
 def prepare_phospho(
         ph_file: str,
         prot_file: str,
         normalize_method: Optional[str] = None,
         min_common_values: int = 5,
-        ridge_cv_alphas: Optional[Iterable] = None
+        normed_phospho: Optional[DataFrame] = None,
+        modules: Optional[Iterable] = None,
+        clustering_parameters_for_modules: Optional[dict] = None,
+        putative_regulator_list: Optional[list] = None,
 ) -> ProteomicsData:
 
     phospho = read_phospho(ph_file)
@@ -76,9 +78,12 @@ def prepare_phospho(
         phospho = column_normalize(phospho, normalize_method)
         protein = column_normalize(protein, normalize_method)
 
-    data = ProteomicsData(phospho, protein, min_common_values)
-    data.normalize_phospho_by_protein(ridge_cv_alphas)
-
-    return data
-
-
+    return ProteomicsData(
+        phospho=phospho,
+        protein=protein,
+        min_common_values=min_common_values,
+        normed_phospho=normed_phospho,
+        modules=modules,
+        clustering_parameters_for_modules=clustering_parameters_for_modules,
+        putative_regulator_list=putative_regulator_list
+    )

@@ -16,7 +16,7 @@ PhDc uses optimized clustering to find co-regulated phosphosite modules. Then, P
 
 ##### Finding modules:
 For either mode 1 or 2, PhDc can also be used to find reproducibly clustered sites.   
-**TODO: describe hyperclsuter a little**
+**TODO: describe hypercluster a little**
 
 ### Following clustering, PhDc can be used for these analyses:
 1. Nominate regulators: given protein and phosphoprotein abundances of kinases and phosphatases, PhDc can find the most correlated putative regulators for each module. 
