@@ -22,8 +22,10 @@ def read_protein(file_path: str) -> DataFrame:
 
 
 def read_annotation(file_path: str) -> DataFrame:
-    return read_protein(file_path)
-
+    sep = get_sep(file_path)
+    return pd.read_csv(file_path, sep=sep, index_col=0).replace(
+        ['na', 'NA', 'NAN', 'nan', 'NaN', 'Na'], np.nan
+    )
 
 def read_phospho(file_path: str) -> Optional[DataFrame]:
     sep = get_sep(file_path)
@@ -31,6 +33,11 @@ def read_phospho(file_path: str) -> Optional[DataFrame]:
         ['na', 'NA', 'NAN', 'nan', 'NaN', 'Na'], np.nan
     ).astype(float)
 
+
+def read_list(file_path: str):
+    with open(file_path, 'r') as fh:
+        return [s.strip() for s in fh.readlines()]
+    
 
 def column_normalize(df: DataFrame, method: str) -> Optional[DataFrame]:
     """

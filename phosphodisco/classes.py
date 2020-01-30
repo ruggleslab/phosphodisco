@@ -35,7 +35,8 @@ class ProteomicsData:
             normed_phospho: Optional[DataFrame] = None,
             modules: Optional[Iterable] = None,
             clustering_parameters_for_modules: Optional[dict] = None,
-            putative_regulator_list: Optional[list] = None,
+            putative_regulator_list: Optional[Iterable] = None,
+            annotations: Optional[DataFrame] = None
     ):
         if min_common_values is None:
             min_common_values = 5
@@ -43,8 +44,8 @@ class ProteomicsData:
 
         common_prots = list(set(phospho.index.get_level_values(0).intersection(protein.index)))
         common_samples = phospho.columns.intersection(protein.columns)
-        self.phospho = phospho[common_samples]
-        self.protein = protein[common_samples]
+        self.phospho = phospho.reindex(common_samples, axis=1)
+        self.protein = protein.reindex(common_samples, axis=1)
         self.common_prots = common_prots
         self.common_samples = common_samples
         self.clustering_parameters_for_modules = clustering_parameters_for_modules
@@ -61,7 +62,7 @@ class ProteomicsData:
         common_prot.index = common_phospho.index
 
         normalizable_rows = common_phospho.index[
-            ((common_phospho.notnull() & common_prot.notnull()).sum(axis=1) >= min_common_values)
+            ((np.logical_and(common_phospho.notnull(), common_prot.notnull())).sum(axis=1) >= min_common_values)
             ]
 
         self.normalizable_rows = normalizable_rows
@@ -74,6 +75,9 @@ class ProteomicsData:
 
         if modules is not None:
             self.assign_modules(modules)
+        
+        if annotations is not None:
+            self.add_annotations(annotations)
 
     def normalize_phospho_by_protein(
             self,
@@ -110,8 +114,8 @@ class ProteomicsData:
                 **ridgecv_kwargs
             ), axis=1
         )
-
-        self.normed_phospho = residuals
+        
+        self.normed_phospho = residuals.reindex(self.common_samples, axis=1)
         return self
 
     def assign_modules(
@@ -136,7 +140,7 @@ class ProteomicsData:
         """
         if modules is not None:
             self.modules = modules
-        if self.modules is None:
+        if 'modules' not in self.__dict__:
             modules = hypercluster.MultiAutoClusterer(
                 **multiautocluster_kwargs
             ).fit(self.normed_phospho).pick_best_labels(method_to_pick_best_labels, min_or_max)
@@ -203,7 +207,7 @@ class ProteomicsData:
         self.module_scores = scores.transpose()
         return self
 
-    def collect_putative_regulators(self, possible_regulator_list, corr_threshold: float = 0.9):
+    def collect_putative_regulators(self, possible_regulator_list: Optional[Iterable] = None, corr_threshold: float = 0.9):
         """
 
         Args:
@@ -213,7 +217,12 @@ class ProteomicsData:
         Returns:
 
         """
+        if self.putative_regulator_list is None and putative_regulator_list is None:
+            raise ValueError('Must provide putative_regulator_list')
+        if putative_regulator_list is None:
+            putative_regulator_list = self.putative_regulator_list
         self.putative_regulator_list = possible_regulator_list
+        
         subset = self.protein.loc[possible_regulator_list, :]
         subset[1] = np.nan
         subset = subset.set_index(1, append=True)
@@ -253,7 +262,7 @@ class ProteomicsData:
         Returns:
 
         """
-        if self.categorical_annotations is not None or self.continuous_annotations is not None:
+        if 'categorical_annotations' in self.__dict__ or 'continuous_annotations' in self.__dict__:
             logging.warning('Overwriting annotation data')
         common_samples = annotations.index.intersection(self.normed_phospho.columns)
         ncommon = len(common_samples)
@@ -262,13 +271,15 @@ class ProteomicsData:
                 'Only %s samples in common between annotations and normed_phospho. Must be more '
                 'than 1 sample in common. ' % len(ncommon)
             )
-        logging.info('Annotations have %s samples in common with normed_phospho' % ncommon)
+        logging.info('Annotations have %sß samples in common with normed_phospho' % ncommon)
         annotations = annotations.reindex(common_samples)
 
         column_types = column_types.replace(annotation_column_map)
-        categorical = binarize_categorical(annotations, annotations.columns[column_types == 0])
 
-        self.categorical_annotations = categorical
+        self.categorical_annotations = binarize_categorical(
+            annotations, 
+            annotations.columns[column_types == 0]
+        )
         self.continuous_annotations = annotations[
             annotations.columns[column_types == 1]
         ].astype(float)

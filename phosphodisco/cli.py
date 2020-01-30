@@ -12,13 +12,13 @@ def _make_parser():
         "--version", "-v", action="version", version="%s" % phosphodisco.__version__
     )
     parser.add_argument(
-        "output_prefix", type=str,required=True, help=''
+        "phospho", type=str, help=''
     )
     parser.add_argument(
-        "phospho", type=str, required=True, help=''
+        "protein", type=str, help=''
     )
     parser.add_argument(
-        "protein", type=str, required=True, help=''
+        "--output_prefix", type=str, default='phdc', help=''
     )
     parser.add_argument(
         "--min_common_values", help=''
@@ -41,6 +41,7 @@ def _make_parser():
     parser.add_argument(
         "--additional_kwargs_yml", type=str, help=''
     )
+    return parser
 
 
 def _main(args: Optional[List[str]] = None):
