@@ -1,7 +1,7 @@
 import phosphodisco as phdc
 import numpy as np
 import pandas as pd
-from sklearn.metrics import log_loss
+
 
 seed = 5
 np.random.seed(seed)
@@ -16,6 +16,8 @@ def test_classes_regulators():
     proteomics = phdc.ProteomicsData(
         phospho, prot, min_common_values=2
     ).normalize_phospho_by_protein()
+    proteomics.impute_missing_values()
+    # proteomics.assign_modules()
     proteomics.assign_modules(
         pd.DataFrame(
             {'test;param-1': [np.random.randint(0, 4) for i in range(30)]},
@@ -24,9 +26,9 @@ def test_classes_regulators():
     )
 
     proteomics.calculate_module_scores()
-    proteomics.collect_putative_regulators(list(set(phospho.sample(3).index.get_level_values(
+    proteomics.collect_possible_regulators(list(set(phospho.sample(3).index.get_level_values(
         0))), corr_threshold=0.98)
-    proteomics.calculate_regulator_coefficients(cv_fold=2)
+    proteomics.calculate_regulator_coefficients(model='linear', cv_fold=2)
     return proteomics
 
 
@@ -52,6 +54,4 @@ def test_classes_annotations():
     proteomics.calculate_module_scores()
     proteomics.add_annotations(annotations, pd.Series(['categorical', 0, 'continuous', 1]))
     proteomics.calculate_annotation_association()
-    print(proteomics.annotation_association_FDR)
-    assert False
     return proteomics

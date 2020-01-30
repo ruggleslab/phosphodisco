@@ -7,12 +7,14 @@ from itertools import product
 from statsmodels.stats.multitest import multipletests
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
+import sklearn.impute
+
 from .utils import norm_line_to_residuals
 from .constants import module_combiner_delim, annotation_column_map, datatype_label
 from .annotation_association import (
     corr_na, binarize_categorical, continuous_score_association, categorical_score_association
 )
-from .nominate_regulators import collapse_putative_regulators, calculate_regulator_coefficients
+from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients
 
 
 class ProteomicsData:
@@ -25,7 +27,7 @@ class ProteomicsData:
         normed_phospho:
         modules:
         clustering_parameters_for_modules:
-        putative_regulator_list:
+        possible_regulator_list:
     """
     def __init__(
             self,
@@ -35,7 +37,7 @@ class ProteomicsData:
             normed_phospho: Optional[DataFrame] = None,
             modules: Optional[Iterable] = None,
             clustering_parameters_for_modules: Optional[dict] = None,
-            putative_regulator_list: Optional[Iterable] = None,
+            possible_regulator_list: Optional[Iterable] = None,
             annotations: Optional[DataFrame] = None
     ):
         if min_common_values is None:
@@ -49,7 +51,7 @@ class ProteomicsData:
         self.common_prots = common_prots
         self.common_samples = common_samples
         self.clustering_parameters_for_modules = clustering_parameters_for_modules
-        self.putative_regulator_list = putative_regulator_list
+        self.possible_regulator_list = possible_regulator_list
 
         logging.info('Phospho and protein data have %s proteins in common' % len(common_prots))
         logging.info(
@@ -108,14 +110,32 @@ class ProteomicsData:
         data = data.transpose()
 
         residuals = data.apply(
-            lambda row: norm_line_to_residuals(
+            lambda row: pd.Series(norm_line_to_residuals(
                 row[0], row[1],
                 ridge_cv_alphas,
                 **ridgecv_kwargs
-            ), axis=1
+            )), axis=1
         )
-        
-        self.normed_phospho = residuals.reindex(self.common_samples, axis=1)
+        residuals.columns = target.index
+        self.normed_phospho = residuals
+        return self
+
+    def impute_missing_values(
+            self,
+            imputation_method: Optional[str] = None,
+            **imputer_kwargs
+    ):
+        if imputation_method is None:
+            imputation_method = 'KNNImputer'
+        transformed_data = eval(
+            'sklearn.impute.%s(**imputer_kwargs).fit_transform(self.normed_phospho.transpose())'
+             % imputation_method
+        )
+        self.normed_phospho = pd.DataFrame(
+            transformed_data.transpose(),
+            index=self.normed_phospho.index,
+            columns=self.normed_phospho.columns
+        )
         return self
 
     def assign_modules(
@@ -140,11 +160,11 @@ class ProteomicsData:
         """
         if modules is not None:
             self.modules = modules
-        if 'modules' not in self.__dict__:
+        else:
             modules = hypercluster.MultiAutoClusterer(
                 **multiautocluster_kwargs
             ).fit(self.normed_phospho).pick_best_labels(method_to_pick_best_labels, min_or_max)
-            self.modules = modules[modules.columns[0]]
+            self.modules = modules
 
         if self.modules.shape[1] > 1:
             if force_choice is False:
@@ -153,7 +173,8 @@ class ProteomicsData:
                     'ProteomicsData.modules with a DataFrame with 1 column of labels.'
                 )
             else:
-                self.modules = modules.sample(1, axis=1)
+                self.modules = self.modules.sample(1, axis=1)
+        self.modules = self.modules.iloc[:, 0]
 
         try:
             parameters = self.modules.name.split(param_delim)
@@ -207,7 +228,11 @@ class ProteomicsData:
         self.module_scores = scores.transpose()
         return self
 
-    def collect_putative_regulators(self, possible_regulator_list: Optional[Iterable] = None, corr_threshold: float = 0.9):
+    def collect_possible_regulators(
+            self,
+            possible_regulator_list: Optional[Iterable] = None,
+            corr_threshold: float = 0.9
+    ):
         """
 
         Args:
@@ -217,20 +242,20 @@ class ProteomicsData:
         Returns:
 
         """
-        if self.putative_regulator_list is None and putative_regulator_list is None:
-            raise ValueError('Must provide putative_regulator_list')
-        if putative_regulator_list is None:
-            putative_regulator_list = self.putative_regulator_list
-        self.putative_regulator_list = possible_regulator_list
+        if self.possible_regulator_list is None and possible_regulator_list is None:
+            raise ValueError('Must provide possible_regulator_list')
+        if possible_regulator_list is None:
+            possible_regulator_list = self.possible_regulator_list
+        self.possible_regulator_list = possible_regulator_list
         
         subset = self.protein.loc[possible_regulator_list, :]
         subset[1] = np.nan
         subset = subset.set_index(1, append=True)
-        putative_regulator_data = subset.append(self.phospho.loc[possible_regulator_list, :])
-        putative_regulator_data = collapse_putative_regulators(
-            putative_regulator_data, corr_threshold
+        possible_regulator_data = subset.append(self.phospho.loc[possible_regulator_list, :])
+        possible_regulator_data = collapse_possible_regulators(
+            possible_regulator_data, corr_threshold
         )
-        self.putative_regulator_data = putative_regulator_data
+        self.possible_regulator_data = possible_regulator_data
         return self
 
     def calculate_regulator_coefficients(
@@ -246,7 +271,7 @@ class ProteomicsData:
 
         """
         self.regulator_coefficients = calculate_regulator_coefficients(
-            self.putative_regulator_data,
+            self.possible_regulator_data,
             self.module_scores,
             **kwargs
         )

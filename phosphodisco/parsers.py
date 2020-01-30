@@ -92,5 +92,5 @@ def prepare_phospho(
         normed_phospho=normed_phospho,
         modules=modules,
         clustering_parameters_for_modules=clustering_parameters_for_modules,
-        putative_regulator_list=putative_regulator_list
+        possible_regulator_list=putative_regulator_list
     )

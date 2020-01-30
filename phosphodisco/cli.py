@@ -68,7 +68,6 @@ def _main(args: Optional[List[str]] = None):
     else:
         modules = None
 
-
     if args.additional_kwargs_yml:
         with open(args.additional_kwargs_yml, 'r') as fh:
             additional_kwargs_yml = yaml.load(fh, Loader=yaml.FullLoader)
@@ -88,6 +87,9 @@ def _main(args: Optional[List[str]] = None):
         )
         data.normed_phospho.to_csv('%s.normed_phospho.csv' % output_prefix)
 
+    if data.normed_phospho.isnull().any().any():
+        data.impute_missing_values(**additional_kwargs_yml.get('impute_missing_values', {}))
+
     if args.modules is None:
         data.assign_modules(
             force_choice=True, **additional_kwargs_yml.get('assign_modules', {})
@@ -100,7 +102,7 @@ def _main(args: Optional[List[str]] = None):
     if args.putative_regulator_list:
         with open(args.putative_regulator_list, 'r') as fh:
             putative_regulator_list = [gene.strip() for gene in fh.readlines()]
-        data.collect_putative_regulators(
+        data.collect_possible_regulators(
             putative_regulator_list, **additional_kwargs_yml.get('collect_putative_regulators', {})
         )
         data.calculate_regulator_coefficients(
