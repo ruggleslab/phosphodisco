@@ -5,6 +5,12 @@ import argparse
 import yaml
 import phosphodisco
 
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
+logger = logging.getLogger('PhosphoDisco')
 
 def _make_parser():
     parser = argparse.ArgumentParser(prog="phosphodisco", description="")
@@ -30,6 +36,9 @@ def _make_parser():
         "--modules", type=str, help=''
     )
     parser.add_argument(
+        "--stop_before_modules", action='store_true', help=''
+    )
+    parser.add_argument(
         "--putative_regulator_list", type=str, help=''
     )
     parser.add_argument(
@@ -48,10 +57,10 @@ def _main(args: Optional[List[str]] = None):
     if args is None:
         args = sys.argv[1:]
     args = _make_parser().parse_args(args)
-    logging.info("Running phosphodisco")
+    logger.info("Running phosphodisco")
 
     for arg in vars(args):
-        logging.info("Parameter %s: %s" % (arg, getattr(args, arg)))
+        logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))
 
     output_prefix = args.output_prefix
     phospho = phosphodisco.parsers.read_phospho(args.phospho)
@@ -81,38 +90,52 @@ def _main(args: Optional[List[str]] = None):
         normed_phospho=normed_phospho,
         modules=modules,
     )
+    logger.info("Instantiated ProteomicsData")
     if args.normed_phospho is None:
+        logger.info('Normalizing phospho by protein')
         data.normalize_phospho_by_protein(
             **additional_kwargs_yml.get('normalize_phospho_by_protein', {})
         )
+        logger.info("Finished normalizing phospho by protein")
         data.normed_phospho.to_csv('%s.normed_phospho.csv' % output_prefix)
-
     if data.normed_phospho.isnull().any().any():
+        logger.info("Imputing missing values")
         data.impute_missing_values(**additional_kwargs_yml.get('impute_missing_values', {}))
-
+        logger.info("Finished imputing missing values")
+        data.normed_phospho.to_csv('%s.normed_phospho.csv' % output_prefix)
+    
+    if args.stop_before_modules:
+        logger.info('Stopping before calculating modules, PhosphoDisco done')
+        return None
+    
     if args.modules is None:
+        logger.info("Assigning modules")
         data.assign_modules(
             force_choice=True, **additional_kwargs_yml.get('assign_modules', {})
         )
         data.modules.to_csv('%s.modules.csv' % output_prefix)
+        logger.info("Finished assigning modules")
     data.calculate_module_scores(
         **additional_kwargs_yml.get('calculate_module_scores', {})
     )
+    logger.info("Calculated module scores")
 
     if args.putative_regulator_list:
         with open(args.putative_regulator_list, 'r') as fh:
             putative_regulator_list = [gene.strip() for gene in fh.readlines()]
         data.collect_possible_regulators(
-            putative_regulator_list, **additional_kwargs_yml.get('collect_putative_regulators', {})
+            putative_regulator_list, **additional_kwargs_yml.get('collect_possible_regulators', {})
         )
+        logger.info("Collected possible regulators")
         data.calculate_regulator_coefficients(
             **additional_kwargs_yml.get('calculate_regulator_coefficients', {})
         )
         data.regulator_coefficients.to_csv('%s.putative_regulator_coefficients.csv' % output_prefix)
+        logger.info("Calculated regulator coefficients")
 
     if args.annotations:
         if args.annotation_column_types is None:
-            logging.error(
+            logger.error(
                 'Annotations were provided, but no column labels were provided. Cannot continue '
                 'with annotation association calculations. '
             )
@@ -124,10 +147,14 @@ def _main(args: Optional[List[str]] = None):
             annotations=annotations,
             column_types=annotation_column_types
         )
+        logger.info("Added annotations")
         data.calculate_annotation_association(
             **additional_kwargs_yml.get('calculate_annotation_association', {})
         )
         data.annotation_association.to_csv('%s.annotation_association.csv' % output_prefix)
+        logger.info("Calculated annotation association. ")
+        
+    logger.info("PhosphoDisco done")
 
 
 if __name__ == "__main__":
