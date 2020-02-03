@@ -1,48 +1,46 @@
-from .annotation_association import corr_na
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
-from itertools import product
 from typing import Iterable, Optional
 from sklearn import linear_model, preprocessing
-from .utils import SigmoidCV
-
-
-reg_models = {
-    'linear': linear_model.RidgeCV,
-    'sigmoid': SigmoidCV
-}
 
 
 def collapse_possible_regulators(reg_data: DataFrame, corr_threshold: float = 0.9) -> DataFrame:
-
-    corr = {
-        (ind1, ind2): corr_na(reg_data.loc[ind1, :], reg_data.loc[ind2, :])[0]
-        for ind1, ind2 in product(reg_data.index, reg_data.index)
-        if (corr_na(reg_data.loc[ind1, :], reg_data.loc[ind2, :])[0] > corr_threshold) and
-           (ind1 != ind2)
-    }
-    high_corr_inds = list(set([i[0] for i in corr.keys()]+[i[1] for i in corr.keys()]))
-    low_corr_inds = reg_data.index.difference(high_corr_inds)
-    grouped = reg_data.loc[low_corr_inds, :]
+    corr = reg_data.transpose().corr()
+    high_corr_inds = corr.index[((corr > corr_threshold).sum(axis=1) > 1)]
+    low_corr_inds = corr.index[((corr > corr_threshold).sum(axis=1) <= 1)]
     high_corr_data = reg_data.loc[high_corr_inds, :]
-    while corr:
-        for inds, corr in corr.items():
-            name = tuple(['%s-%s' % (bit[0], bit[1]) for bit in zip(*inds)])
-            high_corr_data.loc[name, :] = high_corr_data.loc[list(inds), :].mean()
-            high_corr_data = high_corr_data.drop(inds, axis=0)
+    low_corr_data = reg_data.loc[low_corr_inds, :]
+    if len(high_corr_inds) == 0:
+        return low_corr_data
 
-        corr = {
-            (ind1, ind2): corr_na(grouped.loc[ind1, :], grouped.loc[ind2, :])[0]
-            for ind1, ind2 in product(grouped.index, grouped.index)
-            if (corr_na(grouped.loc[ind1, :], grouped.loc[ind2, :])[0] > corr_threshold) and
-            (ind1 != ind2)
-        }
-        high_corr_inds = list(set([i[0] for i in corr.keys()] + [i[1] for i in corr.keys()]))
-        low_corr_inds = reg_data.index.difference(high_corr_inds)
-        grouped = grouped.append(grouped.loc[low_corr_inds, :])
-        print(grouped.shape, type(grouped))
-    return grouped
+    corr = corr.loc[high_corr_inds, high_corr_inds].stack(level=[0, 1])
+    corr = corr.loc[[(a, b) != (c, d) for a, b, c, d in corr.index]]
+    corr = corr[corr > corr_threshold]
+
+    while corr.shape[0] > 0:
+        for i in corr.index:
+            a, b, c, d = i
+            if (a, b) in high_corr_data.index and (c, d) in high_corr_data.index:
+                name = ('%s-%s' %(a, c), '%s-%s' % (b, d))
+                high_corr_data = high_corr_data.append(
+                    pd.Series(high_corr_data.loc[[(a, b), (c, d)], :].mean(), name=name)
+                )
+                high_corr_data = high_corr_data.drop([(a, b), (c, d)], axis=0)
+        corr = high_corr_data.transpose().corr()
+        high_corr_inds = corr.index[((corr > corr_threshold).sum(axis=1) > 1)]
+        low_corr_inds = corr.index[((corr > corr_threshold).sum(axis=1) <= 1)]
+
+        low_corr_data = low_corr_data.append(high_corr_data.loc[low_corr_inds, :])
+        if len(high_corr_inds) == 0:
+            return low_corr_data
+        high_corr_data = high_corr_data.loc[high_corr_inds, :]
+
+        corr = corr.loc[high_corr_inds, high_corr_inds].stack(level=[0, 1])
+        corr = corr.loc[[(a, b) != (c, d) for a, b, c, d in corr.index]]
+        corr = corr[corr > corr_threshold]
+
+    return low_corr_data
 
 
 def calculate_regulator_coefficients(
@@ -56,22 +54,29 @@ def calculate_regulator_coefficients(
 ) -> DataFrame:
 
     if regularization_values is None:
-        [2 ** i for i in range(-10, 10, 1)]
+        regularization_values = [10 ** i for i in range(-5, 4, 1)]
 
-    if model not in reg_models.keys():
-        raise ValueError('Model %s not in accepted models: %s' % (model, ','.join(reg_models)))
+    if model not in ['linear', 'sigmoid']:
+        raise ValueError(
+            'Model %s not in accepted models: %s' % (model, ','.join(['linear', 'sigmoid']))
+        )
 
-    weights = pd.DataFrame()
-    model = reg_models[model]
+    model = linear_model.RidgeCV
+
     model_kwargs['cv'] = cv_fold
     model = model(alphas=regularization_values, **model_kwargs)
     features = reg_data.transpose().values
-    print(reg_data.head(), cluster_scores.head())
+    targets = cluster_scores.transpose().values
+    if model == 'sigmoid':
+        targets = (1/(1+np.exp(-targets)))
     if scale_data:
         features = preprocessing.scale(features)
-        targets = preprocessing.scale(cluster_scores.transpose())
-    print(features, targets)
-    for i, y in enumerate(np.nditer(targets)):
-        model.fit(features, y)
-        weights[cluster_scores.columns[i]] = model.coef_
+        targets = preprocessing.scale(targets)
+
+    model.fit(features, targets)
+    weights = pd.DataFrame(
+        model.coef_,
+        index=cluster_scores.index,
+        columns=reg_data.index
+    ).transpose()
     return weights

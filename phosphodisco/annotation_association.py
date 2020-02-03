@@ -4,23 +4,7 @@ import pandas as pd
 import numpy as np
 import scipy.stats
 from scipy.stats import ttest_ind, pearsonr, spearmanr, binom
-
-
-def not_na(array):
-    if isinstance(array, Series):
-        return ~array.isna()
-    return ~np.isnan(array)
-
-
-def corr_na(array1, array2, corr_method: str = 'pearsonr'):
-    if corr_method not in ['pearsonr', 'spearmanr']:
-        raise ValueError(
-            'Method %s is a valid correlation method, must be: %s'
-            % (corr_method, ','.join(['pearsonr', 'spearmanr']))
-        )
-    nonull = not_na(array1) & not_na(array2)
-    return eval(corr_method)(array1[nonull], array2[nonull])
-
+from .utils import corr_na
 
 def rho_p(rank_vector):
     """Compares each element in the vector to its corresponding value in the null distribution vector,
@@ -34,12 +18,12 @@ def rho_p(rank_vector):
     Returns:
 
     """
-    rank_vector = rank_vector.dropna()
+    rank_vector = rank_vector[~np.isnan(rank_vector)]
     n = len(rank_vector)
 
-    betaScores = rank_vector.copy(deep=True)
+    betaScores = rank_vector.copy()
     betaScores[0:n] = np.nan
-    sorted_ranks = rank_vector.dropna().sort_values().index
+    sorted_ranks = rank_vector.sort_values().index
 
     for i, k in enumerate(sorted_ranks):
         x = rank_vector[k]
@@ -51,8 +35,8 @@ def rho_p(rank_vector):
 
 
 def RRA(a: Iterable, b: Iterable) -> Tuple[float]:
-    vec = pd.Series(list(a) + list(b)).rank(pct=True)
-    return rho_p(vec)
+    vec = a.append(b).rank(ascending=False, pct=True)
+    return rho_p(vec[0:len(a)])
 
 
 categorial_methods = {
@@ -66,7 +50,7 @@ def binarize_categorical(annotations: DataFrame, columns: Iterable) -> DataFrame
 
     binarized = pd.DataFrame(index=annotations.index)
     for col in columns:
-        options = set(annotations[col].unique())
+        options = set(annotations[col].dropna().unique())
         for opt in options:
             new_col = '%s.%s' % (col, opt)
             others = options.difference(set([opt]))
@@ -82,7 +66,7 @@ def categorical_score_association(
 ) -> DataFrame:
     if cat_method is None:
         cat_method = 'RRA'
-    scores = module_scores.transpose()
+    scores = module_scores.copy()
     results = pd.DataFrame(index=scores.index)
 
     indname = annotations.index.name
@@ -90,7 +74,7 @@ def categorical_score_association(
         indname = 'index'
 
     for col in annotations.columns:
-        temp = annotations.reset_index()
+        temp = annotations[col].reset_index()
         temp = temp.groupby(col)[indname].apply(list)
         results[col] = scores.apply(
             lambda row: categorial_methods[cat_method](row[temp[True]], row[temp[False]])[1],
@@ -106,7 +90,8 @@ def continuous_score_association(
 ):
     if cont_method is None:
         cont_method = 'pearsonr'
-    scores = module_scores.transpose()
+
+    scores = module_scores.reindex(annotations.index, axis=1)
     results = pd.DataFrame(index=scores.index)
     for col in annotations.columns:
         results[col] = scores.apply(

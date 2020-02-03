@@ -26,8 +26,10 @@ def test_classes_regulators():
     )
 
     proteomics.calculate_module_scores()
-    proteomics.collect_possible_regulators(list(set(phospho.sample(3).index.get_level_values(
-        0))), corr_threshold=0.98)
+    regs = list(set(phospho.sample(3).index.get_level_values(0)))
+    print(regs)
+    print(proteomics.phospho, proteomics.protein)
+    proteomics.collect_possible_regulators(regs, corr_threshold=0.98)
     proteomics.calculate_regulator_coefficients(model='linear', cv_fold=2)
     return proteomics
 
@@ -55,3 +57,36 @@ def test_classes_annotations():
     proteomics.add_annotations(annotations, pd.Series(['categorical', 0, 'continuous', 1]))
     proteomics.calculate_annotation_association()
     return proteomics
+
+
+
+# phospho = phdc.read_phospho('/Users/lili/dropbox_lili/phosphodisco/results/brca-combined-v4.0-phosphoproteome'
+#                    '-dedup-filtered.csv')
+# protein = phdc.read_protein(
+#     '/Users/lili/dropbox_lili/phosphodisco/results/brca-combined-v4.0-proteome-dedup-filtered.csv')
+# normed = phdc.read_phospho(
+#     '/Users/lili/dropbox_lili/phosphodisco/results/brca.normed_phospho.csv')
+# clusters = phdc.read_phospho('~/dropbox_lili/phosphodisco/results/brca_labels.csv')
+# regs = phdc.parsers.read_list(
+#     '/Users/lili/dropbox_lili/phosphodisco/phosphodisco/data/kinases_and_phosphatases.txt')
+#
+# data = phdc.ProteomicsData(
+#     phospho=phospho,
+#     protein=protein,
+#     normed_phospho=normed,
+#     modules=clusters,
+#     possible_regulator_list=regs
+# )
+# data.add_annotations(
+#     phdc.parsers.read_annotation(
+#     '/Users/lili/dropbox_lili/phosphodisco/results/brca-combined-v4.0-sample-annotation.filtered.csv'),
+#     pd.Series(phdc.parsers.read_list('/Users/lili/dropbox_lili/phosphodisco/results/brca.annotation_cols.txt'
+#                                )),
+# )
+#
+# # data.collect_possible_regulators(corr_threshold=0.9)
+# data.calculate_module_scores()
+# # data.calculate_regulator_coefficients()
+#
+# data.calculate_annotation_association(cat_method='RRA')
+# data.annotation_association

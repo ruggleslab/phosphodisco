@@ -9,15 +9,12 @@ import seaborn as sns
 from .catheat import heatmap as catheat
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import pdist
-<<<<<<< HEAD
-=======
 
 
 matplotlib.rcParams["pdf.fonttype"] = 42
 matplotlib.rcParams["ps.fonttype"] = 42
 sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
 matplotlib.rcParams.update({'savefig.bbox': 'tight'})
->>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087
 
 
 def compute_order(
@@ -56,37 +53,11 @@ def visualize_modules(
         heatmap_kws: dict = {},
         file_prefix: str = 'heatmap'
 ):
-<<<<<<< HEAD
-    matplotlib.rcParams["pdf.fonttype"] = 42
-    matplotlib.rcParams["ps.fonttype"] = 42
-    sns.set(font='arial', style='white', color_codes=True, font_scale=1.3)
-    matplotlib.rcParams.update({'savefig.bbox': 'tight'})
-=======
-    """
->>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087
-
-    Args:
-        data:
-        annotations:
-        col_cluster:
-        row_cluster:
-        cluster_kws:
-        annot_kws:
-        heatmap_kws:
-        file_prefix:
-
-    Returns:
-
-    """
 
     cluster_sets = data.modules
     cluster_sets = {
         cluster_name: cluster_sets.index[cluster_sets==cluster_name] for cluster_name in
-<<<<<<< HEAD
-        clusters.nmembers_per_cluster.keys() if cluster_name != -1
-=======
         data.modules.unique() if cluster_name != -1
->>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087
     }
     values = data.normed_phospho
 
@@ -155,8 +126,6 @@ def visualize_modules(
         plt.savefig('%s.cluster%s.pdf' % (file_prefix, cluster_name))
         plt.show()
         plt.close()
-<<<<<<< HEAD
-=======
 
 
 def visualize_regulator_coefficients(
@@ -198,4 +167,3 @@ def visualize_annotation_associations(
     if savefig_prefix:
         plt.savefig('%s.pdf' % savefig_prefix)
     return ax
->>>>>>> 76486e7b5267800c27d90a8aecef29c686afe087

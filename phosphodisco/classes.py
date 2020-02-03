@@ -3,16 +3,15 @@ import numpy as np
 import pandas as pd
 import logging
 from typing import Iterable, Optional
-from itertools import product
 from statsmodels.stats.multitest import multipletests
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
 
 from .utils import norm_line_to_residuals
-from .constants import module_combiner_delim, annotation_column_map, datatype_label
+from .constants import annotation_column_map, datatype_label
 from .annotation_association import (
-    corr_na, binarize_categorical, continuous_score_association, categorical_score_association
+    binarize_categorical, continuous_score_association, categorical_score_association
 )
 from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients
 
@@ -191,47 +190,19 @@ class ProteomicsData:
         return self
 
     def calculate_module_scores(
-            self,
-            combine_anti_regulated: bool = True,
-            anti_corr_threshold: float = 0.9
+            self
     ):
-        """
-
-        Args:
-            combine_anti_regulated:
-            anti_corr_threshold:
-
-        Returns:
-
-        """
-        abundances = self.normed_phospho.reindex(self.modules.index)
-        scores = abundances.groupby(self.modules).agg('mean')
-
-        if combine_anti_regulated:
-            corr = {
-                (ind1, ind2): corr_na(scores.loc[ind1, :], scores.loc[ind2, :])[0]
-                for ind1, ind2 in product(scores.index, scores.index)
-                if -corr_na(scores.loc[ind1, :], scores.loc[ind2, :])[0] > anti_corr_threshold
-            }
-            if corr:
-                for clusters_labs in corr.keys():
-                    nmems = {k: self.nmembers_per_cluster[k] for k in clusters_labs}
-                    major_cluster = max(nmems, key=lambda key: nmems[key])
-                    minor_cluster = set(clusters_labs).difference({major_cluster})
-                    line = (scores.loc[major_cluster, :] * nmems[major_cluster]).subtract(
-                        (scores.loc[minor_cluster, :] * nmems[minor_cluster])
-                    ).divide((nmems[major_cluster] + nmems[minor_cluster]))
-                    line.name = module_combiner_delim.join(clusters_labs)
-                    scores = scores.drop(clusters_labs, axis=0).append(line)
-
-        self.anticorrelated_collapsed = combine_anti_regulated
-        self.module_scores = scores.transpose()
+        modules = self.modules[self.modules != -1]
+        abundances = self.normed_phospho.reindex(modules.index)
+        self.module_scores = abundances.groupby(self.modules).agg('mean')
         return self
 
     def collect_possible_regulators(
             self,
             possible_regulator_list: Optional[Iterable] = None,
-            corr_threshold: float = 0.9
+            corr_threshold: float = 0.95,
+            imputation_method: Optional[str] = None,
+            **imputer_kwargs
     ):
         """
 
@@ -248,14 +219,30 @@ class ProteomicsData:
             possible_regulator_list = self.possible_regulator_list
         self.possible_regulator_list = possible_regulator_list
         
-        subset = self.protein.loc[possible_regulator_list, :]
+        subset = self.protein.loc[self.protein.index.intersection(possible_regulator_list), :]
         subset[1] = np.nan
         subset = subset.set_index(1, append=True)
-        possible_regulator_data = subset.append(self.phospho.loc[possible_regulator_list, :])
+        possible_regulator_data = subset.append(
+            self.phospho.loc[
+                self.phospho.index.get_level_values(0).intersection(possible_regulator_list), :
+            ]
+        )
         possible_regulator_data = collapse_possible_regulators(
             possible_regulator_data, corr_threshold
         )
-        self.possible_regulator_data = possible_regulator_data
+
+        if imputation_method is None:
+            imputation_method = 'KNNImputer'
+        transformed_data = eval(
+            'sklearn.impute.%s(**imputer_kwargs).fit_transform(possible_regulator_data.transpose())'
+            % imputation_method
+        )
+
+        self.possible_regulator_data = pd.DataFrame(
+            transformed_data.transpose(),
+            index=possible_regulator_data.index,
+            columns=possible_regulator_data.columns
+        )
         return self
 
     def calculate_regulator_coefficients(
@@ -289,6 +276,7 @@ class ProteomicsData:
         """
         if 'categorical_annotations' in self.__dict__ or 'continuous_annotations' in self.__dict__:
             logging.warning('Overwriting annotation data')
+        #TODO add check for list or series for col types
         common_samples = annotations.index.intersection(self.normed_phospho.columns)
         ncommon = len(common_samples)
         if ncommon <= 1:
@@ -344,8 +332,10 @@ class ProteomicsData:
         self.annotation_association = annotation_association
 
         multitest_kwargs['method'] = multitest_kwargs.get('method', 'fdr_bh')
-        fdr = pd.DataFrame(index=annotation_association.index)
-        for col in annotation_association.columns:
-            fdr.loc[:, col] = multipletests(annotation_association[col], **multitest_kwargs)[1]
+        fdr = annotation_association.apply(
+            lambda col: pd.Series(multipletests(col.values, **multitest_kwargs)[1])
+        )
+
+        fdr.index = annotation_association.index
         self.annotation_association_FDR = fdr
         return self
