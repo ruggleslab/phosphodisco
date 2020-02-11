@@ -140,7 +140,7 @@ def visualize_regulator_coefficients(
             'ProteomicsData.calculate_regulator_coefficients before visualizing. '
         )
     cut_off = np.nanpercentile(
-        data.regulator_coefficients.values.flatten(), value_percentile_cutoff
+        data.regulator_coefficients.abs().values.flatten(), value_percentile_cutoff
     )
     subset = data.regulator_coefficients[(data.regulator_coefficients > cut_off).any(axis=1)]
     ax = sns.heatmap(subset, **heatmap_kwargs)
