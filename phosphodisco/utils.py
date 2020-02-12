@@ -73,3 +73,4 @@ def corr_na(array1, array2, corr_method: str = 'pearsonr'):
     if sum(nonull) > 2:
         return eval(corr_method)(array1[nonull], array2[nonull])
     return np.nan, np.nan
+
