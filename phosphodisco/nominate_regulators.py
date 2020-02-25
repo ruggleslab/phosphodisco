@@ -3,6 +3,7 @@ import numpy as np
 from pandas import DataFrame
 from typing import Iterable, Optional
 from sklearn import linear_model, preprocessing
+from .utils import corr_na
 
 
 def collapse_possible_regulators(reg_data: pd.DataFrame, corr_threshold: float = 0.95) -> pd.DataFrame:
@@ -82,8 +83,8 @@ def calculate_regulator_coefficients(
         features = preprocessing.scale(features)
         targets = preprocessing.scale(targets)
         
-    model_kwargs['cv'] = cv_fold
-    model = linear_model.RidgeCV(alphas=regularization_values, **model_kwargs)
+    model_kwargs.update({'cv': cv_fold, 'alphas':regularization_values})
+    model = linear_model.RidgeCV(**model_kwargs)
     model.fit(features, targets)
     weights = pd.DataFrame(
         model.coef_,
@@ -95,3 +96,19 @@ def calculate_regulator_coefficients(
         index=cluster_scores.index,
     )
     return weights, scores
+
+
+def calculate_regulator_corr(
+        reg_data: DataFrame,
+        cluster_scores: DataFrame,
+        **model_kwargs
+):
+    rs = pd.DataFrame(index=reg_data.index)
+    ps = pd.DataFrame(index=reg_data.index)
+    for i, row in cluster_scores.iterrows():
+        res = reg_data.apply(lambda r: pd.Series(corr_na(row, r, **model_kwargs)), axis=1)
+        rs[i] = res.iloc[:, 0]
+        ps[i] = res.iloc[:, 1]
+
+    return rs, ps
+    

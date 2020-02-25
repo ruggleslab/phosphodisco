@@ -13,7 +13,7 @@ from .constants import annotation_column_map, datatype_label
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
-from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients
+from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients, calculate_regulator_corr
 
 
 class ProteomicsData:
@@ -257,26 +257,27 @@ class ProteomicsData:
 
     def calculate_regulator_coefficients(
             self,
-            scale_data: bool = True,
-            model: str = 'sigmoid',
-            regularization_values: Optional[Iterable] = None,
-            cv_fold: int = 5,
+            method: str = 'correlation',
             knn_imputer_kwargs = {},
             **model_kwargs
     ):
         if self.module_scores.isnull().sum().sum() > 0:
             module_scores = sklearn.impute.KNNImputer(**knn_imputer_kwargs).fit_transform(self.module_scores.transpose())
             self.module_scores = pd.DataFrame(module_scores.transpose(), index=self.module_scores.index, columns=self.module_scores.columns)
-            
-        self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_coefficients(
-            self.possible_regulator_data,
-            self.module_scores,
-            scale_data=scale_data,
-            model=model,
-            regularization_values=regularization_values,
-            cv_fold=cv_fold,
-            **model_kwargs
-        )
+        if method == 'linear_model':
+            self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_coefficients(
+                self.possible_regulator_data,
+                self.module_scores,
+                **model_kwargs
+            )
+        elif method == 'correlation':
+            self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_corr(
+                self.possible_regulator_data,
+                self.module_scores,
+                **model_kwargs
+            )
+        else:
+            raise ValueError('Method must be in: %s. %s not valid' %(', '.join(['correlation', 'linear_model']), method))
         return self
 
     def add_annotations(self, annotations: DataFrame, column_types: Series):
