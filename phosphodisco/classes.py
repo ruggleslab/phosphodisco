@@ -266,11 +266,11 @@ class ProteomicsData:
     ):
         if self.module_scores.isnull().sum().sum() > 0:
             module_scores = sklearn.impute.KNNImputer(**knn_imputer_kwargs).fit_transform(self.module_scores.transpose())
-            module_scores = pd.DataFrame(module_scores.transpose(), index=self.module_scores.index, columns=self.module_scores.columns)
+            self.module_scores = pd.DataFrame(module_scores.transpose(), index=self.module_scores.index, columns=self.module_scores.columns)
             
         self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_coefficients(
             self.possible_regulator_data,
-            module_scores,
+            self.module_scores,
             scale_data=scale_data,
             model=model,
             regularization_values=regularization_values,
