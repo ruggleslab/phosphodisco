@@ -13,7 +13,7 @@ from .constants import annotation_column_map, datatype_label
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
-from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients
+from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients, calculate_regulator_corr
 
 
 class ProteomicsData:
@@ -39,8 +39,9 @@ class ProteomicsData:
             possible_regulator_list: Optional[Iterable] = None,
             annotations: Optional[DataFrame] = None
     ):
+        #TODO add annotation cols in this
         if min_common_values is None:
-            min_common_values = 5
+            min_common_values = 6
         self.min_values_in_common = min_common_values
 
         common_prots = list(set(phospho.index.get_level_values(0).intersection(protein.index)))
@@ -124,6 +125,8 @@ class ProteomicsData:
             imputation_method: Optional[str] = None,
             **imputer_kwargs
     ):
+        if self.normed_phospho.isnull().sum().sum() == 0:
+            return self
         if imputation_method is None:
             imputation_method = 'KNNImputer'
         transformed_data = eval(
@@ -162,7 +165,7 @@ class ProteomicsData:
         else:
             modules = hypercluster.MultiAutoClusterer(
                 **multiautocluster_kwargs
-            ).fit(self.normed_phospho).pick_best_labels(method_to_pick_best_labels, min_or_max)
+            ).fit(self.normed_phospho).evaluate([method_to_pick_best_labels]).pick_best_labels(method_to_pick_best_labels, min_or_max)
             self.modules = modules
 
         if self.modules.shape[1] > 1:
@@ -220,8 +223,13 @@ class ProteomicsData:
         self.possible_regulator_list = possible_regulator_list
         
         subset = self.protein.loc[self.protein.index.intersection(possible_regulator_list), :]
-        subset[1] = np.nan
-        subset = subset.set_index(1, append=True)
+        if self.phospho.index.name is None:
+            ind_name = 'variableSites'
+        else:
+            ind_name = self.phospho.index.name[1]
+
+        subset[ind_name] = ''
+        subset = subset.set_index(ind_name, append=True)
         possible_regulator_data = subset.append(
             self.phospho.loc[
                 self.phospho.index.get_level_values(0).intersection(possible_regulator_list), :
@@ -230,9 +238,11 @@ class ProteomicsData:
         possible_regulator_data = collapse_possible_regulators(
             possible_regulator_data, corr_threshold
         )
+        possible_regulator_data = possible_regulator_data.dropna(how='all')
 
         if imputation_method is None:
             imputation_method = 'KNNImputer'
+
         transformed_data = eval(
             'sklearn.impute.%s(**imputer_kwargs).fit_transform(possible_regulator_data.transpose())'
             % imputation_method
@@ -247,21 +257,27 @@ class ProteomicsData:
 
     def calculate_regulator_coefficients(
             self,
-            **kwargs
+            method: str = 'correlation',
+            knn_imputer_kwargs = {},
+            **model_kwargs
     ):
-        """
-
-        Args:
-            **kwargs:
-
-        Returns:
-
-        """
-        self.regulator_coefficients = calculate_regulator_coefficients(
-            self.possible_regulator_data,
-            self.module_scores,
-            **kwargs
-        )
+        if self.module_scores.isnull().sum().sum() > 0:
+            module_scores = sklearn.impute.KNNImputer(**knn_imputer_kwargs).fit_transform(self.module_scores.transpose())
+            self.module_scores = pd.DataFrame(module_scores.transpose(), index=self.module_scores.index, columns=self.module_scores.columns)
+        if method == 'linear_model':
+            self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_coefficients(
+                self.possible_regulator_data,
+                self.module_scores,
+                **model_kwargs
+            )
+        elif method == 'correlation':
+            self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_corr(
+                self.possible_regulator_data,
+                self.module_scores,
+                **model_kwargs
+            )
+        else:
+            raise ValueError('Method must be in: %s. %s not valid' %(', '.join(['correlation', 'linear_model']), method))
         return self
 
     def add_annotations(self, annotations: DataFrame, column_types: Series):
@@ -287,7 +303,7 @@ class ProteomicsData:
         logging.info('Annotations have %sß samples in common with normed_phospho' % ncommon)
         annotations = annotations.reindex(common_samples)
 
-        column_types = column_types.replace(annotation_column_map)
+        column_types = column_types.replace(annotation_column_map) #TODO omg fix this whole problem
 
         self.categorical_annotations = binarize_categorical(
             annotations, 

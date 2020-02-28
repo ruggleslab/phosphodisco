@@ -28,12 +28,12 @@ def norm_line_to_residuals(
 
     """
     if regularization_values is None:
-        regularization_values = [2 ** i for i in range(-10, 10, 1)]
+        regularization_values = [5 ** i for i in range(-5, 5)]
     if cv is None:
-        cv = 5
+        cv = 3
 
     warnings.filterwarnings("ignore", category=DeprecationWarning)
-    nonull = (~np.isnan(ph_line) & ~np.isnan(prot_line))
+    nonull = np.logical_and(~np.isnan(ph_line), ~np.isnan(prot_line))
     if sum(nonull) < cv:
         return np.empty(len(ph_line))
 
@@ -73,3 +73,4 @@ def corr_na(array1, array2, corr_method: str = 'pearsonr'):
     if sum(nonull) > 2:
         return eval(corr_method)(array1[nonull], array2[nonull])
     return np.nan, np.nan
+

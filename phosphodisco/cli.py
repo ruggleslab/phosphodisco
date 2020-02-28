@@ -3,6 +3,7 @@ import sys
 import logging
 import argparse
 import yaml
+import numpy as np
 import phosphodisco
 
 logging.basicConfig(
@@ -32,6 +33,9 @@ def _make_parser():
     )
     parser.add_argument(
         "--normed_phospho", type=str, help=''
+    )
+    parser.add_argument(
+        "--top_stdev_percent", type=float, default=100, help=''
     )
     parser.add_argument(
         "--modules", type=str, help=''
@@ -98,12 +102,21 @@ def _main(args: Optional[List[str]] = None):
             **additional_kwargs_yml.get('normalize_phospho_by_protein', {})
         )
         logger.info("Finished normalizing phospho by protein")
+        #TODO make it so this doesn't keep writing this file
         data.normed_phospho.to_csv('%s.normed_phospho.csv' % output_prefix)
     if data.normed_phospho.isnull().any().any():
         logger.info("Imputing missing values")
         data.impute_missing_values(**additional_kwargs_yml.get('impute_missing_values', {}))
         logger.info("Finished imputing missing values")
         data.normed_phospho.to_csv('%s.normed_phospho.csv' % output_prefix)
+    if args.top_stdev_percent < 100:
+        data.normed_phospho = data.normed_phospho.loc[
+            data.normed_phospho.std(axis=1)<np.percentile(
+                data.normed_phospho.std(axis=1), 100-args.top_stdev_percent
+            )
+        ]
+        data.normed_phospho.to_csv('%s.normed_phospho.top%sstdev_percent.csv' % (output_prefix, args.top_stdev_percent))
+    
     
     if args.stop_before_modules:
         logger.info('Stopping before calculating modules, PhosphoDisco done')
