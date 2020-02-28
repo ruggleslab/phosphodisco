@@ -12,6 +12,7 @@ logging.basicConfig(
 
 logger = logging.getLogger('PhosphoDisco')
 
+
 def _make_parser():
     parser = argparse.ArgumentParser(prog="phosphodisco", description="")
     parser.add_argument(
