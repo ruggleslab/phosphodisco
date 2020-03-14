@@ -74,11 +74,11 @@ def calculate_regulator_coefficients(
             'Model %s not in accepted models: %s' % (model, ','.join(['linear', 'sigmoid']))
         )
 
-    
     features = reg_data.transpose().values
     targets = cluster_scores.transpose().values
     if model == 'sigmoid':
         targets = (1/(1+np.exp(-targets)))
+        # TODO should this be the inverse???
     if scale_data:
         features = preprocessing.scale(features)
         targets = preprocessing.scale(targets)
@@ -109,6 +109,4 @@ def calculate_regulator_corr(
         res = reg_data.apply(lambda r: pd.Series(corr_na(row, r, **model_kwargs)), axis=1)
         rs[i] = res.iloc[:, 0]
         ps[i] = res.iloc[:, 1]
-
     return rs, ps
-    

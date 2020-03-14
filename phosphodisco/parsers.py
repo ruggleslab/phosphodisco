@@ -27,6 +27,7 @@ def read_annotation(file_path: str) -> DataFrame:
         ['na', 'NA', 'NAN', 'nan', 'NaN', 'Na'], np.nan
     )
 
+
 def read_phospho(file_path: str) -> Optional[DataFrame]:
     sep = get_sep(file_path)
     return pd.read_csv(file_path, sep=sep, index_col=[0, 1]).replace(
@@ -39,16 +40,7 @@ def read_list(file_path: str):
         return [s.strip() for s in fh.readlines()]
     
 
-def column_normalize(df: DataFrame, method: str) -> Optional[DataFrame]:
-    """
-    Provides several
-    Args:
-        df:
-        method:
-
-    Returns:
-
-    """
+def column_normalize(df: DataFrame, method: str) -> DataFrame:
     if method == "median_of_ratios":
         return df.divide(df.divide(df.mean(axis=1), axis=0).median())
 
@@ -60,15 +52,15 @@ def column_normalize(df: DataFrame, method: str) -> Optional[DataFrame]:
 
     if method == "twocomp_median":
         pass
+        #TODO make two comp
 
-    logging.error(
+    raise ValueError(
         'Passed method not valid. Must be one of: median_of_ratios, median, upper_quartile, '
         'twocomp_median.'
     )
-    return None
 
 
-def prepare_phospho(
+def prepare_data(
         ph_file: str,
         prot_file: str,
         normalize_method: Optional[str] = None,
@@ -94,3 +86,12 @@ def prepare_phospho(
         clustering_parameters_for_modules=clustering_parameters_for_modules,
         possible_regulator_list=putative_regulator_list
     )
+
+
+def read_fasta(fasta_file) -> dict:
+    with open(fasta_file, 'r') as fh:
+        aa_seqs = {
+            seq.split()[0]: seq.split(']')[-1].replace('\s', '').replace('\n', '')
+            for seq in fh.read().strip().split('>') if seq != ''
+        }
+    return aa_seqs

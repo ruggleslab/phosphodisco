@@ -130,7 +130,7 @@ def visualize_modules(
 
 def visualize_regulator_coefficients(
         data: ProteomicsData,
-        value_percentile_cutoff: float = 95,
+        percentile_cutoff: float = 95,
         savefig_prefix: Optional[str] = None,
         **heatmap_kwargs
 ):
@@ -140,7 +140,7 @@ def visualize_regulator_coefficients(
             'ProteomicsData.calculate_regulator_coefficients before visualizing. '
         )
     cut_off = np.nanpercentile(
-        data.regulator_coefficients.abs().values.flatten(), value_percentile_cutoff
+        data.regulator_coefficients.abs().values.flatten(), percentile_cutoff
     )
     subset = data.regulator_coefficients[(data.regulator_coefficients > cut_off).any(axis=1)]
     ax = sns.heatmap(subset, **heatmap_kwargs)
@@ -151,7 +151,7 @@ def visualize_regulator_coefficients(
 
 def visualize_annotation_associations(
         data: ProteomicsData,
-        value_percentile_cutoff: float = 0,
+        percentile_cutoff: float = 0,
         savefig_prefix: Optional[str] = None,
         **heatmap_kwargs
 ):
@@ -161,9 +161,21 @@ def visualize_annotation_associations(
             'ProteomicsData.calculate_regulator_coefficients before visualizing. '
         )
     temp = -np.log10(data.annotation_association_FDR)
-    cut_off = np.nanpercentile(temp.values.flatten(), value_percentile_cutoff)
+    cut_off = np.nanpercentile(temp.values.flatten(), percentile_cutoff)
     subset = temp[(temp > cut_off).any(axis=1)]
     ax = sns.heatmap(subset, **heatmap_kwargs)
     if savefig_prefix:
         plt.savefig('%s.pdf' % savefig_prefix)
     return ax
+
+
+def visualize_aa_frequencies(module_aa_dict, palette, **stacked_bar_kws):
+    pass
+
+
+def visualize_aa_similarity(module_aa_dict, **clustermap_kws):
+    pass
+
+
+def visualize_set_enrichment():
+    pass

@@ -143,6 +143,7 @@ class ProteomicsData:
     def assign_modules(
             self,
             modules: Optional[DataFrame] = None,
+            data_for_clustering: Optional[DataFrame] = None,
             method_to_pick_best_labels: Optional[str] = None,
             min_or_max: Optional[str] = None,
             force_choice: bool = False,
@@ -160,13 +161,20 @@ class ProteomicsData:
         Returns:
 
         """
+        if data_for_clustering is None:
+            data_for_clustering = self.normed_phospho.transpose().corr()
+            na_cols = data_for_clustering.columns[~data_for_clustering.isnull().any()]
+            data_for_clustering = data_for_clustering.loc[na_cols, na_cols]
+
         if modules is not None:
             self.modules = modules
         else:
-            modules = hypercluster.MultiAutoClusterer(
+            mac = hypercluster.MultiAutoClusterer(
                 **multiautocluster_kwargs
-            ).fit(self.normed_phospho).evaluate([method_to_pick_best_labels]).pick_best_labels(method_to_pick_best_labels, min_or_max)
+            ).fit(data_for_clustering).evaluate([method_to_pick_best_labels])
+            modules = mac.pick_best_labels(method_to_pick_best_labels, min_or_max)
             self.modules = modules
+            self.multiautoclusterer = mac
 
         if self.modules.shape[1] > 1:
             if force_choice is False:
@@ -198,6 +206,15 @@ class ProteomicsData:
         modules = self.modules[self.modules != -1]
         abundances = self.normed_phospho.reindex(modules.index)
         self.module_scores = abundances.groupby(self.modules).agg('mean')
+        if self.module_scores.isnull().sum().sum() > 0:
+            module_scores = sklearn.impute.KNNImputer(
+                **knn_imputer_kwargs
+            ).fit_transform(self.module_scores.transpose())
+            self.module_scores = pd.DataFrame(
+                module_scores.transpose(),
+                index=self.module_scores.index,
+                columns=self.module_scores.columns
+            )
         return self
 
     def collect_possible_regulators(
@@ -255,15 +272,11 @@ class ProteomicsData:
         )
         return self
 
-    def calculate_regulator_coefficients(
+    def calculate_regulator_association(
             self,
             method: str = 'correlation',
-            knn_imputer_kwargs = {},
             **model_kwargs
     ):
-        if self.module_scores.isnull().sum().sum() > 0:
-            module_scores = sklearn.impute.KNNImputer(**knn_imputer_kwargs).fit_transform(self.module_scores.transpose())
-            self.module_scores = pd.DataFrame(module_scores.transpose(), index=self.module_scores.index, columns=self.module_scores.columns)
         if method == 'linear_model':
             self.regulator_coefficients, self.module_prediction_scores = calculate_regulator_coefficients(
                 self.possible_regulator_data,

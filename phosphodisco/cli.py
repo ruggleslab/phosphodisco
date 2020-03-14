@@ -141,7 +141,7 @@ def _main(args: Optional[List[str]] = None):
             putative_regulator_list, **additional_kwargs_yml.get('collect_possible_regulators', {})
         )
         logger.info("Collected possible regulators")
-        data.calculate_regulator_coefficients(
+        data.calculate_regulator_association(
             **additional_kwargs_yml.get('calculate_regulator_coefficients', {})
         )
         data.regulator_coefficients.to_csv('%s.putative_regulator_coefficients.csv' % output_prefix)

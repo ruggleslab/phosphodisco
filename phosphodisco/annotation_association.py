@@ -6,6 +6,7 @@ import scipy.stats
 from scipy.stats import ttest_ind, pearsonr, spearmanr, binom
 from .utils import corr_na
 
+
 def rho_p(rank_vector):
     """Compares each element in the vector to its corresponding value in the null distribution vector,
     using the probability mass function of the binomial distribution.
@@ -80,6 +81,8 @@ def categorical_score_association(
             lambda row: categorial_methods[cat_method](row[temp[True]], row[temp[False]])[1],
             axis=1
         )
+        # TODO add in one sidedness, add possible arg to RRA
+
     return results
 
 

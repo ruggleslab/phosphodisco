@@ -30,7 +30,7 @@ def test_classes_regulators():
     print(regs)
     print(proteomics.phospho, proteomics.protein)
     proteomics.collect_possible_regulators(regs, corr_threshold=0.98)
-    proteomics.calculate_regulator_coefficients(model='linear', cv_fold=2)
+    proteomics.calculate_regulator_association(model='linear', cv_fold=2)
     return proteomics
 
 

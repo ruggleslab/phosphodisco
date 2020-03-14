@@ -63,7 +63,7 @@ def not_na(array):
     return ~np.isnan(array)
 
 
-def corr_na(array1, array2, corr_method: str = 'pearsonr'):
+def corr_na(array1, array2, corr_method: str = 'spearmanr'):
     if corr_method not in ['pearsonr', 'spearmanr']:
         raise ValueError(
             'Method %s is a valid correlation method, must be: %s'
