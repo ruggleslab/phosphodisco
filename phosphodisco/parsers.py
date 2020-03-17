@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
-import logging
 from typing import Optional, Iterable
 from .classes import ProteomicsData
 

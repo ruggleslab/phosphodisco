@@ -7,6 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 from .catheat import heatmap as catheat
+import logomaker
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import pdist
 
@@ -169,12 +170,13 @@ def visualize_annotation_associations(
     return ax
 
 
-def visualize_aa_frequencies(module_aa_dict, palette, **stacked_bar_kws):
-    pass
-
-
-def visualize_aa_similarity(module_aa_dict, **clustermap_kws):
-    pass
+def visualize_aa(seq_dfs, save_prefix: Optional[str] = None, **logo_kws):
+    for module, ps in seq_dfs.items():
+        logo_kws['color_scheme'] = logo_kws.get('color_scheme', 'NajafabadiEtAl2017')
+        logo = logomaker.Logo(ps, **logo_kws)
+        logo.ax.set_title('Module %s motif enrichment' % module)
+        if save_prefix:
+            plt.savefig('%s.logo.motif_enrichment.module%s.pdf')
 
 
 def visualize_set_enrichment():

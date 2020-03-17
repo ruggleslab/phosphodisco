@@ -1,4 +1,5 @@
 from pandas import DataFrame, Series
+from collections import Counter
 import numpy as np
 import pandas as pd
 import logging
@@ -8,26 +9,18 @@ import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
 
-from .utils import norm_line_to_residuals
+from .utils import norm_line_to_residuals, zscore
 from .constants import annotation_column_map, datatype_label
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
-from .nominate_regulators import collapse_possible_regulators, calculate_regulator_coefficients, calculate_regulator_corr
+from .nominate_regulators import (
+    collapse_possible_regulators, calculate_regulator_coefficients,calculate_regulator_corr
+)
+from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment
 
 
 class ProteomicsData:
-    """
-
-    Args:
-        phospho:
-        protein:
-        min_common_values:
-        normed_phospho:
-        modules:
-        clustering_parameters_for_modules:
-        possible_regulator_list:
-    """
     def __init__(
             self,
             phospho: DataFrame,
@@ -37,9 +30,9 @@ class ProteomicsData:
             modules: Optional[Iterable] = None,
             clustering_parameters_for_modules: Optional[dict] = None,
             possible_regulator_list: Optional[Iterable] = None,
-            annotations: Optional[DataFrame] = None
+            annotations: Optional[DataFrame] = None,
+            column_types: Optional[Iterable] = None
     ):
-        #TODO add annotation cols in this
         if min_common_values is None:
             min_common_values = 6
         self.min_values_in_common = min_common_values
@@ -78,23 +71,18 @@ class ProteomicsData:
         if modules is not None:
             self.assign_modules(modules)
         
-        if annotations is not None:
-            self.add_annotations(annotations)
+        if (annotations is not None) and (column_types is not None):
+            self.add_annotations(annotations, column_types)
+        elif annotations is not None:
+            self.annotations = annotations
 
     def normalize_phospho_by_protein(
             self,
+            prevent_negative_parameters: bool = True,
             ridge_cv_alphas: Optional[Iterable] = None,
             **ridgecv_kwargs
     ):
-        """
 
-        Args:
-            ridge_cv_alphas:
-            **ridgecv_kwargs:
-
-        Returns:
-
-        """
         target = self.phospho.loc[self.normalizable_rows]
         features = self.protein.reindex(target.index.get_level_values(0))
         features.index = target.index
@@ -111,8 +99,9 @@ class ProteomicsData:
 
         residuals = data.apply(
             lambda row: pd.Series(norm_line_to_residuals(
-                row[0], row[1],
-                ridge_cv_alphas,
+                ph_line=row[0], prot_line=row[1],
+                regularization_values=ridge_cv_alphas,
+                prevent_negative_parameters=prevent_negative_parameters,
                 **ridgecv_kwargs
             )), axis=1
         )
@@ -149,22 +138,10 @@ class ProteomicsData:
             force_choice: bool = False,
             **multiautocluster_kwargs
     ):
-        """
-
-        Args:
-            modules:
-            method_to_pick_best_labels:
-            min_or_max:
-            force_choice:
-            **multiautocluster_kwargs:
-
-        Returns:
-
-        """
         if data_for_clustering is None:
             data_for_clustering = self.normed_phospho.transpose().corr()
-            na_cols = data_for_clustering.columns[~data_for_clustering.isnull().any()]
-            data_for_clustering = data_for_clustering.loc[na_cols, na_cols]
+            no_na_cols = data_for_clustering.columns[~data_for_clustering.isnull().any()]
+            data_for_clustering = data_for_clustering.loc[no_na_cols, no_na_cols]
 
         if modules is not None:
             self.modules = modules
@@ -201,10 +178,14 @@ class ProteomicsData:
         return self
 
     def calculate_module_scores(
-            self
+            self,
+            zscore_first: bool = False,
+            **knn_imputer_kwargs
     ):
         modules = self.modules[self.modules != -1]
         abundances = self.normed_phospho.reindex(modules.index)
+        if zscore_first:
+            abundances = zscore(abundances)
         self.module_scores = abundances.groupby(self.modules).agg('mean')
         if self.module_scores.isnull().sum().sum() > 0:
             module_scores = sklearn.impute.KNNImputer(
@@ -224,15 +205,6 @@ class ProteomicsData:
             imputation_method: Optional[str] = None,
             **imputer_kwargs
     ):
-        """
-
-        Args:
-            possible_regulator_list:
-            corr_threshold:
-
-        Returns:
-
-        """
         if self.possible_regulator_list is None and possible_regulator_list is None:
             raise ValueError('Must provide possible_regulator_list')
         if possible_regulator_list is None:
@@ -290,22 +262,20 @@ class ProteomicsData:
                 **model_kwargs
             )
         else:
-            raise ValueError('Method must be in: %s. %s not valid' %(', '.join(['correlation', 'linear_model']), method))
+            raise ValueError(
+                'Method must be in: %s. %s not valid'
+                %(', '.join(['correlation', 'linear_model']), method)
+            )
         return self
 
-    def add_annotations(self, annotations: DataFrame, column_types: Series):
-        """
-
-        Args:
-            annotations:
-            column_types:
-
-        Returns:
-
-        """
+    def add_annotations(self, annotations: DataFrame, column_types: Iterable):
         if 'categorical_annotations' in self.__dict__ or 'continuous_annotations' in self.__dict__:
             logging.warning('Overwriting annotation data')
-        #TODO add check for list or series for col types
+        self.annotations = annotations
+
+        if isinstance(column_types, list):
+            column_types = pd.Series(column_types, index=annotations.columns)
+
         common_samples = annotations.index.intersection(self.normed_phospho.columns)
         ncommon = len(common_samples)
         if ncommon <= 1:
@@ -316,12 +286,24 @@ class ProteomicsData:
         logging.info('Annotations have %sß samples in common with normed_phospho' % ncommon)
         annotations = annotations.reindex(common_samples)
 
-        column_types = column_types.replace(annotation_column_map) #TODO omg fix this whole problem
+        column_types = column_types.astype(str).replace(annotation_column_map)
+        not_1_or_0 = np.logical_and((column_types != 1), (column_types != 0))
+        if any(not_1_or_0):
+            logging.warning(
+                'These columns will be ignored, invalid column labels: %s'
+                % column_types[not_1_or_0]
+            )
 
-        self.categorical_annotations = binarize_categorical(
+        self.binarized_categorical_annotations = binarize_categorical(
             annotations, 
             annotations.columns[column_types == 0]
         )
+
+        self.categorical_annotations = binarize_categorical(
+            annotations,
+            annotations.columns[column_types == 0]
+        )
+
         self.continuous_annotations = annotations[
             annotations.columns[column_types == 1]
         ].astype(float)
@@ -333,27 +315,19 @@ class ProteomicsData:
             cont_method: Optional[str] = None,
             **multitest_kwargs
     ):
-        """
 
-        Args:
-            cat_method:
-            cont_method:
-            **multitest_kwargs:
-
-        Returns:
-
-        """
-        if self.categorical_annotations is None or self.continuous_annotations is None:
-            raise ValueError(
-                'Annotations are not defined. Provide annotation table to add_annotation method.'
-            )
         cont = continuous_score_association(
             self.continuous_annotations,
             self.module_scores,
             cont_method
         )
+        if cat_method == 'ANOVA':
+            cat_annots = self.categorical_annotations
+        else:
+            cat_annots = self.binarized_categorical_annotations
+
         cat = categorical_score_association(
-            self.categorical_annotations,
+            cat_annots,
             self.module_scores,
             cat_method
         )
@@ -368,3 +342,37 @@ class ProteomicsData:
         fdr.index = annotation_association.index
         self.annotation_association_FDR = fdr
         return self
+
+    def analyze_aa_sequences(
+            self,
+            all_sites_modules_df,
+            fasta_dict,
+            module_col: str = 'modules',
+            n_flanking: int = 7
+    ):
+        n_flanking = max(7, n_flanking)
+        background_df = all_sites_modules_df
+        module_df = all_sites_modules_df.loc[all_sites_modules_df[module_col] != -1, :]
+        seqs = make_module_sequence_dict(
+            module_df,
+            fasta_dict=fasta_dict,
+            module_col=module_col,
+            n_flanking=n_flanking
+        )
+        self.module_sequences = seqs
+        self.module_freqs = {
+            module: pd.DataFrame([Counter(tup) for tup in list(zip(*aas))])
+            for module, aas in seqs.items()
+        }
+
+        ps = calculate_motif_enrichment(
+            module_IDs_df=module_df,
+            background_IDs_df=background_df,
+            fasta_dict=fasta_dict,
+            module_col=module_col,
+            n_flanking=n_flanking
+        )
+        self.module_aa_enrichment = ps
+
+        return self
+

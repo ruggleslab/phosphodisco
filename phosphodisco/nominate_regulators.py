@@ -3,10 +3,14 @@ import numpy as np
 from pandas import DataFrame
 from typing import Iterable, Optional
 from sklearn import linear_model, preprocessing
-from .utils import corr_na
+from .utils import corr_na, zscore
 
 
-def collapse_possible_regulators(reg_data: pd.DataFrame, corr_threshold: float = 0.95) -> pd.DataFrame:
+def collapse_possible_regulators(
+        reg_data: pd.DataFrame,
+        corr_threshold: float = 0.95
+) -> pd.DataFrame:
+    reg_data = zscore(reg_data)
     corr = reg_data.transpose().corr()
     
     high_corr_inds = corr.index[((corr > corr_threshold).sum(axis=1) > 1)]
@@ -32,7 +36,9 @@ def collapse_possible_regulators(reg_data: pd.DataFrame, corr_threshold: float =
                 ]
                 others_ab = [(f, g) if (d, e) == (a, b) else (d, e) for d, e, f, g in others_ab]
                 inds_to_mean.extend(
-                    [(e, f) for e, f in others_ab if ((e, f, c, d) in high_corr_data.index) or ((c, d, e, f) in high_corr_data.index)]
+                    [(e, f) for e, f in others_ab
+                     if ((e, f, c, d) in high_corr_data.index)
+                     or ((c, d, e, f) in high_corr_data.index)]
                 )
             
                 name = ('%s-%s' %(a, c), '%s-%s' % (b, d))
@@ -77,8 +83,7 @@ def calculate_regulator_coefficients(
     features = reg_data.transpose().values
     targets = cluster_scores.transpose().values
     if model == 'sigmoid':
-        targets = (1/(1+np.exp(-targets)))
-        # TODO should this be the inverse???
+        targets = -np.log2(1+(2**-targets))
     if scale_data:
         features = preprocessing.scale(features)
         targets = preprocessing.scale(targets)

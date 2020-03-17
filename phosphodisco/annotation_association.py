@@ -2,8 +2,7 @@ from typing import Iterable, Tuple, Optional
 from pandas import DataFrame, Series
 import pandas as pd
 import numpy as np
-import scipy.stats
-from scipy.stats import ttest_ind, pearsonr, spearmanr, binom
+from scipy.stats import ttest_ind, binom, ranksums, f_oneway
 from .utils import corr_na
 
 
@@ -40,10 +39,28 @@ def RRA(a: Iterable, b: Iterable) -> Tuple[float]:
     return rho_p(vec[0:len(a)])
 
 
+def one_sided_ttest(a: Iterable, b: Iterable, **test_kws) -> Tuple[float]:
+    test_kws['nan_policy'] = 'omit'
+    stat, p = ttest_ind(a, b, **test_kws)
+    p = p*2
+    if stat <= 0:
+        p = 1 - p
+    return stat, p
+
+
+def one_sided_rank_sum(a: Iterable, b: Iterable) -> Tuple[float]:
+    stat, p = ranksums(a, b)
+    p = p * 2
+    if stat <= 0:
+        p = 1 - p
+    return stat, p
+
+
 categorial_methods = {
     'RRA': RRA,
-    'ttest': scipy.stats.ttest_ind,
-    'ranksum': scipy.stats.ranksums
+    'ttest': one_sided_ttest,
+    'ranksum': one_sided_rank_sum,
+    'ANOVA': f_oneway
 }
 
 
@@ -63,7 +80,8 @@ def binarize_categorical(annotations: DataFrame, columns: Iterable) -> DataFrame
 def categorical_score_association(
         annotations: DataFrame,
         module_scores: DataFrame,
-        cat_method: Optional[str] = None
+        cat_method: Optional[str] = None,
+        **test_kws
 ) -> DataFrame:
     if cat_method is None:
         cat_method = 'RRA'
@@ -74,14 +92,19 @@ def categorical_score_association(
     if indname is None:
         indname = 'index'
 
+    if cat_method != 'ANOVA':
+        compare_fn = lambda row: categorial_methods[cat_method](*[row[k] for k in temp.keys()])[1]
+    else:
+        compare_fn = lambda row: categorial_methods[cat_method](
+            row[temp[True]], row[temp[False]], **test_kws
+        )[1]
     for col in annotations.columns:
         temp = annotations[col].reset_index()
         temp = temp.groupby(col)[indname].apply(list)
         results[col] = scores.apply(
-            lambda row: categorial_methods[cat_method](row[temp[True]], row[temp[False]])[1],
+            compare_fn,
             axis=1
         )
-        # TODO add in one sidedness, add possible arg to RRA
 
     return results
 
