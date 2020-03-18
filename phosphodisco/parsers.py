@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from pandas import DataFrame
 from typing import Optional, Iterable
-from .classes import ProteomicsData
 
 
 def get_sep(file_path: str) -> str:
@@ -56,34 +55,6 @@ def column_normalize(df: DataFrame, method: str) -> DataFrame:
     raise ValueError(
         'Passed method not valid. Must be one of: median_of_ratios, median, upper_quartile, '
         'twocomp_median.'
-    )
-
-
-def prepare_data(
-        ph_file: str,
-        prot_file: str,
-        normalize_method: Optional[str] = None,
-        min_common_values: int = 5,
-        normed_phospho: Optional[DataFrame] = None,
-        modules: Optional[Iterable] = None,
-        clustering_parameters_for_modules: Optional[dict] = None,
-        putative_regulator_list: Optional[list] = None,
-) -> ProteomicsData:
-
-    phospho = read_phospho(ph_file)
-    protein = read_protein(prot_file)
-    if normalize_method:
-        phospho = column_normalize(phospho, normalize_method)
-        protein = column_normalize(protein, normalize_method)
-
-    return ProteomicsData(
-        phospho=phospho,
-        protein=protein,
-        min_common_values=min_common_values,
-        normed_phospho=normed_phospho,
-        modules=modules,
-        clustering_parameters_for_modules=clustering_parameters_for_modules,
-        possible_regulator_list=putative_regulator_list
     )
 
 

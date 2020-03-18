@@ -92,7 +92,7 @@ def categorical_score_association(
     if indname is None:
         indname = 'index'
 
-    if cat_method != 'ANOVA':
+    if cat_method == 'ANOVA':
         compare_fn = lambda row: categorial_methods[cat_method](*[row[k] for k in temp.keys()])[1]
     else:
         compare_fn = lambda row: categorial_methods[cat_method](
@@ -105,7 +105,6 @@ def categorical_score_association(
             compare_fn,
             axis=1
         )
-
     return results
 
 

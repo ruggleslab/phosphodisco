@@ -27,8 +27,6 @@ def test_classes_regulators():
 
     proteomics.calculate_module_scores()
     regs = list(set(phospho.sample(3).index.get_level_values(0)))
-    print(regs)
-    print(proteomics.phospho, proteomics.protein)
     proteomics.collect_possible_regulators(regs, corr_threshold=0.98)
     proteomics.calculate_regulator_association(model='linear', cv_fold=2)
     return proteomics

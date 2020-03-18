@@ -12,7 +12,7 @@ import sklearn.impute
 from .constants import var_site_delimiter
 from .utils import norm_line_to_residuals, zscore
 from .constants import annotation_column_map, datatype_label
-from .parsers import read_fasta
+from .parsers import read_fasta, read_phospho, read_protein, column_normalize
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
@@ -363,7 +363,6 @@ class ProteomicsData:
         self.background_sequences = var_site_delimiter.join(
             df_to_aa_seqs(all_sites_modules_df, fasta, n_flanking)
         ).split(var_site_delimiter)
-
         return self
 
     def analyze_aa_sequences(
@@ -404,3 +403,33 @@ class ProteomicsData:
             background_seqs=self.background_sequences, ptm_set_gmt=ptm_set_gmt
         )
         return self
+
+
+def prepare_data(
+        ph_file: str,
+        prot_file: str,
+        normalize_method: Optional[str] = None,
+        min_common_values: int = 5,
+        normed_phospho: Optional[DataFrame] = None,
+        modules: Optional[Iterable] = None,
+        clustering_parameters_for_modules: Optional[dict] = None,
+        putative_regulator_list: Optional[list] = None,
+) -> ProteomicsData:
+
+    phospho = read_phospho(ph_file)
+    protein = read_protein(prot_file)
+    if normalize_method:
+        phospho = column_normalize(phospho, normalize_method)
+        protein = column_normalize(protein, normalize_method)
+
+    return ProteomicsData(
+        phospho=phospho,
+        protein=protein,
+        min_common_values=min_common_values,
+        normed_phospho=normed_phospho,
+        modules=modules,
+        clustering_parameters_for_modules=clustering_parameters_for_modules,
+        possible_regulator_list=putative_regulator_list
+    )
+
+

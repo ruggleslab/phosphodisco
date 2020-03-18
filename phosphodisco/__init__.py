@@ -1,6 +1,6 @@
-from phosphodisco.classes import ProteomicsData
+from phosphodisco.classes import ProteomicsData, prepare_data
 from phosphodisco.parsers import (
-    read_protein, read_phospho, read_annotation, column_normalize, prepare_data
+    read_protein, read_phospho, read_annotation, column_normalize
 )
 from phosphodisco.nominate_regulators import (
     collapse_possible_regulators,
@@ -18,7 +18,7 @@ __all__ = [
     'read_phospho',
     'read_annotation',
     'column_normalize',
-    'prepare_phospho',
+    'prepare_data',
     'collapse_possible_regulators',
     'calculate_regulator_coefficients'
 ]

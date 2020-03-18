@@ -24,7 +24,7 @@ def norm_line_to_residuals(
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     nonull = np.logical_and(~np.isnan(ph_line), ~np.isnan(prot_line))
     if sum(nonull) < cv:
-        return np.empty(len(ph_line))
+        return pd.Series(np.empty(len(ph_line)), index=ph_line[nonull].index)
 
     features = prot_line[nonull].values.reshape(-1, 1)
     labels = ph_line[nonull].values
@@ -33,7 +33,7 @@ def norm_line_to_residuals(
     ridgecv_kwargs['cv'] = cv
     model = RidgeCV(**ridgecv_kwargs).fit(features, labels)
     if prevent_negative_parameters and (model.coef_[0] <= 0):
-        return np.empty(len(ph_line))
+        return pd.Series(np.empty(len(ph_line)), index=ph_line[nonull].index)
 
     prediction = model.predict(features)
     residuals = labels - prediction
@@ -54,7 +54,7 @@ def not_na(array):
     return ~np.isnan(array)
 
 
-def corr_na(array1, array2, corr_method: str = 'spearmanr'):
+def corr_na(array1, array2, corr_method: str = 'spearmanr', **addl_kws):
     if corr_method not in ['pearsonr', 'spearmanr']:
         raise ValueError(
             'Method %s is a valid correlation method, must be: %s'
