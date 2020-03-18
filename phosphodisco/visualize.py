@@ -86,7 +86,7 @@ def visualize_modules(
             header = annotations.reindex(col_order).transpose()
 
         fig_len = 0.25*(len(df) + len(header))
-        fig_width = 0.1*len(col_order)
+        fig_width = 0.15*len(col_order)
 
         fig = plt.figure(figsize=(fig_width, fig_len))
         gs = plt.GridSpec(
@@ -179,5 +179,29 @@ def visualize_aa(seq_dfs, save_prefix: Optional[str] = None, **logo_kws):
             plt.savefig('%s.logo.motif_enrichment.module%s.pdf')
 
 
-def visualize_set_enrichment():
-    pass
+def visualize_set_enrichment(
+        module_enrichment_dict,
+        pval_cutoff: float = 0.5,
+        save_prefix: Optional[str] = None,
+        **barplot_kws
+):
+    barplot_kws['color'] = barplot_kws.get('color', '#BDBDBD')
+    for module, df in module_enrichment_dict.items():
+        temp = df[df['Adjusted P-value'] < pval_cutoff]
+        temp = temp.sort_values('Adjusted P-value')
+        if len(temp) > 0:
+            fig, axs = plt.subplots(figsize=(6, 0.3 * len(temp)))
+            sns.barplot(
+                x=-np.log10(temp['Adjusted P-value']),
+                y=temp.index,
+                ax=axs,
+                **barplot_kws
+            )
+            for i, row in enumerate(temp.iterrows()):
+                row = row[1]
+                plt.text(0, i, row['Genes'], va='center', fontsize=10)
+            plt.xlabel('log$_{10}$(adjusted p-value)')
+            plt.ylabel('Terms')
+            plt.title('Cluster %s GO terms, FDR %s' % (module, pval_cutoff))
+            if save_prefix:
+                plt.savefig('%s.barplot.enrichment.pdf')

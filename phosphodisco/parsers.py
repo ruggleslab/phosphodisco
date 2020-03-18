@@ -94,3 +94,27 @@ def read_fasta(fasta_file) -> dict:
             for seq in fh.read().strip().split('>') if seq != ''
         }
     return aa_seqs
+
+
+def read_gmt(gmt_file: str) -> dict:
+    """Parser for gmt files, specifically from ptm-ssGSEA
+
+    Args:
+        gmt_file: Name of gmt file.
+
+    Returns:
+        Dictionary of ptm sets. Keys are labels for each set. Values are dictionaries with
+        structure: {aa sequence: site name}
+
+    """
+    result = {}
+    with open(gmt_file, 'r') as fh:
+        for line in fh.readlines():
+            line = line.strip().split()
+            name = line[0]
+            site_labels = line[1]
+            seqs = line[2:]
+            seq_labels = {seqs[i]: label for i, label in enumerate(site_labels.split('|')[1:])}
+            result.update({name: seq_labels})
+
+    return result

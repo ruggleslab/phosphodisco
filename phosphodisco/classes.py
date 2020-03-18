@@ -1,23 +1,26 @@
-from pandas import DataFrame, Series
+from pandas import DataFrame
 from collections import Counter
 import numpy as np
 import pandas as pd
 import logging
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Union
 from statsmodels.stats.multitest import multipletests
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
 
+from .constants import var_site_delimiter
 from .utils import norm_line_to_residuals, zscore
 from .constants import annotation_column_map, datatype_label
+from .parsers import read_fasta
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
 from .nominate_regulators import (
     collapse_possible_regulators, calculate_regulator_coefficients,calculate_regulator_corr
 )
-from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment
+from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment, df_to_aa_seqs
+from .gene_ontology_analysis import enrichr_per_module, ptm_per_module
 
 
 class ProteomicsData:
@@ -343,36 +346,61 @@ class ProteomicsData:
         self.annotation_association_FDR = fdr
         return self
 
-    def analyze_aa_sequences(
+    def collect_aa_sequences(
             self,
             all_sites_modules_df,
-            fasta_dict,
-            module_col: str = 'modules',
+            fasta: Union[dict, str],
+            module_col,
             n_flanking: int = 7
     ):
-        n_flanking = max(7, n_flanking)
-        background_df = all_sites_modules_df
-        module_df = all_sites_modules_df.loc[all_sites_modules_df[module_col] != -1, :]
-        seqs = make_module_sequence_dict(
-            module_df,
-            fasta_dict=fasta_dict,
-            module_col=module_col,
-            n_flanking=n_flanking
-        )
-        self.module_sequences = seqs
-        self.module_freqs = {
-            module: pd.DataFrame([Counter(tup) for tup in list(zip(*aas))])
-            for module, aas in seqs.items()
-        }
+        if isinstance(fasta, str):
+            fasta = read_fasta(fasta)
 
-        ps = calculate_motif_enrichment(
-            module_IDs_df=module_df,
-            background_IDs_df=background_df,
-            fasta_dict=fasta_dict,
-            module_col=module_col,
-            n_flanking=n_flanking
-        )
-        self.module_aa_enrichment = ps
+        n_flanking = max(7, n_flanking)
+        module_df = all_sites_modules_df.loc[all_sites_modules_df[module_col] != -1, :]
+        module_aas = make_module_sequence_dict(module_df, fasta, module_col, n_flanking)
+        self.module_sequences = module_aas
+        self.background_sequences = var_site_delimiter.join(
+            df_to_aa_seqs(all_sites_modules_df, fasta, n_flanking)
+        ).split(var_site_delimiter)
 
         return self
 
+    def analyze_aa_sequences(
+            self,
+    ):
+        self.module_freqs = {
+            module: pd.DataFrame([Counter(tup) for tup in list(zip(*aas))])
+            for module, aas in self.module_sequences.items()
+        }
+
+        ps = calculate_motif_enrichment(
+            module_aas=self.module_sequences,
+            background_aas=self.background_sequences,
+        )
+        self.module_aa_enrichment = ps
+        return self
+
+    def calculate_go_set_enrichment(
+            self,
+            background_gene_list,
+            gene_sets: str = 'GO_Biological_Process_2018',
+            **enrichr_kws
+    ):
+        self.go_enrichment = enrichr_per_module(
+            self.modules,
+            background_gene_list=background_gene_list,
+            gene_sets=gene_sets,
+            **enrichr_kws
+        )
+        return self
+
+    def calculate_ptm_set_enrichment(
+            self,
+            ptm_set_gmt
+    ):
+        self.ptm_enrichment = ptm_per_module(
+            self.module_sequences,
+            background_seqs=self.background_sequences, ptm_set_gmt=ptm_set_gmt
+        )
+        return self

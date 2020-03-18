@@ -45,16 +45,9 @@ def make_module_sequence_dict(IDs_df, fasta_dict, module_col, n_flanking=7):
 
 
 def calculate_motif_enrichment(
-        module_IDs_df,
-        background_IDs_df,
-        fasta_dict,
-        module_col='modules',
-        n_flanking=7
+        module_aas,
+        background_aas,
 ):
-    module_aas = make_module_sequence_dict(module_IDs_df, fasta_dict, module_col, n_flanking)
-    background_aas = var_site_delimiter.join(
-        df_to_aa_seqs(background_IDs_df, fasta_dict, n_flanking)
-    ).split(var_site_delimiter)
 
     module_freqs = {
         module: pd.DataFrame([Counter(tup) for tup in list(zip(*aas))])
