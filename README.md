@@ -1,5 +1,5 @@
 # PhosphoDisco (PhDc)
-A python package for finding co-regulated phospho sites from phosphoproteomics and proteomics data. 
+A python package for finding co-regulated phospho sites from phosphoproteomics and proteomics data.   
 ***docs to come***
 
 ## Description
