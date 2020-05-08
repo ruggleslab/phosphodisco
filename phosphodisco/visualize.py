@@ -176,12 +176,12 @@ def visualize_aa(seq_dfs, save_prefix: Optional[str] = None, **logo_kws):
         logo = logomaker.Logo(ps, **logo_kws)
         logo.ax.set_title('Module %s motif enrichment' % module)
         if save_prefix:
-            plt.savefig('%s.logo.motif_enrichment.module%s.pdf')
+            plt.savefig('%s.logo.motif_enrichment.module%s.pdf' % module)
 
 
 def visualize_set_enrichment(
         module_enrichment_dict,
-        pval_cutoff: float = 0.5,
+        pval_cutoff: float = 0.05,
         save_prefix: Optional[str] = None,
         **barplot_kws
 ):

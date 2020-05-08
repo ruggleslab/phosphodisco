@@ -73,7 +73,7 @@ class ProteomicsData:
 
         if modules is not None:
             self.assign_modules(modules)
-        
+
         if (annotations is not None) and (column_types is not None):
             self.add_annotations(annotations, column_types)
         elif annotations is not None:
@@ -141,20 +141,41 @@ class ProteomicsData:
             force_choice: bool = False,
             **multiautocluster_kwargs
     ):
+        if modules is not None:
+            self.modules = modules
+            if self.modules.shape[1] > 1:
+                if force_choice is False:
+                    raise ValueError(
+                        'Too many sets of labels in ProteomicsData.modules, please reassign '
+                        'ProteomicsData.modules with a DataFrame with 1 column of labels.'
+                    )
+                else:
+                    self.modules = self.modules.sample(1, axis=1)
+            self.modules = self.modules.iloc[:, 0]
+            try:
+                parameters = self.modules.name.split(param_delim)
+                clss = parameters.pop(0)
+                parameters.append('clusterer%s%s' % (val_delim, clss))
+                parameters = {s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1] for s in parameters}
+                self.clustering_parameters_for_modules = parameters
+            except AttributeError:
+                logging.error(
+                    "Modules names not in hypercluster structure. Cannot assign "
+                    "ProteomicsData.clustering_parameters_for_module"
+                )
+            return self
+
         if data_for_clustering is None:
             data_for_clustering = self.normed_phospho.transpose().corr()
             no_na_cols = data_for_clustering.columns[~data_for_clustering.isnull().any()]
             data_for_clustering = data_for_clustering.loc[no_na_cols, no_na_cols]
 
-        if modules is not None:
-            self.modules = modules
-        else:
-            mac = hypercluster.MultiAutoClusterer(
-                **multiautocluster_kwargs
-            ).fit(data_for_clustering).evaluate([method_to_pick_best_labels])
-            modules = mac.pick_best_labels(method_to_pick_best_labels, min_or_max)
-            self.modules = modules
-            self.multiautoclusterer = mac
+        mac = hypercluster.MultiAutoClusterer(
+            **multiautocluster_kwargs
+        ).fit(data_for_clustering).evaluate([method_to_pick_best_labels])
+        modules = mac.pick_best_labels(method_to_pick_best_labels, min_or_max)
+        self.modules = modules
+        self.multiautoclusterer = mac
 
         if self.modules.shape[1] > 1:
             if force_choice is False:
@@ -213,7 +234,7 @@ class ProteomicsData:
         if possible_regulator_list is None:
             possible_regulator_list = self.possible_regulator_list
         self.possible_regulator_list = possible_regulator_list
-        
+
         subset = self.protein.loc[self.protein.index.intersection(possible_regulator_list), :]
         if self.phospho.index.name is None:
             ind_name = 'variableSites'
@@ -298,7 +319,7 @@ class ProteomicsData:
             )
 
         self.binarized_categorical_annotations = binarize_categorical(
-            annotations, 
+            annotations,
             annotations.columns[column_types == 0]
         )
 
@@ -431,5 +452,3 @@ def prepare_data(
         clustering_parameters_for_modules=clustering_parameters_for_modules,
         possible_regulator_list=putative_regulator_list
     )
-
-

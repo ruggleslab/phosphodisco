@@ -12,7 +12,7 @@ def enrichr_per_module(
         **enrichr_kws
 ):
     results = {}
-    for module, genes in modules.groupby(modules).groups:
+    for module, genes in modules.groupby(modules).groups.items():
         genes = list(set([i[0] for i in genes]))
         res = enrichr(
             gene_list=genes,
