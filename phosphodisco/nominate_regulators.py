@@ -66,7 +66,7 @@ def calculate_regulator_coefficients(
         reg_data: DataFrame,
         cluster_scores: DataFrame,
         scale_data: bool = True,
-        model: str = 'sigmoid',
+        model: str = 'linear',
         regularization_values: Optional[Iterable] = None,
         cv_fold: int = 5,
         **model_kwargs

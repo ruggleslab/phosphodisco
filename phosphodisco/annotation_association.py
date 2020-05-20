@@ -60,7 +60,6 @@ categorial_methods = {
     'RRA': RRA,
     'ttest': one_sided_ttest,
     'ranksum': one_sided_rank_sum,
-    'ANOVA': f_oneway
 }
 
 
@@ -92,12 +91,9 @@ def categorical_score_association(
     if indname is None:
         indname = 'index'
 
-    if cat_method == 'ANOVA':
-        compare_fn = lambda row: categorial_methods[cat_method](*[row[k] for k in temp.keys()])[1]
-    else:
-        compare_fn = lambda row: categorial_methods[cat_method](
-            row[temp[True]], row[temp[False]], **test_kws
-        )[1]
+    compare_fn = lambda row: categorial_methods[cat_method](
+        row[temp[True]], row[temp[False]], **test_kws
+    )[1]
     for col in annotations.columns:
         temp = annotations[col].reset_index()
         temp = temp.groupby(col)[indname].apply(list)

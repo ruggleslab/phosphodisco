@@ -13,7 +13,7 @@ def norm_line_to_residuals(
         prot_line: Iterable,
         regularization_values: Optional[Iterable] = None,
         cv: Optional[int] = None,
-        prevent_negative_parameters: bool = True,
+        prevent_negative_coefficients: bool = True,
         **ridgecv_kwargs
 ) -> Series:
     if regularization_values is None:
@@ -32,7 +32,7 @@ def norm_line_to_residuals(
     ridgecv_kwargs['alphas'] = regularization_values
     ridgecv_kwargs['cv'] = cv
     model = RidgeCV(**ridgecv_kwargs).fit(features, labels)
-    if prevent_negative_parameters and (model.coef_[0] <= 0):
+    if prevent_negative_coefficients and (model.coef_[0] <= 0):
         return pd.Series(np.empty(len(ph_line)), ph_line.index)
 
     prediction = model.predict(features)
