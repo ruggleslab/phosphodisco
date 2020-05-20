@@ -530,9 +530,17 @@ class ProteomicsData:
         sets such as with PTM-ssGSEA
 
         Args:
-            all_sites_modules_df:
-            fasta:
-            module_col:
+            all_sites_modules_df: DataFrame of variable site locations for each phosphosite. The
+            Structure of this df is very strict. It must have a column called 'protein_id' which
+            will match the name of proteins in the fasta file. It must have a column called
+            variable_site_col which contained a ',' separated list of variable sites integers.
+            NB: these must be integers, so variable sites like 'S225s T227t' must be converted to
+            '225,227'. In addition this must contain a column with the module labels for each
+            site, the name of which you specify below.
+            fasta: Fasta file with protein sequences that match with isoform specifier in the
+            all_sites_modules_df.
+            module_col: The name of the column in all_sites_modules_df which contains module
+            labels per site.
             n_flanking: Number of flanking amino acids to collect. Minimum is 7, so that it can
             be used for PTM-ssGSEA.
 
@@ -554,6 +562,12 @@ class ProteomicsData:
     def analyze_aa_sequences(
             self,
     ):
+        """Counts the aa frequencies at each position, as well as the enrichment over background
+        for each module.
+
+        Returns: self with module_freqs and module_aa_enrichment attributes.
+
+        """
         self.module_freqs = {
             module: pd.DataFrame([Counter(tup) for tup in list(zip(*aas))])
             for module, aas in self.module_sequences.items()
@@ -572,6 +586,18 @@ class ProteomicsData:
             gene_sets: str = 'GO_Biological_Process_2018',
             **enrichr_kws
     ):
+        """Uses enrichr from the gseapy package to calculate gene set enrichments for genes in
+        each module.
+
+        Args:
+            background_gene_list: List of all genes from sites used to identify modules.
+            gene_sets: Name of gene sets to use, see enrichr for possibilities:
+            http://amp.pharm.mssm.edu/Enrichr/#stats
+            **enrichr_kws: Additional keyword args to pass to gseapy.enrichr.
+
+        Returns: self with go_enrichment attribute.
+
+        """
         self.go_enrichment = enrichr_per_module(
             self.modules,
             background_gene_list=background_gene_list,
@@ -582,8 +608,17 @@ class ProteomicsData:
 
     def calculate_ptm_set_enrichment(
             self,
-            ptm_set_gmt
+            ptm_set_gmt: str = 'data/ptm.sig.db.all.flanking.human.v1.9.0.gmt'
     ):
+        """Uses a hypergeometric test to calculate enrichment for known ptm sets from PTM-ssGSEA
+        gmt files. Must have the module_sequences and background_sequences attributes to run.
+
+        Args:
+            ptm_set_gmt: Path to gmt file with ptm sets.
+
+        Returns: self with ptm_enrichment attribute.
+
+        """
         self.ptm_enrichment = ptm_per_module(
             self.module_sequences,
             background_seqs=self.background_sequences, ptm_set_gmt=ptm_set_gmt
@@ -601,6 +636,26 @@ def prepare_data(
         clustering_parameters_for_modules: Optional[dict] = None,
         putative_regulator_list: Optional[list] = None,
 ) -> ProteomicsData:
+    """Helper function for loading a bunch of files into a ProteomicsData object.
+
+    Args:
+        ph_file: Path to phospho data file. File must be tsv or csv with first two column as
+        gene name, phosphosite respectively.
+        prot_file: Path to protein data file. csv or tsv with first column specifying the gene
+        name.
+        normalize_method: Optional, if given, the method to use to column normalize for coverage.
+        See parsers.column_normalize for options.
+        min_common_values: The minimum common values between a protein and its phosphosite to
+        consider protein-normalization.
+        normed_phospho: Path to protein-normalized phospho data, if pre calculated.
+        modules: Path to module labels table, if pre calculated.
+        clustering_parameters_for_modules: Dictionary of parameters used in clusterer to get
+        module labels, if pre-calculated.
+        putative_regulator_list: List of gene names of putative regulators.
+
+    Returns: ProteomicsData object loaded with all provided data.
+
+    """
 
     phospho = read_phospho(ph_file)
     protein = read_protein(prot_file)

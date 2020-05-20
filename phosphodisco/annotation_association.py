@@ -7,15 +7,15 @@ from .utils import corr_na
 
 
 def rho_p(rank_vector):
-    """Compares each element in the vector to its corresponding value in the null distribution vector,
-    using the probability mass function of the binomial distribution.
+    """Compares each element in the vector to its corresponding value in the null distribution
+    vector, using the probability mass function of the binomial distribution.
     Assigns a p-value to each element in the vector, creating the betaScore vector.
     Uses minimum betaScore as rho
 
     Args:
-        rank_vector:
+        rank_vector: A vector with the normalized ranks of your group of interest.
 
-    Returns:
+    Returns: rho, p-value
 
     """
     rank_vector = rank_vector[~np.isnan(rank_vector)]
@@ -35,11 +35,32 @@ def rho_p(rank_vector):
 
 
 def RRA(a: Iterable, b: Iterable) -> Tuple[float]:
+    """For 2 vectors of values, calculates the RRA p value that group a is higher ranked than
+    group b. See "Robust Rank Aggregation for Gene List Integration and Meta-Analysis" by
+    Raivo Kolde, Sven Laur, Priit Adler, Jaak Vilo, 2012.
+
+    Args:
+        a: Vector of values in group of interest.
+        b: Vector of values in out group.
+
+    Returns: RRA rho, RRA p for enrichment of values in a.
+
+    """
     vec = a.append(b).rank(ascending=False, pct=True)
     return rho_p(vec[0:len(a)])
 
 
 def one_sided_ttest(a: Iterable, b: Iterable, **test_kws) -> Tuple[float]:
+    """Calculates t-test enrichment of higher values in a.
+
+    Args:
+        a: Vector of values in group of interest.
+        b: Vector of values in out group.
+        **test_kws: Keywords to pass to scipy.stats.ttest_ind.
+
+    Returns: t-stat and p value.
+
+    """
     test_kws['nan_policy'] = 'omit'
     stat, p = ttest_ind(a, b, **test_kws)
     p = p*2
@@ -49,6 +70,16 @@ def one_sided_ttest(a: Iterable, b: Iterable, **test_kws) -> Tuple[float]:
 
 
 def one_sided_rank_sum(a: Iterable, b: Iterable) -> Tuple[float]:
+    """Calculates rank sum enrichment of higher values in a.
+
+    Args:
+        a: Vector of values in group of interest.
+        b: Vector of values in out group.
+        **test_kws: Keywords to pass to scipy.stats.ranksums.
+
+    Returns: rank sum-stat and p value.
+
+    """
     stat, p = ranksums(a, b)
     p = p * 2
     if stat <= 0:
@@ -64,6 +95,15 @@ categorial_methods = {
 
 
 def binarize_categorical(annotations: DataFrame, columns: Iterable) -> DataFrame:
+    """
+
+    Args:
+        annotations:
+        columns:
+
+    Returns:
+
+    """
 
     binarized = pd.DataFrame(index=annotations.index)
     for col in columns:
