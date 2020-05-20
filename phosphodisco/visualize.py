@@ -19,20 +19,20 @@ matplotlib.rcParams.update({'savefig.bbox': 'tight'})
 
 
 def compute_order(
-        df,
-        optimal=True,
-        dist_method="euclidean",
-        cluster_method="average"
+        df: DataFrame,
+        optimal: bool = True,
+        dist_method: str="euclidean",
+        cluster_method: str="average"
 ):
-    """
+    """Computes order of samples for clustered heatmaps.
 
     Args:
-        df:
-        optimal:
-        dist_method:
-        cluster_method:
+        df: Data with rows to cluster.
+        optimal: Whether to return optimal ordering. Slows stuff down.
+        dist_method: Which distance calculation to use.
+        cluster_method: Which hierarchical clustering method to use.
 
-    Returns:
+    Returns: Clustered order of rows.
 
     """
     dist_mat = pdist(df, metric=dist_method)
@@ -54,6 +54,24 @@ def visualize_modules(
         heatmap_kws: dict = {},
         file_prefix: str = 'heatmap'
 ):
+    """Makes heatmap figures of sites vs samples for each module.
+
+    Args:
+        data: ProteomicsData object containing AT LEAST normed_phospho data with no missing
+        values (maybe imputed), and modules assigned.
+        annotations: A DataFrame with samples as rows and categorical annotations to visualize as
+        columns. This isn't taken directly from ProteomicsData because that table may have many
+        more columns than anyone wants to visualize.
+        col_cluster: Whether to cluster samples in the heatmaps.
+        row_cluster: Whether to cluster rows in the heatmaps.
+        cluster_kws: Additional keyword args to pass to visualize.compute_order
+        annot_kws: Additional keyword args to pass to catheat.heatmap
+        heatmap_kws: Additional keyword args to pass to sns.heatmap
+        file_prefix: File prefix for each figure. Suffix will be .clusterX.pdf
+
+    Returns: None
+
+    """
 
     cluster_sets = data.modules
     cluster_sets = {
@@ -88,7 +106,7 @@ def visualize_modules(
         fig_len = 0.25*(len(df) + len(header))
         fig_width = 0.15*len(col_order)
 
-        fig = plt.figure(figsize=(fig_width, fig_len))
+        _ = plt.figure(figsize=(fig_width, fig_len))
         gs = plt.GridSpec(
             nrows=3, ncols=2,
             height_ratios=[len(header)]+2*[len(df)/2],
@@ -135,6 +153,18 @@ def visualize_regulator_coefficients(
         savefig_prefix: Optional[str] = None,
         **heatmap_kwargs
 ):
+    """Visualizes the associations between putative regulators and modules.
+
+    Args:
+        data: ProteomicsData object with regulator_coefficients assigned.
+        percentile_cutoff: Heatmaps are filtered to show high associations only. What threshold
+        should be used.
+        savefig_prefix: If prefix is provided, a figure will be saved with this prefix.
+        **heatmap_kwargs: Additional keyword args for sns.heatmap
+
+    Returns: matplotlib ax with heatmap of coefficients
+
+    """
     if data.regulator_coefficients is None:
         raise KeyError(
             'Must calculate regulator coefficients using '
@@ -156,6 +186,18 @@ def visualize_annotation_associations(
         savefig_prefix: Optional[str] = None,
         **heatmap_kwargs
 ):
+    """Visualizes the associations between sample annotations and modules.
+
+    Args:
+        data: ProteomicsData object with annotation_association_FDR assigned.
+        percentile_cutoff: Heatmaps are filtered to show high associations only. What
+        percentile threshold should be used.
+        savefig_prefix: If prefix is provided, a figure will be saved with this prefix.
+        **heatmap_kwargs: Additional keyword args for sns.heatmap
+
+    Returns: matplotlib ax with heatmap of associations
+
+    """
     if data.annotation_association_FDR is None:
         raise KeyError(
             'Must calculate regulator coefficients using '
@@ -171,6 +213,17 @@ def visualize_annotation_associations(
 
 
 def visualize_aa(seq_dfs, save_prefix: Optional[str] = None, **logo_kws):
+    """Draws logos of each amino acid sequence motif for each module. Can pass in either
+    module_aa_freqs or module_aa_enrichment from ProteomicsData objects.
+
+    Args:
+        seq_dfs: Either module_aa_freqs or module_aa_enrichment from ProteomicsData objects.
+        save_prefix: If prefix is provided, a figure will be saved with this prefix.
+        **logo_kws: Additional keyword args for logomaker.Logo
+
+    Returns: None
+
+    """
     for module, ps in seq_dfs.items():
         logo_kws['color_scheme'] = logo_kws.get('color_scheme', 'NajafabadiEtAl2017')
         logo = logomaker.Logo(ps, **logo_kws)
@@ -185,6 +238,17 @@ def visualize_set_enrichment(
         save_prefix: Optional[str] = None,
         **barplot_kws
 ):
+    """Draws barplots for either enrichr or ptm-ssGSEA set enrichments per module.
+
+    Args:
+        module_enrichment_dict: go_enrichment or ptm_enrichment from ProteomicsData objects.
+        pval_cutoff: p-val cut off to filter for significant enrichments.
+        save_prefix: If prefix is provided, a figure will be saved with this prefix.
+        **barplot_kws: Additional keyword args for sns.barplot
+
+    Returns: None
+
+    """
     barplot_kws['color'] = barplot_kws.get('color', '#BDBDBD')
     for module, df in module_enrichment_dict.items():
         temp = df[df['Adjusted P-value'] < pval_cutoff]

@@ -568,7 +568,7 @@ class ProteomicsData:
         Returns: self with module_freqs and module_aa_enrichment attributes.
 
         """
-        self.module_freqs = {
+        self.module_aa_freqs = {
             module: pd.DataFrame([Counter(tup) for tup in list(zip(*aas))])
             for module, aas in self.module_sequences.items()
         }
