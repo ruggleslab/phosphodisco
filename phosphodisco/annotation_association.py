@@ -95,13 +95,14 @@ categorial_methods = {
 
 
 def binarize_categorical(annotations: DataFrame, columns: Iterable) -> DataFrame:
-    """
+    """Makes binarized versions of categorical data.
 
     Args:
-        annotations:
-        columns:
+        annotations: DataFrame with samples as rows and annotations as columns.
+        columns: Which columns to binarize. Only include categorical columns.
 
-    Returns:
+    Returns: DataFrame with one column per category in specified columns of orignal DataFrame.
+    All values are True, False or missing values.
 
     """
 
@@ -122,6 +123,18 @@ def categorical_score_association(
         cat_method: Optional[str] = None,
         **test_kws
 ) -> DataFrame:
+    """Calculates statistical association between categorical annotations and module scores.
+
+    Args:
+        annotations: DataFrame of sample annotations, samples as rows and annotations as columns.
+        module_scores: DataFrame of module scores, modules as rows, samples as columns.
+        cat_method: What test to use to calculate p-values, must be in
+        annotation_association.categorial_methods.keys()
+        **test_kws: Addition keyword args to pass to a test function.
+
+    Returns: DataFrame with modules as rows, annotations as columns, and p-values as values.
+
+    """
     if cat_method is None:
         cat_method = 'RRA'
     scores = module_scores.copy()
@@ -149,6 +162,16 @@ def continuous_score_association(
         module_scores: DataFrame,
         cont_method: Optional[str] = None
 ):
+    """Calculates statistical association between continuous annotations and module scores.
+
+    Args:
+        annotations: DataFrame of sample annotations, samples as rows and annotations as columns.
+        module_scores: DataFrame of module scores, modules as rows, samples as columns.
+        cont_method: Method to use for statistical test. "pearsonr" or "spearmanr"
+
+    Returns: DataFrame with modules as rows, annotations as columns, and p-values as values.
+
+    """
     if cont_method is None:
         cont_method = 'pearsonr'
 

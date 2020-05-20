@@ -7,9 +7,21 @@ from .utils import corr_na, zscore
 
 
 def collapse_possible_regulators(
-        reg_data: pd.DataFrame,
+        reg_data: DataFrame,
         corr_threshold: float = 0.95
-) -> pd.DataFrame:
+) -> DataFrame:
+    """Uses mean to collapse rows of possible regulator data that are highly correlated. Slightly
+    chaotic, since it just averages two at a time based on iterating through a dictionary. Use
+    with caution.
+
+    Args:
+        reg_data: DataFrame with possible regulator features as rows, samples as columns.
+        corr_threshold: Rows with pearson correlation higher than this value will be averaged
+        iteratively until there are no more rows with more than this correlation.
+
+    Returns: DataFrame with rows that do not have pairwise correlation above the corr_threshold.
+
+    """
     reg_data = zscore(reg_data)
     corr = reg_data.transpose().corr()
     
@@ -64,14 +76,33 @@ def collapse_possible_regulators(
 
 def calculate_regulator_coefficients(
         reg_data: DataFrame,
-        cluster_scores: DataFrame,
+        module_scores: DataFrame,
         scale_data: bool = True,
         model: str = 'linear',
         regularization_values: Optional[Iterable] = None,
         cv_fold: int = 5,
         **model_kwargs
-):
+) -> DataFrame:
+    """Calculates linear model coefficients between regulator data and module scores.
 
+    Args:
+        reg_data: DataFrame with possible regulator features as rows, samples as columns.
+        module_scores: DataFrame with module scores as rows, samples as columns.
+        scale_data: Whether to scale the regulator data and module scores with
+        sklearn.preprocess.scale before training the linear model.
+        model: Whether the relationship between log2(regulator_data) and module scores should be
+        modeled as linear or sigmoid.
+        regularization_values: Which regularization values should be tried during CV to define
+        the coefficients.
+        cv_fold: The number of cross validation folds to try for calculating the regularization
+        value.
+        **model_kwargs: Additional keyword args for sklearn.linear_model.RidgeCV
+
+    Returns: The first object is a DataFrame with module scores as rows and regulators as columns,
+    and model coefficients as values. The second is a Series with module scores as rows and the
+    over all model quality score as values.
+
+    """
     if regularization_values is None:
         regularization_values = [5 ** i for i in range(-5, 5)]
 
@@ -81,36 +112,48 @@ def calculate_regulator_coefficients(
         )
 
     features = reg_data.transpose().values
-    targets = cluster_scores.transpose().values
+    targets = module_scores.transpose().values
     if model == 'sigmoid':
         targets = -np.log2(1+(2**-targets))
     if scale_data:
-        features = preprocessing.scale(features)
-        targets = preprocessing.scale(targets)
+        features = preprocessing.scale(features, copy=True)
+        targets = preprocessing.scale(targets, copy=True)
         
     model_kwargs.update({'cv': cv_fold, 'alphas':regularization_values})
     model = linear_model.RidgeCV(**model_kwargs)
     model.fit(features, targets)
     weights = pd.DataFrame(
         model.coef_,
-        index=cluster_scores.index,
+        index=module_scores.index,
         columns=reg_data.index
     ).transpose()
     scores = pd.Series(
         model.score(features, targets),
-        index=cluster_scores.index,
+        index=module_scores.index,
     )
     return weights, scores
 
 
 def calculate_regulator_corr(
         reg_data: DataFrame,
-        cluster_scores: DataFrame,
+        module_scores: DataFrame,
         **model_kwargs
 ):
+    """Calculates the correlation between possible regulators and module scores.
+
+    Args:
+        reg_data: DataFrame with possible regulator features as rows, samples as columns.
+        module_scores: DataFrame with module scores as rows, samples as columns.
+        **model_kwargs: Additional keyword args for corr_na, including method which can take
+        either pearsonr or spearmanr.
+
+    Returns: Two DataFrames, both with module scores as rows and possible regulators as columns.
+    The first one has correlation R values, the second has correlation p values.
+
+    """
     rs = pd.DataFrame(index=reg_data.index)
     ps = pd.DataFrame(index=reg_data.index)
-    for i, row in cluster_scores.iterrows():
+    for i, row in module_scores.iterrows():
         res = reg_data.apply(lambda r: pd.Series(corr_na(row, r, **model_kwargs)), axis=1)
         rs[i] = res.iloc[:, 0]
         ps[i] = res.iloc[:, 1]

@@ -5,6 +5,14 @@ from typing import Optional, Iterable
 
 
 def get_sep(file_path: str) -> str:
+    """
+
+    Args:
+        file_path:
+
+    Returns:
+
+    """
     if file_path[-4:] == '.tsv':
         return '\t'
     elif file_path[-4:] == '.csv':
