@@ -531,18 +531,21 @@ class ProteomicsData:
 
         Args:
             all_sites_modules_df: DataFrame of variable site locations for each phosphosite. The
-            Structure of this df is very strict. It must have a column called 'protein_id' which
-            will match the name of proteins in the fasta file. It must have a column called
-            variable_site_col which contained a ',' separated list of variable sites integers.
-            NB: these must be integers, so variable sites like 'S225s T227t' must be converted to
-            '225,227'. In addition this must contain a column with the module labels for each
-            site, the name of which you specify below.
-            fasta: Fasta file with protein sequences that match with isoform specifier in the
-            all_sites_modules_df.
-            module_col: The name of the column in all_sites_modules_df which contains module
-            labels per site.
-            n_flanking: Number of flanking amino acids to collect. Minimum is 7, so that it can
-            be used for PTM-ssGSEA.
+                                  Structure of this df is very strict. It must have a column called 'protein_id' which
+                                  will match the name of proteins in the fasta file. It must have a column called
+                                  'variable_sites' which contains a ',' separated list of variable sites integers.
+                                  NB: these must be integers, so variable sites like 'S225s T227t' must be converted to
+                                  '225,227'. In addition this must contain a column with the module labels for each
+                                  site, the name of which you specify below.
+            
+            fasta:                Fasta file with protein sequences that match with isoform specifier in the
+                                  all_sites_modules_df.
+            
+            module_col:           The name of the column in all_sites_modules_df which contains module
+                                  labels per site.
+                                  
+            n_flanking:           Number of flanking amino acids to collect. Minimum is 7, so that it can
+                                  be used for PTM-ssGSEA.
 
         Returns: self with module_sequences and background_sequences attributes.
 
