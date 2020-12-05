@@ -74,7 +74,7 @@ def ptm_per_module(
         raise ValueError('Module sequences must be at least 15 AAs long')
     if len(list(module_seq_dict.values())[0]) > 15:
         module_seq_dict = {
-            k: [seq[(len(seq)/2-0.5)-7: (len(seq)/2-0.5)+8]
+            k: [seq[int((len(seq)/2-0.5)-7): int((len(seq)/2-0.5)+8)]
                 for seq in v] for k, v in module_seq_dict.items()
         }
     background_seqs = set(background_seqs)
