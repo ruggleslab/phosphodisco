@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
-from typing import Optional, Iterable
+from typing import Optional, Iterable, Tuple
 
 
 def get_sep(file_path: str) -> str:
@@ -36,11 +36,11 @@ def read_protein(file_path: str) -> DataFrame:
     ).astype(float)
 
 def read_gct(path: str, 
-             index_cols: list=['geneSymbol', 'variableSites'], 
-             regex: str=None, 
-             sample_cols: list=None, 
-             annotation_rows: list=None
-            ):
+             index_cols: Optional[List[str]]=['geneSymbol', 'variableSites'], 
+             regex: Optional[Union[str, None]]=None, 
+             sample_cols: Optional[Union[List, None]]=None, 
+             annotation_rows: Optional[Union[List, None]]=None
+            ) -> Tuple[DataFrame, DataFrame]:
     """
     Reads in a gct file and formats the dataframe so it's ready for phospho disco
     path: path to file.gct
@@ -89,7 +89,6 @@ def read_gct(path: str,
             )
 
     return sample_df, annots_df
-
 
 def read_annotation(file_path: str) -> DataFrame:
     """Reads in sample annotation file. Sample as rows, annotations as columns.
