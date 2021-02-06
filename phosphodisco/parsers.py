@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
-from typing import Optional, Iterable, Tuple
+from typing import Optional, Iterable, Tuple, List, Union
 
 
 def get_sep(file_path: str) -> str:
@@ -90,6 +90,32 @@ def read_gct(path: str,
 
     return sample_df, annots_df
 
+def filter_dups(group:pd.DataFrame):
+    """
+    Meant to be used in apply after a groupby call.
+    For a set of rows (group) find the one with the lowest number of NaNs or tied for the lowest number.
+    group: pd.DataFrame
+    """
+    nan_counts = group.apply(lambda r: r.isnull().sum(), axis=1)
+    min_nan_counts = nan_counts.min()
+    return group.loc[nan_counts == min_nan_counts].head(1)
+
+# def deduplicate_rows(
+#     df: pd.DataFrame,
+#     samples,
+#     sequence_col = 'sequence',
+#     maximize_cols = ['bestScore', 'Best_scoreVML', 'bestDeltaForwardReverseScore']
+#     ) -> pd.DataFrame:
+
+#     groupby = df.index.names
+#     df = df.reset_index()
+
+#     df[maximize_cols] = df[maximize_cols].astype(float)
+#     df['numNAs'] = df[samples].isnull().sum(axis=1)
+#     if sequence_col:
+#         df['len'] = df[sequence_col].str.len()
+#         return df.groupby(groupby).apply(lambda row: row.nsmallest(1, columns=['numNAs','len'], keep='all').nlargest(1, columns=maximize_cols, keep='first')).reset_index(level=-1, drop=True)
+#     return df.groupby(groupby).apply(lambda row: row.nsmallest(1, columns=['numNAs'], keep='all').nlargest(1, columns=maximize_cols, keep='first')).reset_index(level=-1, drop=True)
 
 
 def read_annotation(file_path: str) -> DataFrame:
