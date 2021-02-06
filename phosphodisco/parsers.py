@@ -63,8 +63,8 @@ def read_gct(path: str,
     )
     # the metadatatable is transposed in the gct file, hence we are indexing everything but 
     # the first ncolsmeta rows, and everything but the first nrowsmeta columns
-    sample_df = df.set_index(index_cols).iloc[ncolsmeta:, nrowmeta-1:].copy()
-    annots_df = df.set_index(df.columns[0]).iloc[:ncolsmeta, nrowmeta-1:].copy()
+    sample_df = df.set_index(index_cols).iloc[ncolsmeta:, nrowmeta-len(index_cols)+1:].copy()
+    annots_df = df.set_index(df.columns[0]).iloc[:ncolsmeta, nrowmeta:].copy()
     if regex is not None:
         sample_df = sample_df.loc[:,sample_df.columns.str.match(regex)]
         annots_df = annots_df.loc[:,annots_df.columns.str.match(regex)]
@@ -89,6 +89,8 @@ def read_gct(path: str,
             )
 
     return sample_df, annots_df
+
+
 
 def read_annotation(file_path: str) -> DataFrame:
     """Reads in sample annotation file. Sample as rows, annotations as columns.
