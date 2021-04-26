@@ -1,3 +1,5 @@
+import pkgutil
+from io import BytesIO
 from pandas import DataFrame, Series
 from collections import Counter
 import numpy as np
@@ -67,6 +69,7 @@ class ProteomicsData:
             1, which mean categorical and continuous respectively. If there are values other than
             these, those annotation columns will be ignored.
         """
+        
         if min_common_values is None:
             min_common_values = 6
         self.min_values_in_common = min_common_values
@@ -626,6 +629,35 @@ class ProteomicsData:
             self.module_sequences,
             background_seqs=self.background_sequences, ptm_set_gmt=ptm_set_gmt
         )
+        return self
+    
+    def extract_kinase_activation_loop_phosphosites(self, kin_act_phosphosites=None):
+        """
+        Extracts common phosphosites between ProteomicsData object and the list of known activation loop sites found by Schmidlin et. al 2019. Also allows for partial matches, i.e. S12s S143s will be matched with S12s or S143s and vice versa.
+        kin_act_phosphosites: Optional phosphosite dataframe with a MultiIndex, where 
+                              level 0 is the gene identifier and level 1 is a PTM-site identifier
+        """
+        if kin_act_phosphosites is None: #read in dataframe if none is given 
+            kin_act_data = BytesIO(pkgutil.get_data('phosphodisco', 'data/kin_act_loops.csv'))
+            kin_act_phosphosites = pd.read_csv(kin_act_data,
+                            index_col=[0,1])
+        #Extract indices 
+        phospho_inds = self.phospho.index.to_frame().copy()
+        phospho_inds.iloc[:,1] = phospho_inds.iloc[:,1].str.split() #get  first column 
+        phospho_inds = phospho_inds.explode(phospho_inds.columns[1]) #get column name
+
+        # Rename and swap index and columns, so we can overlap the new index with the kinase activation loop index
+        phospho_inds = phospho_inds.rename(columns={phospho_inds.columns[0]:'geneSymbol_exploded',phospho_inds.columns[1]:'variableSites_exploded'})
+        phospho_inds['variableSites_numerical'] = phospho_inds['variableSites_exploded'].str.extract(r'(\d+)').astype(int)
+        phospho_inds = phospho_inds.reset_index()
+        phospho_inds = phospho_inds.set_index(['geneSymbol_exploded','variableSites_numerical'])
+
+        #Fetch phosphodata from overlapping indices 
+        kin_act_index_overlap = kin_act_phosphosites.index.intersection(phospho_inds.index)
+        #phospho_inds.columns
+        phospho_inds_overlap = phospho_inds.loc[kin_act_index_overlap].iloc[:,0:2].set_index(list(phospho_inds.columns[[0,1]])).index
+        kin_act_loop_phospho_data = self.phospho.loc[phospho_inds_overlap]
+        self.kin_act_loop_phospho_data = kin_act_loop_phospho_data
         return self
 
 
