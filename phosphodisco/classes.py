@@ -1,5 +1,6 @@
 import pkgutil
 from io import BytesIO
+from warnings import warn
 from pandas import DataFrame, Series
 from collections import Counter
 import numpy as np
@@ -658,8 +659,11 @@ class ProteomicsData:
         phospho_inds_overlap = phospho_inds.loc[kin_act_index_overlap].iloc[:,0:2].set_index(list(phospho_inds.columns[[0,1]])).index.drop_duplicates()
         kin_act_loop_phospho_data = self.phospho.loc[phospho_inds_overlap]
         self.kin_act_loop_phospho_data = kin_act_loop_phospho_data
+        if self.kin_act_loop_phospho_data.shape[0] == 0:
+            warn('No phosphosites overlapped with the set of kinase activation loop phosphosites')
         return self
-
+#     def correlate_kinase_activation_loop_phosphosites_with_module_scores(self):
+        
 
 def prepare_data(
         ph_file: str,
