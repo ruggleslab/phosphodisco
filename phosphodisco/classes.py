@@ -655,7 +655,7 @@ class ProteomicsData:
         #Fetch phosphodata from overlapping indices 
         kin_act_index_overlap = kin_act_phosphosites.index.intersection(phospho_inds.index)
         #phospho_inds.columns
-        phospho_inds_overlap = phospho_inds.loc[kin_act_index_overlap].iloc[:,0:2].set_index(list(phospho_inds.columns[[0,1]])).index
+        phospho_inds_overlap = phospho_inds.loc[kin_act_index_overlap].iloc[:,0:2].set_index(list(phospho_inds.columns[[0,1]])).index.drop_duplicates()
         kin_act_loop_phospho_data = self.phospho.loc[phospho_inds_overlap]
         self.kin_act_loop_phospho_data = kin_act_loop_phospho_data
         return self
