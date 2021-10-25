@@ -20,7 +20,7 @@ def find_aa_seqs(
     Returns: AA sequence centered around var_site.
 
     """
-    sites = [int(v.strip()) for v in var_sites.split(var_site_delimiter)]
+    sites = [max(int(v.strip())-1, 0) for v in var_sites.split(var_site_delimiter)]
     seqs = []
     for var_site in sites:
         n = int(var_site)

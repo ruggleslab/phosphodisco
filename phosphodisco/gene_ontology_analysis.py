@@ -94,15 +94,19 @@ def ptm_per_module(
             ]
         )
         for term, sites in ptm_set_gmt.items():
+            sites = dict(sites)
             n = len(sites)
             overlap = seqs.intersection(set(sites.keys()))
             x = len(overlap)
             overlap = [sites[seq] for seq in overlap]
             pval = scipy.stats.hypergeom.sf(x, M, n, N, loc=1)
             line = pd.Series({
-                'Genes': ','.join(overlap),
+                'Site_set':','.join(sites.values()),
+                'Sites': ','.join(overlap),
                 'Overlap': x,
-                'P-value': pval},
+                'P-value': pval,
+                'Term':term
+                },
                 name=term
             )
             module_results = module_results.append(line)

@@ -224,11 +224,11 @@ def read_gmt(gmt_file: str) -> dict:
     result = {}
     with open(gmt_file, 'r') as fh:
         for line in fh.readlines():
-            line = line.strip().split()
+            line = line.strip().split('\t')
             name = line[0]
             site_labels = line[1]
             seqs = line[2:]
-            seq_labels = {seqs[i]: label for i, label in enumerate(site_labels.split('|')[1:])}
+            seq_labels = {seqs[i].split('-')[0]: label for i, label in enumerate(site_labels.split('|')[1:])}
             result.update({name: seq_labels})
 
     return result
