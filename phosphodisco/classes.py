@@ -539,7 +539,8 @@ class ProteomicsData:
                                   site, the name of which you specify below.
             
             fasta:                Fasta file with protein sequences that match with isoform specifier in the
-                                  all_sites_modules_df.
+                                  all_sites_modules_df. 
+                                  Can also pass a dictionary in format {isoform specifier:protein sequence}.
             
             module_col:           The name of the column in all_sites_modules_df which contains module
                                   labels per site.
