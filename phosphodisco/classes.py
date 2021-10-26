@@ -710,3 +710,75 @@ def druggability(self,module_num=None,interactions=None):
             return self
         else:
             return self
+
+
+
+def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True):
+    #specify third argument = druggable or not 
+    
+    """
+    Description: 
+        This function helps find druggable regulators and is able to filter them by module. 
+        Can also find the top N (where N is a number over zero) regulators associated with each module
+    
+    Args: 
+        module_num= Module numbers of interest. Must be entered in list form 
+        top_num = The number of regulators closely associated with the module, must be greater than 0. 
+        only_druggable = True or False value, specifies whether you want only druggable  regulators returned.
+        
+    Modified attributes: 
+        self.druggable_regulators_df = gives you a dataframe of only druggable regulators. 
+        self.filtered_reg_df = returns a dataframe of regulators filtered by druggability, modules of interest
+    
+    Returns: 
+        self 
+        
+    """
+    if hasattr(self, 'possible_regulator_data')==False:
+        raise AttributeError("No regulators nominated, run .collect_possible_regulators")
+
+    possible_regulator_list = self.possible_regulator_data.index.get_level_values(0)
+    druggable_genes = self.druggable_module_genes_df.iloc[:,0]
+    self.druggable_genes = druggable_genes
+    self.possible_reg_list = possible_regulator_list
+
+    if hasattr(self, 'regulator_coefficients')==False:
+        raise AttributeError("Run .calculate_regulator_association()")
+        
+    reg_coeff = proteomics_obj.regulator_coefficients.reset_index()
+
+    
+    #return a  list of only druggable regulators 
+    druggable_regulators_names = self.possible_regulator_data.loc[possible_regulator_list.intersection(druggable_genes)]
+    druggable_regulator_list = set(druggable_regulators_names.reset_index().iloc[:,0])
+    self.druggable_regulator_list = druggable_regulator_list
+    
+    
+    #find druggable regulators in regulator_coefficient dataframe
+    self.druggable_regulators_df =  reg_coeff[reg_coeff.iloc[:,0].isin(druggable_regulator_list)]
+   
+     
+    if only_druggable:
+        regulator_df = self.druggable_regulators_df.set_index(['geneSymbol','variableSites']).copy() #generalize this maybe? 
+    else:
+        regulator_df = reg_coeff.copy()
+                                              
+   #Find top X in a given module
+
+    if module_num is not None: #module number and top number not entered
+        regulator_df = regulator_df.loc[:,module_num]
+        
+    column_list = regulator_df.columns
+        
+    if top_num is not None: 
+        combined_top_regs  = set(
+        chain.from_iterable(set(regulator_df[x].nlargest(top_num).index) for x in 
+                    column_list)
+                            )
+        regulator_df = regulator_df.loc[combined_top_regs, column_list]
+        
+        
+    self.filtered_reg_df = regulator_df
+
+    return self
+
