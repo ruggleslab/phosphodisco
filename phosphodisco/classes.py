@@ -712,12 +712,6 @@ def druggability(self,module_num=None,interactions=None):
             return self
 
 
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> druggability
 def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True):
     #specify third argument = druggable or not 
     
