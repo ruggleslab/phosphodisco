@@ -713,8 +713,11 @@ def druggability(self,module_num=None,interactions=None):
 
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> druggability
 def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True):
     #specify third argument = druggable or not 
     
@@ -781,4 +784,5 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
         
         
     self.filtered_reg_df = regulator_df
+
     return self
