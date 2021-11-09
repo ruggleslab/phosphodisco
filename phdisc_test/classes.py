@@ -794,8 +794,9 @@ def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_drugga
      top_num = The number of regulators closely associated with the module, must be greater than 0. 
      only_druggable = True or False value, specifies whether you want only druggable regulators returned.
     
-    Modified attributes: 
-        
+    Modified attributes:
+    self.druggable_bool = returns series containing gene names, associated phosphosites and whether these genes are druggable are not. Druggable genes are "True", non-druggable genes are "False". This boolean series is used to construct the accompanying color bar for the heatmap. 
+    
     """
     #Error statements
     if hasattr(self, 'regulator_coefficients')==False:
