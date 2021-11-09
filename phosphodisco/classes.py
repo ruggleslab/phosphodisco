@@ -780,3 +780,66 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
     self.filtered_reg_df = regulator_df
 
     return self
+
+
+def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_druggable=True):
+    
+    """
+    Description: 
+     This function creates a heatmap displaying the association coefficients between nominated, druggable regulators and modules.
+     It also calls on the find_druggable_regulators function and uses its output to create the heatmap
+    
+    Args:
+     module_num= Module numbers of interest. Must be entered in list form 
+     top_num = The number of regulators closely associated with the module, must be greater than 0. 
+     only_druggable = True or False value, specifies whether you want only druggable regulators returned.
+    
+    Modified attributes:
+    self.druggable_bool = returns series containing gene names, associated phosphosites and whether these genes are druggable are not. Druggable genes are "True", non-druggable genes are "False". This boolean series is used to construct the accompanying color bar for the heatmap. 
+    
+    """
+    #Error statements
+    if hasattr(self, 'regulator_coefficients')==False:
+        raise AttributeError("Run .calculate_regulator_association()")
+    
+
+
+    #call other function
+    self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
+    
+    regdf = self.filtered_reg_df
+    regdf_copy = self.filtered_reg_df.copy()
+    
+    #annotation for druggability 
+    druggable_or_not = []
+    
+    
+    #Druggability
+    druggable_genes = self.druggable_genes
+    #use druggable regulators not druggable genes in modules
+    for x in regdf.index.get_level_values(0):
+        if x in druggable_genes:
+            druggable_or_not.append(1)
+        else:
+            druggable_or_not.append(0)
+        
+        
+    self.druggable_or_not = druggable_or_not
+    regdf_copy['druggability'] = druggable_or_not
+    
+    
+   
+    druggable_bool = pd.Series(data=regdf_copy.index.get_level_values(0).map(lambda row: (len(set(row.split('-')).intersection(druggable_genes)) > 0)),index = regdf.index,name = 'druggability')
+    
+    self.druggable_bool = druggable_bool
+    
+    druggable_colors = druggable_bool.map(dict(zip([False,True], sns.color_palette('husl',2))))
+    cmap = dict(zip(['not druggable','druggable'], sns.color_palette('husl',2)))
+    
+    #Heatmap
+    legend_TN  = [mpatches.Patch(color=c,label=l) for l,c in cmap.items()]  
+  
+    #center heatmap at 
+    druggability_map = sns.clustermap(regdf, row_colors=druggable_colors, cmap="coolwarm")
+    l2=druggability_map.ax_heatmap.legend(loc='center',bbox_to_anchor=(1.8,1.2),handles=legend_TN,frameon=True, prop={'size':15})
+    return druggability_map
