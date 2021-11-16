@@ -450,7 +450,7 @@ class ProteomicsData:
         if ncommon <= 1:
             raise ValueError(
                 'Only %s samples in common between annotations and normed_phospho. Must be more '
-                'than 1 sample in common. ' % len(ncommon)
+                'than 1 sample in common. ' % (ncommon)
             )
         logging.info('Annotations have %s samples in common with normed_phospho' % ncommon)
         annotations = annotations.reindex(common_samples)
