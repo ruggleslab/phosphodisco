@@ -500,7 +500,12 @@ class ProteomicsData:
             cont_method
         )
         cat_annots = self.categorical_annotations
+        keep_columns = []
+	for column in cat_annots.columns:
+		if len(cat_annots.loc[cat_annots[column].notnull(),column].unique())>1:
+			keep_columns.append(column)        
 
+	cat_annots = cat_annots.loc[:,keep_columns]
         cat = categorical_score_association(
             cat_annots,
             self.module_scores,
