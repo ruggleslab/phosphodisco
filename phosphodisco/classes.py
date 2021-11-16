@@ -8,7 +8,7 @@ from statsmodels.stats.multitest import multipletests
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
-
+from io import BytesIO
 from .constants import var_site_delimiter
 from .utils import norm_line_to_residuals, zscore
 from .constants import annotation_column_map, datatype_label
@@ -688,7 +688,7 @@ def druggability(self,module_num=None,interactions=None):
     
     #Read in list of interactions
     if interactions is None: #read in list of interactions taken from DGidb database
-        interactions = pd.read_csv('/gpfs/data/ruggleslab/phosphodisco/interactions-Jan2021-dgidb.tsv', sep='\t')
+        interactions = BytesIO(pkgutil.get_data('phosphodisco', 'data/interactions-Jan2021-dgidb.tsv')
         genes = interactions.iloc[:,0]
     
     #define a list of druggable genes as a set 
