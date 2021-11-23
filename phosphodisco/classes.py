@@ -3,6 +3,7 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 import logging
+import pkgutil
 from typing import Iterable, Optional, Union
 from statsmodels.stats.multitest import multipletests
 import hypercluster
