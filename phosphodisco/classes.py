@@ -1,3 +1,6 @@
+import pkgutil
+from io import BytesIO
+from warnings import warn
 from pandas import DataFrame, Series
 from collections import Counter
 import numpy as np
@@ -5,6 +8,7 @@ import pandas as pd
 import logging
 from typing import Iterable, Optional, Union
 from statsmodels.stats.multitest import multipletests
+from scipy.stats import spearmanr
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
@@ -67,6 +71,7 @@ class ProteomicsData:
             1, which mean categorical and continuous respectively. If there are values other than
             these, those annotation columns will be ignored.
         """
+        
         if min_common_values is None:
             min_common_values = 6
         self.min_values_in_common = min_common_values
@@ -627,6 +632,77 @@ class ProteomicsData:
             self.module_sequences,
             background_seqs=self.background_sequences, ptm_set_gmt=ptm_set_gmt
         )
+        return self
+    
+    def extract_kinase_activation_loop_phosphosites(self, kin_act_phosphosites=None):
+        """
+        Extracts common phosphosites between ProteomicsData object and the list of known activation loop sites found by Schmidlin et. al 2019. Also allows for partial matches, i.e. S12s S143s will be matched with S12s or S143s and vice versa.
+        kin_act_phosphosites: Optional phosphosite dataframe with a MultiIndex, where 
+                              level 0 is the gene identifier and level 1 is a PTM-site identifier
+        """
+        if kin_act_phosphosites is None: #read in dataframe if none is given 
+            kin_act_data = BytesIO(pkgutil.get_data('phosphodisco', 'data/kin_act_loops.csv'))
+            kin_act_phosphosites = pd.read_csv(kin_act_data,
+                            index_col=[0,1])
+        #Extract indices 
+        phospho_inds = self.phospho.index.to_frame().copy()
+        phospho_inds.iloc[:,1] = phospho_inds.iloc[:,1].str.split() #get  first column 
+        phospho_inds = phospho_inds.explode(phospho_inds.columns[1]) #get column name
+
+        # Rename and swap index and columns, so we can overlap the new index with the kinase activation loop index
+        phospho_inds = phospho_inds.rename(columns={phospho_inds.columns[0]:'geneSymbol_exploded',phospho_inds.columns[1]:'variableSites_exploded'})
+        phospho_inds['variableSites_numerical'] = phospho_inds['variableSites_exploded'].str.extract(r'(\d+)').astype(int)
+        phospho_inds = phospho_inds.reset_index()
+        phospho_inds = phospho_inds.set_index(['geneSymbol_exploded','variableSites_numerical'])
+
+        #Fetch phosphodata from overlapping indices 
+        kin_act_index_overlap = kin_act_phosphosites.index.intersection(phospho_inds.index)
+        #phospho_inds.columns
+        phospho_inds_overlap = phospho_inds.loc[kin_act_index_overlap].iloc[:,0:2].set_index(list(phospho_inds.columns[[0,1]])).index.drop_duplicates()
+        kin_act_loop_phospho_data = self.phospho.loc[phospho_inds_overlap]
+        self.kin_act_loop_phospho_data = kin_act_loop_phospho_data
+        if self.kin_act_loop_phospho_data.shape[0] == 0:
+            warn("No phosphosites overlapped with the set of kinase activation loop phosphosites")
+        return self
+    def correlate_kinase_activation_loop_phosphosites_with_module_scores(self, na_frac=None):
+        """
+        Correlates kinase activation loop phosphosite data with module scores using the Spearman correlation coefficient.
+        Will try to run the necessary functions in case module_scores or kin_act_loop_phospho_data haven't been set by calculate_module_scores and extract_kinase_activation_loop_phosphosites yet. P-values are multiple-testing corrected with FDR (Benjamini Hochberg method).
+        
+        Args:
+            na_frac: float to set which fraction of a row in kin_act_loop_phospho_data is allowed to be NaN and still get included, i.e. 0.7 would mean 70% of values could be NaN in a row. By default and at minimum, 3 non-NaN values are allowed.
+        
+        Returns:
+            self with kin_act_phospho_module_score_correlations and kin_act_phospho_module_score_pvals attributes set.
+        """
+        if not hasattr(self,"kin_act_loop_phospho_data"):
+            logging.info("Kinase activation loop data has not been extracted from ProteomicsData.phospho yet.\nExtracting kinase activation loop data using defaults.")
+            self.extract_kinase_activation_loop_phosphosites()
+            if self.kin_act_loop_phospho_data.shape[0] == 0:
+                raise ValueError("Need kinase activation loop phosphosites that overlap with provided phospho data in order to correlate them with module scores")
+        if not hasattr(self, "module_scores"):
+            if not hasattr(self, "modules"):
+                raise ValueError("Add modules using assign_modules first")
+            else:
+                self.calculate_module_scores()
+        # dropping all rows with less than 3 non-NaN values bc three are required for a p-value
+        # should I add another optional NaN filtering step here? Rows with tons of missing values will tend to have terrible p-values, and add to the number of tests we have to correct for.
+        if na_frac is not None:
+            na_thresh = round(self.kin_act_loop_phospho_data.shape[1] * (1-na_frac))
+        else:
+            na_thresh = 3
+        spearmanr_df = self.kin_act_loop_phospho_data.dropna(thresh=na_thresh).dropna(thresh=3).apply(
+            lambda phos_sites_row: self.module_scores.apply(
+                lambda scores_row: spearmanr(phos_sites_row, scores_row, nan_policy='omit'),
+                axis=1
+            ),
+            axis=1
+        )
+        self.kin_act_phospho_module_score_correlations = spearmanr_df.apply(lambda col: col.str.get(0))
+        pvals_melted = spearmanr_df.apply(lambda col: col.str.get(1)).melt(ignore_index=False, var_name="module", value_name='p-value').reset_index()
+        pvals_melted['adj_pval'] = multipletests(pvals_melted['p-value'], method='fdr_bh')[1]
+        self.kin_act_phospho_module_score_pvals = pvals_melted.pivot_table(columns='module', values='adj_pval', index=pvals_melted.columns[[0,1]].to_list())
+        
         return self
 
 

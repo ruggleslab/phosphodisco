@@ -1,0 +1,630 @@
+geneSymbol,variableSites_numerical,Modified Peptide Sequence,kinase_and_phosphosite,Uniprot ID and Name,Availability of phosphosite specific antibodies from Science Signaling Technology™,Antibody Specificity,variableSites
+AAK1,235,APEMVNLYS[Pho]GK,AAK1 (S235),sp|Q2M2I8|AAK1_HUMAN,,,S235s
+AAK1,234,APEMVNLY[Pho]SGK,AAK1 (Y234),sp|Q2M2I8|AAK1_HUMAN,,,Y234y
+AAK1,234,APEMVNLY[Pho]S[Pho]GK,AAK1 (Y234/S235),sp|Q2M2I8|AAK1_HUMAN,,,Y234y
+AAK1,235,APEMVNLY[Pho]S[Pho]GK,AAK1 (Y234/S235),sp|Q2M2I8|AAK1_HUMAN,,,S235s
+ABL1,392,LMTGDT[Pho]YTAHAGAK,"Abl (T392), Abl2/Arg (T438)",sp|P00519|ABL1_HUMAN,,,T392t
+ABL1,438,LMTGDT[Pho]YTAHAGAK,"Abl (T392), Abl2/Arg (T438)",sp|P00519|ABL1_HUMAN,,,T438t
+ABL2,392,LMTGDT[Pho]YTAHAGAK,"Abl (T392), Abl2/Arg (T438)", sp|P42684|ABL2_HUMAN,,,T392t
+ABL2,438,LMTGDT[Pho]YTAHAGAK,"Abl (T392), Abl2/Arg (T438)", sp|P42684|ABL2_HUMAN,,,T438t
+ABL1,394,LMTGDTYT[Pho]AHAGAK,"Abl (T394), Abl2/Arg (T440)",sp|P00519|ABL1_HUMAN,,,T394t
+ABL1,440,LMTGDTYT[Pho]AHAGAK,"Abl (T394), Abl2/Arg (T440)",sp|P00519|ABL1_HUMAN,,,T440t
+ABL2,394,LMTGDTYT[Pho]AHAGAK,"Abl (T394), Abl2/Arg (T440)", sp|P42684|ABL2_HUMAN,,,T394t
+ABL2,440,LMTGDTYT[Pho]AHAGAK,"Abl (T394), Abl2/Arg (T440)", sp|P42684|ABL2_HUMAN,,,T440t
+ABL1,393,LMTGDTY[Pho]TAHAGAK,"Abl (Y393), Abl2/Arg (Y439)",sp|P00519|ABL1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-c-abl-tyr412-247c7-rabbit-mab/2865,,Y393y
+ABL1,439,LMTGDTY[Pho]TAHAGAK,"Abl (Y393), Abl2/Arg (Y439)",sp|P00519|ABL1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-c-abl-tyr412-247c7-rabbit-mab/2865,,Y439y
+ABL2,393,LMTGDTY[Pho]TAHAGAK,"Abl (Y393), Abl2/Arg (Y439)", sp|P42684|ABL2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-c-abl-tyr412-247c7-rabbit-mab/2865,,Y393y
+ABL2,439,LMTGDTY[Pho]TAHAGAK,"Abl (Y393), Abl2/Arg (Y439)", sp|P42684|ABL2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-c-abl-tyr412-247c7-rabbit-mab/2865,,Y439y
+ARAF,452,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)",sp|P10398|ARAF_HUMAN,,,T452t
+ARAF,599,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)",sp|P10398|ARAF_HUMAN,,,T599t
+ARAF,491,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)",sp|P10398|ARAF_HUMAN,,,T491t
+BRAF,452,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)", sp|P15056|BRAF_HUMAN,,,T452t
+BRAF,599,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)", sp|P15056|BRAF_HUMAN,,,T599t
+BRAF,491,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)", sp|P15056|BRAF_HUMAN,,,T491t
+RAF1,452,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)", sp|P04049|RAF1_HUMAN,,,T452t
+RAF1,599,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)", sp|P04049|RAF1_HUMAN,,,T599t
+RAF1,491,IGDFGLAT[Pho]VK,"ARaf (T452), BRaf (T599), C-Raf/Raf1 (T491)", sp|P04049|RAF1_HUMAN,,,T491t
+UFO,703,IYNGDYY[Pho]R,Axl (Y703),sp|P30530|UFO_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-axl-tyr702-d12b2-rabbit-mab/5724,,Y703y
+BLK,389,IIDSEY[Pho]TAQEGAK,BLK (Y389),sp|P51451|BLK_HUMAN,,,Y389y
+BMPR2,379,PGEEDNAAISEVGT[Pho]IR,BMPR2 (T379),sp|Q13873|BMPR2_HUMAN,,,T379t
+PTK6,342,EDVY[Pho]LSHDHNIPYK,Brk (Y342),sp|Q13882|PTK6_HUMAN,,,Y342y
+PTK6,342,EDVY[Pho]LSHDHNIPY[Pho]K,Brk (Y342/Y351),sp|Q13882|PTK6_HUMAN,,,Y342y
+PTK6,351,EDVY[Pho]LSHDHNIPY[Pho]K,Brk (Y342/Y351),sp|Q13882|PTK6_HUMAN,,,Y351y
+PTK6,351,EDVYLSHDHNIPY[Pho]K,Brk (Y351),sp|Q13882|PTK6_HUMAN,,,Y351y
+BTK,551,YVLDDEY[Pho]TSSVGSK,BTK (Y551),sp|Q06187|BTK_HUMAN,,,Y551y
+KCC2A,305,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)",sp|Q9UQM7|KCC2A_HUMAN,,,T305t
+KCC2A,306,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)",sp|Q9UQM7|KCC2A_HUMAN,,,T306t
+KCC2A,306,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)",sp|Q9UQM7|KCC2A_HUMAN,,,T306t
+KCC2B,305,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)", sp|Q13554|KCC2B_HUMAN,,,T305t
+KCC2B,306,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)", sp|Q13554|KCC2B_HUMAN,,,T306t
+KCC2B,306,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)", sp|Q13554|KCC2B_HUMAN,,,T306t
+KCC2D,305,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)", sp|Q13557|KCC2D_HUMAN,,,T305t
+KCC2D,306,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)", sp|Q13557|KCC2D_HUMAN,,,T306t
+KCC2D,306,GAILT[Pho]TMLATR,"CaMKIIα (T305), CaMKIIβ (T306), CaMKIIδ (T306)", sp|Q13557|KCC2D_HUMAN,,,T306t
+KCC2A,305,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T305t
+KCC2A,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T306t
+KCC2A,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T306t
+KCC2A,307,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T307t
+KCC2A,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T306t
+KCC2A,307,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T307t
+KCC2B,305,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13554|KCC2B_HUMAN,,,T305t
+KCC2B,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13554|KCC2B_HUMAN,,,T306t
+KCC2B,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13554|KCC2B_HUMAN,,,T306t
+KCC2B,307,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13554|KCC2B_HUMAN,,,T307t
+KCC2B,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13554|KCC2B_HUMAN,,,T306t
+KCC2B,307,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13554|KCC2B_HUMAN,,,T307t
+KCC2D,305,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13557|KCC2D_HUMAN,,,T305t
+KCC2D,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13557|KCC2D_HUMAN,,,T306t
+KCC2D,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13557|KCC2D_HUMAN,,,T306t
+KCC2D,307,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13557|KCC2D_HUMAN,,,T307t
+KCC2D,306,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13557|KCC2D_HUMAN,,,T306t
+KCC2D,307,GAILT[Pho]T[Pho]MLATR,"CaMKIIα (T305/T306), CaMKIIβ (T306/T307), CaMKIIδ (T306/T307)", sp|Q13557|KCC2D_HUMAN,,,T307t
+KCC2A,306,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T306t
+KCC2A,307,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T307t
+KCC2A,307,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)",sp|Q9UQM7|KCC2A_HUMAN,,,T307t
+KCC2B,306,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)", sp|Q13554|KCC2B_HUMAN,,,T306t
+KCC2B,307,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)", sp|Q13554|KCC2B_HUMAN,,,T307t
+KCC2B,307,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)", sp|Q13554|KCC2B_HUMAN,,,T307t
+KCC2D,306,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)", sp|Q13557|KCC2D_HUMAN,,,T306t
+KCC2D,307,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)", sp|Q13557|KCC2D_HUMAN,,,T307t
+KCC2D,307,GAILTT[Pho]MLATR,"CaMKIIα (T306), CaMKIIβ (T307), CaMKIIδ (T307)", sp|Q13557|KCC2D_HUMAN,,,T307t
+KCC2B,287,QET[Pho]VEC[Cam]LK,CaMKIIβ (T287),sp|Q13554|KCC2B_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-camkii-thr286-d21e4-rabbit-mab/12716,cross reactivity with CaMKIIα and CaMKIIγ,T287t
+KCC4,189,IADFGLS[Pho]K,"CaMKIV (S189), RIPK2 (S168)",sp|Q16566|KCC4_HUMAN,,,S189s
+KCC4,168,IADFGLS[Pho]K,"CaMKIV (S189), RIPK2 (S168)",sp|Q16566|KCC4_HUMAN,,,S168s
+RIPK2,189,IADFGLS[Pho]K,"CaMKIV (S189), RIPK2 (S168)", sp|O43353|RIPK2_HUMAN,,,S189s
+RIPK2,168,IADFGLS[Pho]K,"CaMKIV (S189), RIPK2 (S168)", sp|O43353|RIPK2_HUMAN,,,S168s
+KCC4,200,T[Pho]VC[Cam]GTPGYC[Cam]APEILR,CaMKIV (T200),sp|Q16566|KCC4_HUMAN,,,T200t
+KCC1D,180,GDVMST[Pho]AC[Cam]GTPGYVAPEVLAQK,CaMKIδ (T180),sp|Q8IU85|KCC1D_HUMAN,,,T180t
+CDK1,178,SPEVLLGS[Pho]AR,cdc2/CDK1 (S178),sp|P06493|CDK1_HUMAN,,,S178s
+CDK1,161,VYT[Pho]HEVVTLWYR,cdc2/CDK1 (T161),sp|P06493|CDK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-cdc2-thr161-antibody/9114,cross-reactivity with CDK2 phosphorylated at T160,T161t
+CD11A,577,EYGS[Pho]PLK,"CDK11A (S577), PITSLRE (S589)",sp|Q9UQ88|CD11A_HUMAN,,,S577s
+CD11A,589,EYGS[Pho]PLK,"CDK11A (S577), PITSLRE (S589)",sp|Q9UQ88|CD11A_HUMAN,,,S589s
+CD11B,577,EYGS[Pho]PLK,"CDK11A (S577), PITSLRE (S589)", sp|P21127|CD11B_HUMAN,,,S577s
+CD11B,589,EYGS[Pho]PLK,"CDK11A (S577), PITSLRE (S589)", sp|P21127|CD11B_HUMAN,,,S589s
+CD11A,582,AY[Pho]TPVVVTQWYR,CDK11A (Y582),sp|Q9UQ88|CD11A_HUMAN,,,Y582y
+CD11A,582,AY[Pho]T[Pho]PVVVTQWYR,CDK11A (Y582/T583),sp|Q9UQ88|CD11A_HUMAN,,,Y582y
+CD11A,583,AY[Pho]T[Pho]PVVVTQWYR,CDK11A (Y582/T583),sp|Q9UQ88|CD11A_HUMAN,,,T583t
+CDK2,160,TYT[Pho]HEVVTLWYR,"CDK2 (T160), CDK3 (T160)",sp|P24941|CDK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-cdc2-thr161-antibody/9114,cross reactivity reported with CDK1 phosphorylated at T161,T160t
+CDK2,160,TYT[Pho]HEVVTLWYR,"CDK2 (T160), CDK3 (T160)",sp|P24941|CDK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-cdc2-thr161-antibody/9114,cross reactivity reported with CDK1 phosphorylated at T161,T160t
+CDK3,160,TYT[Pho]HEVVTLWYR,"CDK2 (T160), CDK3 (T160)", sp|Q00526|CDK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-cdc2-thr161-antibody/9114,cross reactivity reported with CDK1 phosphorylated at T161,T160t
+CDK3,160,TYT[Pho]HEVVTLWYR,"CDK2 (T160), CDK3 (T160)", sp|Q00526|CDK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-cdc2-thr161-antibody/9114,cross reactivity reported with CDK1 phosphorylated at T161,T160t
+CDK7,164,SFGS[Pho]PNR,CDK7 (S164),sp|P50613|CDK7_HUMAN,,,S164s
+CDK7,170,AYT[Pho]HQVVTR,CDK7 (T170),sp|P50613|CDK7_HUMAN,,,T170t
+CDK9,175,AFS[Pho]LAK,CDK9 (S175),sp|P50750|CDK9_HUMAN,,,S175s
+CHK2,379,ILGETS[Pho]LMR,Chk2/Rad53 (S379),sp|O96017|CHK2_HUMAN,,,S379s
+CLK2,344,VVDFGSATFDHEHHSTIVST[Pho]R,CLK2 (T344),sp|P49760|CLK2_HUMAN,,,T344t
+CDK12,1053,QS[Pho]GVVVEEPPPSK,CRK7 (S1053),sp|Q9NYV4|CDK12_HUMAN,,,S1053s
+CDK12,1083,NSS[Pho]PAPPQPAPGK,CRK7 (S1083),sp|Q9NYV4|CDK12_HUMAN,,,S1083s
+DDR1,792,NLY[Pho]AGDYYR,DDR1 (Y792),sp|Q08345|DDR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-ddr1-tyr792-antibody/11994,cross reactivity with other phospho-RTKs assumed,Y792y
+DDR1,796,NLYAGDY[Pho]YR,DDR1 (Y796),sp|Q08345|DDR1_HUMAN,,,Y796y
+DDR1,797,NLYAGDYY[Pho]R,DDR1 (Y797),sp|Q08345|DDR1_HUMAN,,,Y797y
+DDR2,736,NLY[Pho]SGDYYR,DDR2 (Y736),sp|Q16832|DDR2_HUMAN,,,Y736y
+DDR2,740,NLYSGDY[Pho]YR,DDR2 (Y740),sp|Q16832|DDR2_HUMAN,,,Y740y
+DDR2,741,NLYSGDYY[Pho]R,DDR2 (Y741),sp|Q16832|DDR2_HUMAN,,,Y741y
+DMPK,216,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)",sp|Q09013|DMPK_HUMAN,,,S216s
+DMPK,222,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)",sp|Q09013|DMPK_HUMAN,,,S222s
+DMPK,221,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)",sp|Q09013|DMPK_HUMAN,,,S221s
+MRCKA,216,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)", sp|Q5VT25|MRCKA_HUMAN,,,S216s
+MRCKA,222,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)", sp|Q5VT25|MRCKA_HUMAN,,,S222s
+MRCKA,221,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)", sp|Q5VT25|MRCKA_HUMAN,,,S221s
+MRCKB,216,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)", sp|Q9Y5S2|MRCKB_HUMAN,,,S216s
+MRCKB,222,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)", sp|Q9Y5S2|MRCKB_HUMAN,,,S222s
+MRCKB,221,LADFGS[Pho]C[Cam]LK,"DMPK (S216), MRCKα (S222), MRCKβ (S221)", sp|Q9Y5S2|MRCKB_HUMAN,,,S221s
+MRCKG,216,LADFGS[Pho]C[Cam]LR,DMPK2 (S216),sp|Q6DT37|MRCKG_HUMAN,,,S216s
+DYR1A,310,IVDFGS[Pho]SC[Cam]QLGQR,"DYRK1A (S310), DYRK1B (S262)",sp|Q13627|DYR1A_HUMAN,,,S310s
+DYR1A,262,IVDFGS[Pho]SC[Cam]QLGQR,"DYRK1A (S310), DYRK1B (S262)",sp|Q13627|DYR1A_HUMAN,,,S262s
+DYR1B,310,IVDFGS[Pho]SC[Cam]QLGQR,"DYRK1A (S310), DYRK1B (S262)", sp|Q9Y463|DYR1B_HUMAN,,,S310s
+DYR1B,262,IVDFGS[Pho]SC[Cam]QLGQR,"DYRK1A (S310), DYRK1B (S262)", sp|Q9Y463|DYR1B_HUMAN,,,S262s
+DYR1A,319,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)",sp|Q13627|DYR1A_HUMAN,,,Y319y
+DYR1A,321,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)",sp|Q13627|DYR1A_HUMAN,,,Y321y
+DYR1A,271,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)",sp|Q13627|DYR1A_HUMAN,,,Y271y
+DYR1A,273,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)",sp|Q13627|DYR1A_HUMAN,,,Y273y
+DYR1B,319,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)", sp|Q9Y463|DYR1B_HUMAN,,,Y319y
+DYR1B,321,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)", sp|Q9Y463|DYR1B_HUMAN,,,Y321y
+DYR1B,271,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)", sp|Q9Y463|DYR1B_HUMAN,,,Y271y
+DYR1B,273,IY[Pho]QY[Pho]IQSR,"DYRK1A (Y319/Y321), DYRK1B (Y271/Y273)", sp|Q9Y463|DYR1B_HUMAN,,,Y273y
+DYR1A,321,IYQY[Pho]IQSR,"DYRK1A (Y321), DYRK1B (Y273)",sp|Q13627|DYR1A_HUMAN,,,Y321y
+DYR1A,273,IYQY[Pho]IQSR,"DYRK1A (Y321), DYRK1B (Y273)",sp|Q13627|DYR1A_HUMAN,,,Y273y
+DYR1B,321,IYQY[Pho]IQSR,"DYRK1A (Y321), DYRK1B (Y273)", sp|Q9Y463|DYR1B_HUMAN,,,Y321y
+DYR1B,273,IYQY[Pho]IQSR,"DYRK1A (Y321), DYRK1B (Y273)", sp|Q9Y463|DYR1B_HUMAN,,,Y273y
+DYRK2,381,VYT[Pho]YIQSR,"DYRK2 (T381), DYRK4 (T263)",sp|Q92630|DYRK2_HUMAN,,,T381t
+DYRK2,263,VYT[Pho]YIQSR,"DYRK2 (T381), DYRK4 (T263)",sp|Q92630|DYRK2_HUMAN,,,T263t
+DYRK4,381,VYT[Pho]YIQSR,"DYRK2 (T381), DYRK4 (T263)", sp|Q9NR20|DYRK4_HUMAN,,,T381t
+DYRK4,263,VYT[Pho]YIQSR,"DYRK2 (T381), DYRK4 (T263)", sp|Q9NR20|DYRK4_HUMAN,,,T263t
+DYRK2,381,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)",sp|Q92630|DYRK2_HUMAN,,,T381t
+DYRK2,382,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)",sp|Q92630|DYRK2_HUMAN,,,Y382y
+DYRK2,263,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)",sp|Q92630|DYRK2_HUMAN,,,T263t
+DYRK2,264,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)",sp|Q92630|DYRK2_HUMAN,,,Y264y
+DYRK4,381,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)", sp|Q9NR20|DYRK4_HUMAN,,,T381t
+DYRK4,382,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)", sp|Q9NR20|DYRK4_HUMAN,,,Y382y
+DYRK4,263,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)", sp|Q9NR20|DYRK4_HUMAN,,,T263t
+DYRK4,264,VYT[Pho]Y[Pho]IQSR,"DYRK2 (T381/Y382), DYRK4 (T263/Y264)", sp|Q9NR20|DYRK4_HUMAN,,,Y264y
+DYRK2,382,VYTY[Pho]IQSR,"DYRK2 (Y382), DYRK4 (Y264)",sp|Q92630|DYRK2_HUMAN,,,Y382y
+DYRK2,264,VYTY[Pho]IQSR,"DYRK2 (Y382), DYRK4 (Y264)",sp|Q92630|DYRK2_HUMAN,,,Y264y
+DYRK4,382,VYTY[Pho]IQSR,"DYRK2 (Y382), DYRK4 (Y264)", sp|Q9NR20|DYRK4_HUMAN,,,Y382y
+DYRK4,264,VYTY[Pho]IQSR,"DYRK2 (Y382), DYRK4 (Y264)", sp|Q9NR20|DYRK4_HUMAN,,,Y264y
+DYRK3,369,LYTY[Pho]IQSR,DYRK3 (Y369),sp|O43781|DYRK3_HUMAN,,,Y369y
+EPHA2,790,WTAPEAIS[Pho]YR,EphA2 (S790),sp|P29317|EPHA2_HUMAN,,,S790s
+EPHA2,790,WTAPEAIS[Pho]Y[Pho]R,EphA2 (S790/Y791),sp|P29317|EPHA2_HUMAN,,,S790s
+EPHA2,791,WTAPEAIS[Pho]Y[Pho]R,EphA2 (S790/Y791),sp|P29317|EPHA2_HUMAN,,,Y791y
+EPHA2,771,VLEDDPEAT[Pho]Y[Pho]TTSGGK,EphA2 (T771/Y772),sp|P29317|EPHA2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha2-tyr772-antibody/8244,detects pT722 - this antibody may cross-react with other overexpressed phosphotyrosine proteins,T771t
+EPHA2,772,VLEDDPEAT[Pho]Y[Pho]TTSGGK,EphA2 (T771/Y772),sp|P29317|EPHA2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha2-tyr772-antibody/8244,detects pT722 - this antibody may cross-react with other overexpressed phosphotyrosine proteins,Y772y
+EPHA2,791,WTAPEAISY[Pho]R,EphA2 (Y791),sp|P29317|EPHA2_HUMAN,,,Y791y
+EPHA3,779,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)",sp|P29320|EPHA3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y779y
+EPHA3,779,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)",sp|P29320|EPHA3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y779y
+EPHA3,833,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)",sp|P29320|EPHA3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y833y
+EPHA4,779,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)", sp|P54764|EPHA4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y779y
+EPHA4,779,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)", sp|P54764|EPHA4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y779y
+EPHA4,833,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)", sp|P54764|EPHA4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y833y
+EPHA5,779,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)", sp|P54756|EPHA5_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y779y
+EPHA5,779,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)", sp|P54756|EPHA5_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y779y
+EPHA5,833,VLEDDPEAAY[Pho]TTR,"EphA3 (Y779), EphA4 (Y779), EphA5 (Y833)", sp|P54756|EPHA5_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-epha3-tyr779-d10h1-rabbit-mab/8862,"cross-reacts with EphA2, EphA4, and EphA5 at the corresponding phosphosites",Y833y
+EPHA6,830,VLEDDPEAAY[Pho]TTTGGK,EphA6 (Y830),sp|Q9UF33|EPHA6_HUMAN,,,Y830y
+EPHA7,791,VIEDDPEAVY[Pho]TTTGGK,EphA7 (Y791),sp|Q15375|EPHA7_HUMAN,,,Y791y
+MK03,198,IADPEHDHT[Pho]GFLTEYVATR,ERK1/p44MAPK (T198),sp|P27361|MK03_HUMAN,,,T198t
+MK03,202,IADPEHDHTGFLT[Pho]EYVATR,ERK1/p44MAPK (T202),sp|P27361|MK03_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p44-42-mapk-erk1-2-thr202-tyr204-antibody/9101,Detects doubly phosphorylated version. Cannot distinguish ERK1 and ERK2 but no other cross reactivity is reported,T202t
+MK03,204,IADPEHDHTGFLTEY[Pho]VATR,ERK1/p44MAPK (Y204),sp|P27361|MK03_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p44-42-mapk-erk1-2-thr202-tyr204-antibody/9101,Detects doubly phosphorylated version. Cannot distinguish ERK1 and ERK2 but no other cross reactivity is reported,Y204y
+MK01,185,VADPDHDHTGFLT[Pho]EYVATR,ERK2/p42MAPK (T185),sp|P28482|MK01_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p44-42-mapk-erk1-2-thr202-tyr204-antibody/9101,Detects doubly phosphorylated version. Cannot distinguish ERK1 and ERK2 but no other cross reactivity is reported,T185t
+MK01,190,VADPDHDHTGFLTEYVAT[Pho]R,ERK2/p42MAPK (T190),sp|P28482|MK01_HUMAN,,,T190t
+MK01,187,VADPDHDHTGFLTEY[Pho]VATR,ERK2/p42MAPK (Y187),sp|P28482|MK01_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p44-42-mapk-erk1-2-thr202-tyr204-antibody/9101,Detects doubly phosphorylated version. Cannot distinguish ERK1 and ERK2 but no other cross reactivity is reported,Y187y
+MK06,189,GHLS[Pho]EGLVTK,ERK3 (S189),sp|Q16659|MK06_HUMAN,,,S189s
+MK04,186,GYLS[Pho]EGLVTK,ERK4 (S186),sp|P31152|MK04_HUMAN,,,S186s
+BMX,566,YVLDDQY[Pho]VSSVGTK,Etk/BMX (Y566),sp|P51813|BMX_HUMAN,,,Y566y
+FAK1,570,Y[Pho]MEDSTYYK,FAK (Y570),sp|Q05397|FAK1_HUMAN,,,Y570y
+FAK1,576,YMEDSTY[Pho]YK,FAK (Y576),sp|Q05397|FAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-fak-tyr576-577-antibody/3281,Detects doubly phosphorylated version. This antibody may cross-react with other activated receptor tyrosine kinases.,Y576y
+FAK1,577,YMEDSTYY[Pho]K,FAK (Y577),sp|Q05397|FAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-fak-tyr576-577-antibody/3281,Detects doubly phosphorylated version. This antibody may cross-react with other activated receptor tyrosine kinases.,Y577y
+FER,714,QEDGGVY[Pho]SSSGLK,Fer (Y714),sp|P16591|FER_HUMAN,,,Y714y
+FES,713,EEADGVY[Pho]AASGGLR,FES (Y713),sp|P07332|FES_HUMAN,,,Y713y
+FGFR1,653,DIHHIDY[Pho]YK,FGFR1 (Y653),sp|P11362|FGFR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-fgf-receptor-tyr653-654-55h2-mouse-mab/3476,available for doubly phosphorylated version. Crossreactive with other FGFRs and PDGFRs,Y653y
+FGFR1,654,DIHHIDYY[Pho]K,FGFR1 (Y654),sp|P11362|FGFR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-fgf-receptor-tyr653-654-55h2-mouse-mab/3476,available for doubly phosphorylated version. Crossreactive with other FGFRs and PDGFRs,Y654y
+FGFR2,656,DINNIDY[Pho]YK,FGFR2 (Y656),sp|P21802|FGFR2_HUMAN,,,Y656y
+FGFR2,656,DINNIDY[Pho]Y[Pho]K,FGFR2 (Y656/Y657),sp|P21802|FGFR2_HUMAN,,,Y656y
+FGFR2,657,DINNIDY[Pho]Y[Pho]K,FGFR2 (Y656/Y657),sp|P21802|FGFR2_HUMAN,,,Y657y
+FGFR2,657,DINNIDYY[Pho]K,FGFR2 (Y657),sp|P21802|FGFR2_HUMAN,,,Y657y
+FGFR3,647,DVHNLDY[Pho]YK,FGFR3 (Y647),sp|P22607|FGFR3_HUMAN,,,Y647y
+FGFR3,647,DVHNLDY[Pho]Y[Pho]K,FGFR3 (Y647/Y648),sp|P22607|FGFR3_HUMAN,,,Y647y
+FGFR3,648,DVHNLDY[Pho]Y[Pho]K,FGFR3 (Y647/Y648),sp|P22607|FGFR3_HUMAN,,,Y648y
+FGFR4,642,GVHHIDY[Pho]YK,FGFR4 (Y642),sp|P22455|FGFR4_HUMAN,,,Y642y
+FGFR4,642,GVHHIDY[Pho]Y[Pho]K,FGFR4 (Y642/Y643),sp|P22455|FGFR4_HUMAN,,,Y642y
+FGFR4,643,GVHHIDY[Pho]Y[Pho]K,FGFR4 (Y642/Y643),sp|P22455|FGFR4_HUMAN,,,Y643y
+FGFR4,643,GVHHIDYY[Pho]K,FGFR4 (Y643),sp|P22455|FGFR4_HUMAN,,,Y643y
+FGR,4124,DDEY[Pho]NPC[Cam]QGSK,FGR (412),sp|P09769|FGR_HUMAN,,,4124
+FLT3,842,DIMSDSNY[Pho]VVR,FLT3 (Y842),sp|P36888|FLT3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-flt3-tyr842-10a8-rabbit-mab/4577,This antibody may cross-react with other tyrosine-phosphorylated family members,Y842y
+CSF1R,809,DIMNDSNY[Pho]IVK,Fms/CSFR (Y809),sp|P07333|CSF1R_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-m-csf-receptor-tyr809-antibody/3154,The antibody may cross-react slightly with activated KDR and PDGF receptors.,Y809y
+FRK,387,VDNEDIY[Pho]ESR,FRK (Y387),sp|P42685|FRK_HUMAN,,,Y387y
+FYN,420,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)",sp|P06241|FYN_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y420y
+FYN,394,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)",sp|P06241|FYN_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y394y
+FYN,426,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)",sp|P06241|FYN_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y426y
+FYN,419,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)",sp|P06241|FYN_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y419y
+LCK,420,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P06239|LCK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y420y
+LCK,394,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P06239|LCK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y394y
+LCK,426,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P06239|LCK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y426y
+LCK,419,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P06239|LCK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y419y
+YES,420,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P07947|YES_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y420y
+YES,394,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P07947|YES_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y394y
+YES,426,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P07947|YES_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y426y
+YES,419,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P07947|YES_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y419y
+SRC,420,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P12931|SRC_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y420y
+SRC,394,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P12931|SRC_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y394y
+SRC,426,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P12931|SRC_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y426y
+SRC,419,LIEDNEY[Pho]TAR,"Fyn (Y420), Lck (Y394), Yes (Y426), Src (Y419)", sp|P12931|SRC_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y419y
+FYN,440,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)",sp|P06241|FYN_HUMAN,,,Y440y
+FYN,4464,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)",sp|P06241|FYN_HUMAN,,,4464
+FYN,439,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)",sp|P06241|FYN_HUMAN,,,Y439y
+YES,440,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)", sp|P07947|YES_HUMAN,,,Y440y
+YES,4464,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)", sp|P07947|YES_HUMAN,,,4464
+YES,439,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)", sp|P07947|YES_HUMAN,,,Y439y
+SRC,440,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)", sp|P12931|SRC_HUMAN,,,Y440y
+SRC,4464,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)", sp|P12931|SRC_HUMAN,,,4464
+SRC,439,WTAPEAALY[Pho]GR,"Fyn (Y440), Yes (446), Src (Y439)", sp|P12931|SRC_HUMAN,,,Y439y
+GAK,1176,VS[Pho]ENDFEDLLSNQGFSSR,GAK (S1176),sp|O14976|GAK_HUMAN,,,S1176s
+GAK,1176,VS[Pho]ENDFEDLLS[Pho]NQGFSSR,GAK (S1176/S1185),sp|O14976|GAK_HUMAN,,,S1176s
+GAK,1185,VS[Pho]ENDFEDLLS[Pho]NQGFSSR,GAK (S1176/S1185),sp|O14976|GAK_HUMAN,,,S1185s
+GAK,456,HPGHYAVYNLS[Pho]PR,GAK (S456),sp|O14976|GAK_HUMAN,,,S456s
+GAK,829,DESEVS[Pho]DEGGSPISSEGQEPR,GAK (S829),sp|O14976|GAK_HUMAN,,,S829s
+GAK,834,DESEVSDEGGS[Pho]PISSEGQEPR,GAK (S834),sp|O14976|GAK_HUMAN,,,S834s
+E2AK4,899,SDPSGHLT[Pho]GMVGTALYVSPEVQGSTK,GCN2 (T899),sp|Q9P2K8|E2AK4_HUMAN,,,T899t
+E2AK4,904,SDPSGHLTGMVGT[Pho]ALYVSPEVQGSTK,GCN2 (T904),sp|Q9P2K8|E2AK4_HUMAN,,,T904t
+GSK3A,279,GEPNVSY[Pho]IC[Cam]SR,"GSK3α (Y279), GSK3β (Y216)",sp|P49840|GSK3A_HUMAN,,,Y279y
+GSK3A,216,GEPNVSY[Pho]IC[Cam]SR,"GSK3α (Y279), GSK3β (Y216)",sp|P49840|GSK3A_HUMAN,,,Y216y
+GSK3B,279,GEPNVSY[Pho]IC[Cam]SR,"GSK3α (Y279), GSK3β (Y216)", sp|P49841|GSK3B_HUMAN,,,Y279y
+GSK3B,216,GEPNVSY[Pho]IC[Cam]SR,"GSK3α (Y279), GSK3β (Y216)", sp|P49841|GSK3B_HUMAN,,,Y216y
+HCK,411,VIEDNEY[Pho]TAR,"HCK (Y411), Lyn (Y397)",sp|P08631|HCK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y411y
+HCK,397,VIEDNEY[Pho]TAR,"HCK (Y411), Lyn (Y397)",sp|P08631|HCK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y397y
+LYN,411,VIEDNEY[Pho]TAR,"HCK (Y411), Lyn (Y397)", sp|P07948|LYN_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y411y
+LYN,397,VIEDNEY[Pho]TAR,"HCK (Y411), Lyn (Y397)", sp|P07948|LYN_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-src-family-tyr416-antibody/2101,"detects corresponding phosphorylation sites in Src, Lyn, Fyn, Lck, Yes, Hck",Y397y
+ERBB4,1056,SEIGHSPPPAY[Pho]TPMSGNQFVYR,HER4 (Y1056),sp|Q15303|ERBB4_HUMAN,,,Y1056y
+HIPK3,359,TVC[Cam]STY[Pho]LQSR,HIPK3 (Y359),sp|Q9H422|HIPK3_HUMAN,,,Y359y
+ICK,157,PPYT[Pho]DYVSTR,"ICK (T157), MAK (T157)",sp|Q9UPZ9|ICK_HUMAN,,,T157t
+ICK,157,PPYT[Pho]DYVSTR,"ICK (T157), MAK (T157)",sp|Q9UPZ9|ICK_HUMAN,,,T157t
+MAK,157,PPYT[Pho]DYVSTR,"ICK (T157), MAK (T157)", sp|P20794|MAK_HUMAN,,,T157t
+MAK,157,PPYT[Pho]DYVSTR,"ICK (T157), MAK (T157)", sp|P20794|MAK_HUMAN,,,T157t
+ICK,157,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)",sp|Q9UPZ9|ICK_HUMAN,,,T157t
+ICK,159,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)",sp|Q9UPZ9|ICK_HUMAN,,,Y159y
+ICK,157,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)",sp|Q9UPZ9|ICK_HUMAN,,,T157t
+ICK,159,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)",sp|Q9UPZ9|ICK_HUMAN,,,Y159y
+MAK,157,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)", sp|P20794|MAK_HUMAN,,,T157t
+MAK,159,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)", sp|P20794|MAK_HUMAN,,,Y159y
+MAK,157,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)", sp|P20794|MAK_HUMAN,,,T157t
+MAK,159,PPYT[Pho]DY[Pho]VSTR,"ICK (T157/Y159), MAK (T157/Y159)", sp|P20794|MAK_HUMAN,,,Y159y
+ICK,159,PPYTDY[Pho]VSTR,"ICK (Y159), MAK (Y159)",sp|Q9UPZ9|ICK_HUMAN,,,Y159y
+ICK,159,PPYTDY[Pho]VSTR,"ICK (Y159), MAK (Y159)",sp|Q9UPZ9|ICK_HUMAN,,,Y159y
+MAK,159,PPYTDY[Pho]VSTR,"ICK (Y159), MAK (Y159)", sp|P20794|MAK_HUMAN,,,Y159y
+MAK,159,PPYTDY[Pho]VSTR,"ICK (Y159), MAK (Y159)", sp|P20794|MAK_HUMAN,,,Y159y
+IGF1R,1161,DIY[Pho]ETDYYR,"IGF1R (Y1161), InsR (Y1185)",sp|P08069|IGF1R_HUMAN,,,Y1161y
+IGF1R,1185,DIY[Pho]ETDYYR,"IGF1R (Y1161), InsR (Y1185)",sp|P08069|IGF1R_HUMAN,,,Y1185y
+INSR,1161,DIY[Pho]ETDYYR,"IGF1R (Y1161), InsR (Y1185)", sp|P06213|INSR_HUMAN,,,Y1161y
+INSR,1185,DIY[Pho]ETDYYR,"IGF1R (Y1161), InsR (Y1185)", sp|P06213|INSR_HUMAN,,,Y1185y
+IGF1R,1165,DIYETDY[Pho]YR,"IGF1R (Y1165), InsR (Y1189)",sp|P08069|IGF1R_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1165y
+IGF1R,1189,DIYETDY[Pho]YR,"IGF1R (Y1165), InsR (Y1189)",sp|P08069|IGF1R_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1189y
+INSR,1165,DIYETDY[Pho]YR,"IGF1R (Y1165), InsR (Y1189)", sp|P06213|INSR_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1165y
+INSR,1189,DIYETDY[Pho]YR,"IGF1R (Y1165), InsR (Y1189)", sp|P06213|INSR_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1189y
+IGF1R,1166,DIYETDYY[Pho]R,"IGF1R (Y1166), InsR (Y1190)",sp|P08069|IGF1R_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1166y
+IGF1R,1190,DIYETDYY[Pho]R,"IGF1R (Y1166), InsR (Y1190)",sp|P08069|IGF1R_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1190y
+INSR,1166,DIYETDYY[Pho]R,"IGF1R (Y1166), InsR (Y1190)", sp|P06213|INSR_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1166y
+INSR,1190,DIYETDYY[Pho]R,"IGF1R (Y1166), InsR (Y1190)", sp|P06213|INSR_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-igf-i-receptor-b-tyr1135-1136-insulin-receptor-b-tyr1150-1151-19h7-rabbit-mab/3024,detects doubly phosphorylated version of IGF1R and InsR,Y1190y
+IKKE,172,FVS[Pho]VYGTEEYLHPDMYER,IKKε (S172),sp|Q14164|IKKE_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-ikke-ser172-d1b7-rabbit-mab/8766,This antibody may cross-react with phospho-TBK1/NAK,S172s
+IRAK1,387,GT[Pho]LAYLPEEYIK,IRAK1 (T387),sp|P51617|IRAK1_HUMAN,,,T387t
+IRAK4,346,FAQTVMTS[Pho]R,IRAK4 (S346),sp|Q9NWZ3|IRAK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-irak4-thr345-ser346-d6d7-rabbit-mab/11927,detects doubly phosphorylated version,S346s
+IRAK4,345,FAQTVMT[Pho]SR,IRAK4 (T345),sp|Q9NWZ3|IRAK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-irak4-thr345-ser346-d6d7-rabbit-mab/11927,detects doubly phosphorylated version,T345t
+INSRR,1145,DVYETDY[Pho]YR,IRR (Y1145),sp|P14616|INSRR_HUMAN,,,Y1145y
+INSRR,1145,DVYETDY[Pho]Y[Pho]R,IRR (Y1145/Y1146),sp|P14616|INSRR_HUMAN,,,Y1145y
+INSRR,1146,DVYETDY[Pho]Y[Pho]R,IRR (Y1145/Y1146),sp|P14616|INSRR_HUMAN,,,Y1146y
+INSRR,1146,DVYETDYY[Pho]R,IRR (Y1146),sp|P14616|INSRR_HUMAN,,,Y1146y
+ITK,512,FVLDDQY[Pho]TSSTGTK,ITK (Y512),sp|Q08881|ITK_HUMAN,,,Y512y
+JAK1,1034,EY[Pho]YTVK,Jak1 (Y1034),sp|P23458|JAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak1-tyr1034-1035-d7n4z-rabbit-mab/74129,detects doubly phosphorylated version or phosphorylation at Y1034,Y1034y
+JAK1,1034,EY[Pho]Y[Pho]TVK,Jak1 (Y1034/Y1035),sp|P23458|JAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak1-tyr1034-1035-d7n4z-rabbit-mab/74129,detects doubly phosphorylated version or phosphorylation at Y1034,Y1034y
+JAK1,1035,EY[Pho]Y[Pho]TVK,Jak1 (Y1034/Y1035),sp|P23458|JAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak1-tyr1034-1035-d7n4z-rabbit-mab/74129,detects doubly phosphorylated version or phosphorylation at Y1034,Y1035y
+JAK1,1035,EYY[Pho]TVK,Jak1 (Y1035),sp|P23458|JAK1_HUMAN,,,Y1035y
+JAK3,980,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]",sp|P52333|JAK3_HUMAN,,,Y980y
+JAK3,113,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]",sp|P52333|JAK3_HUMAN,,,Y113y
+JAK3,122,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]",sp|P52333|JAK3_HUMAN,,,Y122y
+PKR1,980,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]", sp|Q8TCW9|PKR1_HUMAN,,,Y980y
+PKR1,113,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]", sp|Q8TCW9|PKR1_HUMAN,,,Y113y
+PKR1,122,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]", sp|Q8TCW9|PKR1_HUMAN,,,Y122y
+PKR2,980,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]", sp|Q8NFJ6|PKR2_HUMAN,,,Y980y
+PKR2,113,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]", sp|Q8NFJ6|PKR2_HUMAN,,,Y113y
+PKR2,122,DY[Pho]YVVR,"Jak3 (Y980), [PKR2 (Y113), PKR1 (Y122)]", sp|Q8NFJ6|PKR2_HUMAN,,,Y122y
+JAK3,980,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]",sp|P52333|JAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y980y
+JAK3,981,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]",sp|P52333|JAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y981y
+JAK3,113,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]",sp|P52333|JAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y113y
+JAK3,114,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]",sp|P52333|JAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y114y
+JAK3,122,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]",sp|P52333|JAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y122y
+JAK3,123,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]",sp|P52333|JAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y123y
+PKR1,980,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8TCW9|PKR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y980y
+PKR1,981,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8TCW9|PKR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y981y
+PKR1,113,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8TCW9|PKR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y113y
+PKR1,114,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8TCW9|PKR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y114y
+PKR1,122,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8TCW9|PKR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y122y
+PKR1,123,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8TCW9|PKR1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y123y
+PKR2,980,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8NFJ6|PKR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y980y
+PKR2,981,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8NFJ6|PKR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y981y
+PKR2,113,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8NFJ6|PKR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y113y
+PKR2,114,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8NFJ6|PKR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y114y
+PKR2,122,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8NFJ6|PKR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y122y
+PKR2,123,DY[Pho]Y[Pho]VVR,"Jak3 (Y980/Y981), [PKR2 (Y113/Y114), PKR1 (Y122/Y123)]", sp|Q8NFJ6|PKR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-jak3-tyr980-981-d44e3-rabbit-mab/5031,,Y123y
+JAK3,981,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]",sp|P52333|JAK3_HUMAN,,,Y981y
+JAK3,114,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]",sp|P52333|JAK3_HUMAN,,,Y114y
+JAK3,123,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]",sp|P52333|JAK3_HUMAN,,,Y123y
+PKR1,981,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]", sp|Q8TCW9|PKR1_HUMAN,,,Y981y
+PKR1,114,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]", sp|Q8TCW9|PKR1_HUMAN,,,Y114y
+PKR1,123,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]", sp|Q8TCW9|PKR1_HUMAN,,,Y123y
+PKR2,981,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]", sp|Q8NFJ6|PKR2_HUMAN,,,Y981y
+PKR2,114,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]", sp|Q8NFJ6|PKR2_HUMAN,,,Y114y
+PKR2,123,DYY[Pho]VVR,"Jak3 (Y981), [PKR2 (Y114), PKR1 (Y123)]", sp|Q8NFJ6|PKR2_HUMAN,,,Y123y
+MK08,183,TAGTSFMMT[Pho]PYVVTR,"JNK1 (T183), JNK3 (T221)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T183t
+MK08,221,TAGTSFMMT[Pho]PYVVTR,"JNK1 (T183), JNK3 (T221)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T221t
+MK10,183,TAGTSFMMT[Pho]PYVVTR,"JNK1 (T183), JNK3 (T221)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T183t
+MK10,221,TAGTSFMMT[Pho]PYVVTR,"JNK1 (T183), JNK3 (T221)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T221t
+MK08,183,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T183t
+MK08,185,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y185y
+MK08,221,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T221t
+MK08,223,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y223y
+MK10,183,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T183t
+MK10,185,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y185y
+MK10,221,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,T221t
+MK10,223,TAGTSFMMT[Pho]PY[Pho]VVTR,"JNK1 (T183/Y185), JNK3 (T221/Y223)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y223y
+MK08,185,TAGTSFMMTPY[Pho]VVTR,"JNK1 (Y185), JNK3 (Y223)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y185y
+MK08,223,TAGTSFMMTPY[Pho]VVTR,"JNK1 (Y185), JNK3 (Y223)",sp|P45983|MK08_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y223y
+MK10,185,TAGTSFMMTPY[Pho]VVTR,"JNK1 (Y185), JNK3 (Y223)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y185y
+MK10,223,TAGTSFMMTPY[Pho]VVTR,"JNK1 (Y185), JNK3 (Y223)", sp|P53779|MK10_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sapk-jnk-thr183-tyr185-g9-mouse-mab/9255,This antibody may cross-react with phosphorylated p44/42 or p38 MAP kinases.,Y223y
+MK09,183,TAC[Cam]TNFMMT[Pho]PYVVTR,JNK2 (T183),sp|P45984|MK09_HUMAN,,,T183t
+MK09,183,TAC[Cam]TNFMMT[Pho]PY[Pho]VVTR,JNK2 (T183/Y185),sp|P45984|MK09_HUMAN,,,T183t
+MK09,185,TAC[Cam]TNFMMT[Pho]PY[Pho]VVTR,JNK2 (T183/Y185),sp|P45984|MK09_HUMAN,,,Y185y
+MK09,185,TAC[Cam]TNFMMTPY[Pho]VVTR,JNK2 (Y185),sp|P45984|MK09_HUMAN,,,Y185y
+VGFR2,1059,DPDY[Pho]VR,"KDR/VEGFR2 (Y1059), FLT4 (Y1068)",sp|P35968|VGFR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-vegf-receptor-2-tyr1059-d5a6-rabbit-mab/3817,same epitope as VEGF 1 and 3,Y1059y
+VGFR2,1068,DPDY[Pho]VR,"KDR/VEGFR2 (Y1059), FLT4 (Y1068)",sp|P35968|VGFR2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-vegf-receptor-2-tyr1059-d5a6-rabbit-mab/3817,same epitope as VEGF 1 and 3,Y1068y
+VGFR3,1059,DPDY[Pho]VR,"KDR/VEGFR2 (Y1059), FLT4 (Y1068)", sp|P35916|VGFR3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-vegf-receptor-2-tyr1059-d5a6-rabbit-mab/3817,same epitope as VEGF 1 and 3,Y1059y
+VGFR3,1068,DPDY[Pho]VR,"KDR/VEGFR2 (Y1059), FLT4 (Y1068)", sp|P35916|VGFR3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-vegf-receptor-2-tyr1059-d5a6-rabbit-mab/3817,same epitope as VEGF 1 and 3,Y1068y
+KIT,821,NDS[Pho]NYVVK,Kit (S821),sp|P10721|KIT_HUMAN,,,S821s
+KIT,821,NDS[Pho]NY[Pho]VVK,Kit (S821/Y823),sp|P10721|KIT_HUMAN,,,S821s
+KIT,823,NDS[Pho]NY[Pho]VVK,Kit (S821/Y823),sp|P10721|KIT_HUMAN,,,Y823y
+KIT,823,NDSNY[Pho]VVK,Kit (Y823),sp|P10721|KIT_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-c-kit-tyr823-antibody/77522,"This antibody also recognizes a hSCF-induced, non-specific band at 95 kDa from a protein of unknown identity",Y823y
+KPCD,503,ENIFGES[Pho]R,PKCδ (S503),sp|Q05655|KPCD_HUMAN,,,S503s
+MAPK5,182,IDQGDLMT[Pho]PQFTPYYVAPQVLEAQR,MAPKAPK5 (T182),sp|Q8IW41|MAPK5_HUMAN,,,T182t
+MARK1,219,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)",sp|Q9P0L2|MARK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S219s
+MARK1,212,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)",sp|Q9P0L2|MARK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S212s
+MARK1,215,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)",sp|Q9P0L2|MARK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S215s
+MARK1,218,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)",sp|Q9P0L2|MARK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S218s
+MARK2,219,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q7KZI7|MARK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S219s
+MARK2,212,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q7KZI7|MARK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S212s
+MARK2,215,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q7KZI7|MARK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S215s
+MARK2,218,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q7KZI7|MARK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S218s
+MARK3,219,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|P27448|MARK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S219s
+MARK3,212,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|P27448|MARK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S212s
+MARK3,215,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|P27448|MARK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S215s
+MARK3,218,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|P27448|MARK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S218s
+MARK4,219,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q96L34|MARK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S219s
+MARK4,212,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q96L34|MARK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S212s
+MARK4,215,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q96L34|MARK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S215s
+MARK4,218,LDTFC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (S219), MARK2 (S212), MARK3 (S215), MARK4 (S218)", sp|Q96L34|MARK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mark-family-activation-loop-antibody/4836,"Phospho-MARK Family (Activation Loop) Antibody detects endogenous levels of phosphorylated MARK family members, MARK1 at threonine 215, MARK2 at threonine 208, and MARK3 at threonine 234 (A.K.A. 211 in isoforms 3-6) . This antibody does not react with MARK4.",S218s
+MARK1,208,IADFGFSNEFT[Pho]VGNK,MARK1 (T208),sp|Q9P0L2|MARK1_HUMAN,,,T208t
+MARK1,215,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)",sp|Q9P0L2|MARK1_HUMAN,,,T215t
+MARK1,208,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)",sp|Q9P0L2|MARK1_HUMAN,,,T208t
+MARK1,211,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)",sp|Q9P0L2|MARK1_HUMAN,,,T211t
+MARK1,214,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)",sp|Q9P0L2|MARK1_HUMAN,,,T214t
+MARK2,215,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q7KZI7|MARK2_HUMAN,,,T215t
+MARK2,208,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q7KZI7|MARK2_HUMAN,,,T208t
+MARK2,211,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q7KZI7|MARK2_HUMAN,,,T211t
+MARK2,214,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q7KZI7|MARK2_HUMAN,,,T214t
+MARK3,215,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|P27448|MARK3_HUMAN,,,T215t
+MARK3,208,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|P27448|MARK3_HUMAN,,,T208t
+MARK3,211,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|P27448|MARK3_HUMAN,,,T211t
+MARK3,214,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|P27448|MARK3_HUMAN,,,T214t
+MARK4,215,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q96L34|MARK4_HUMAN,,,T215t
+MARK4,208,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q96L34|MARK4_HUMAN,,,T208t
+MARK4,211,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q96L34|MARK4_HUMAN,,,T211t
+MARK4,214,LDT[Pho]FC[Cam]GSPPYAAPELFQGK,"MARK1 (T215), MARK2 (T208), MARK3 (T211), MARK4 (T214)", sp|Q96L34|MARK4_HUMAN,,,T214t
+MARK1,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,T215t
+MARK1,219,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,S219s
+MARK1,208,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,T208t
+MARK1,212,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,S212s
+MARK1,211,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,T211t
+MARK1,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,S215s
+MARK1,214,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,T214t
+MARK1,218,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)",sp|Q9P0L2|MARK1_HUMAN,,,S218s
+MARK2,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,T215t
+MARK2,219,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,S219s
+MARK2,208,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,T208t
+MARK2,212,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,S212s
+MARK2,211,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,T211t
+MARK2,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,S215s
+MARK2,214,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,T214t
+MARK2,218,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q7KZI7|MARK2_HUMAN,,,S218s
+MARK3,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,T215t
+MARK3,219,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,S219s
+MARK3,208,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,T208t
+MARK3,212,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,S212s
+MARK3,211,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,T211t
+MARK3,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,S215s
+MARK3,214,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,T214t
+MARK3,218,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|P27448|MARK3_HUMAN,,,S218s
+MARK4,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,T215t
+MARK4,219,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,S219s
+MARK4,208,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,T208t
+MARK4,212,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,S212s
+MARK4,211,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,T211t
+MARK4,215,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,S215s
+MARK4,214,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,T214t
+MARK4,218,LDT[Pho]FC[Cam]GS[Pho]PPYAAPELFQGK,"MARK1 (T215/S219), MARK2 (T208/S212), MARK3 (T211/S215), MARK4 (T214/S218)", sp|Q96L34|MARK4_HUMAN,,,S218s
+GWL,293,C[Cam]LTSNLLQS[Pho]R,MASTL (S293),sp|Q96GX5|GWL_HUMAN,,,S293s
+GWL,552,DYLSSS[Pho]FLC[Cam]SDDDR,MASTL (S552),sp|Q96GX5|GWL_HUMAN,,,S552s
+GWL,552,DYLSSS[Pho]FLC[Cam]S[Pho]DDDR,MASTL (S552/S556),sp|Q96GX5|GWL_HUMAN,,,S552s
+GWL,556,DYLSSS[Pho]FLC[Cam]S[Pho]DDDR,MASTL (S552/S556),sp|Q96GX5|GWL_HUMAN,,,S556s
+GWL,631,GVENPAVQES[Pho]NQK,MASTL (S631),sp|Q96GX5|GWL_HUMAN,,,S631s
+GWL,657,S[Pho]FNSHINASNNSEPSR,MASTL (S657),sp|Q96GX5|GWL_HUMAN,,,S657s
+GWL,657,S[Pho]FNSHINASNNS[Pho]EPSR,MASTL (S657/S668),sp|Q96GX5|GWL_HUMAN,,,S657s
+GWL,668,S[Pho]FNSHINASNNS[Pho]EPSR,MASTL (S657/S668),sp|Q96GX5|GWL_HUMAN,,,S668s
+GWL,668,SFNSHINASNNS[Pho]EPSR,MASTL (S668),sp|Q96GX5|GWL_HUMAN,,,S668s
+GWL,741,ILGT[Pho]PDYLAPELLLGR,MASTL (T741),sp|Q96GX5|GWL_HUMAN,,,T741t
+MP2K1,218,LC[Cam]DFGVSGQLIDS[Pho]MANSFVGTR,"MEK1/MAP2K1 (S218), MEK2/MAP2K2 (S222)",sp|Q02750|MP2K1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mek1-2-ser221-166f8-rabbit-mab/2338,,S218s
+MP2K1,222,LC[Cam]DFGVSGQLIDS[Pho]MANSFVGTR,"MEK1/MAP2K1 (S218), MEK2/MAP2K2 (S222)",sp|Q02750|MP2K1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mek1-2-ser221-166f8-rabbit-mab/2338,,S222s
+MP2K2,218,LC[Cam]DFGVSGQLIDS[Pho]MANSFVGTR,"MEK1/MAP2K1 (S218), MEK2/MAP2K2 (S222)", sp|P36507|MP2K2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mek1-2-ser221-166f8-rabbit-mab/2338,,S218s
+MP2K2,222,LC[Cam]DFGVSGQLIDS[Pho]MANSFVGTR,"MEK1/MAP2K1 (S218), MEK2/MAP2K2 (S222)", sp|P36507|MP2K2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mek1-2-ser221-166f8-rabbit-mab/2338,,S222s
+MP2K5,315,T[Pho]YVGTNAYMAPER,MEK5/MAP2K5 (T315),sp|Q13163|MP2K5_HUMAN,,,T315t
+MERTK,749,IY[Pho]SGDYYR,"Mer (Y749), Tyro3/Sky (Y681)",sp|Q12866|MERTK_HUMAN,,,Y749y
+MERTK,681,IY[Pho]SGDYYR,"Mer (Y749), Tyro3/Sky (Y681)",sp|Q12866|MERTK_HUMAN,,,Y681y
+TYRO3,749,IY[Pho]SGDYYR,"Mer (Y749), Tyro3/Sky (Y681)", sp|Q06418|TYRO3_HUMAN,,,Y749y
+TYRO3,681,IY[Pho]SGDYYR,"Mer (Y749), Tyro3/Sky (Y681)", sp|Q06418|TYRO3_HUMAN,,,Y681y
+MERTK,753,IYSGDY[Pho]YR,"Mer (Y753), Tyro3/Sky (Y685)",sp|Q12866|MERTK_HUMAN,,,Y753y
+MERTK,685,IYSGDY[Pho]YR,"Mer (Y753), Tyro3/Sky (Y685)",sp|Q12866|MERTK_HUMAN,,,Y685y
+TYRO3,753,IYSGDY[Pho]YR,"Mer (Y753), Tyro3/Sky (Y685)", sp|Q06418|TYRO3_HUMAN,,,Y753y
+TYRO3,685,IYSGDY[Pho]YR,"Mer (Y753), Tyro3/Sky (Y685)", sp|Q06418|TYRO3_HUMAN,,,Y685y
+MERTK,754,IYSGDYY[Pho]R,"Mer (Y754), Tyro3/Sky (Y686)",sp|Q12866|MERTK_HUMAN,,,Y754y
+MERTK,686,IYSGDYY[Pho]R,"Mer (Y754), Tyro3/Sky (Y686)",sp|Q12866|MERTK_HUMAN,,,Y686y
+TYRO3,754,IYSGDYY[Pho]R,"Mer (Y754), Tyro3/Sky (Y686)", sp|Q06418|TYRO3_HUMAN,,,Y754y
+TYRO3,686,IYSGDYY[Pho]R,"Mer (Y754), Tyro3/Sky (Y686)", sp|Q06418|TYRO3_HUMAN,,,Y686y
+MET,1234,EY[Pho]YSVHNK,Met (Y1234),sp|P08581|MET_HUMAN,,,Y1234y
+MET,1234,EY[Pho]Y[Pho]SVHNK,Met (Y1234/Y1235),sp|P08581|MET_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-met-tyr1234-1235-d26-xp-rabbit-mab/3077,This antibody may cross-react with overexpressed tyrosine phosphorylated Src proteins,Y1234y
+MET,1235,EY[Pho]Y[Pho]SVHNK,Met (Y1234/Y1235),sp|P08581|MET_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-met-tyr1234-1235-d26-xp-rabbit-mab/3077,This antibody may cross-react with overexpressed tyrosine phosphorylated Src proteins,Y1235y
+MET,1235,EYY[Pho]SVHNK,Met (Y1235),sp|P08581|MET_HUMAN,,,Y1235y
+M3K10,262,MS[Pho]AAGTYAWMAPEVIR,"MLK2 (S262), MLK1 (S308)",sp|Q02779|M3K10_HUMAN,,,S262s
+M3K10,308,MS[Pho]AAGTYAWMAPEVIR,"MLK2 (S262), MLK1 (S308)",sp|Q02779|M3K10_HUMAN,,,S308s
+M3K9,262,MS[Pho]AAGTYAWMAPEVIR,"MLK2 (S262), MLK1 (S308)", sp|P80192|M3K9_HUMAN,,,S262s
+M3K9,308,MS[Pho]AAGTYAWMAPEVIR,"MLK2 (S262), MLK1 (S308)", sp|P80192|M3K9_HUMAN,,,S308s
+M3K10,266,MSAAGT[Pho]YAWMAPEVIR,"MLK2 (T266), MLK1 (T312)",sp|Q02779|M3K10_HUMAN,,,T266t
+M3K10,312,MSAAGT[Pho]YAWMAPEVIR,"MLK2 (T266), MLK1 (T312)",sp|Q02779|M3K10_HUMAN,,,T312t
+M3K9,266,MSAAGT[Pho]YAWMAPEVIR,"MLK2 (T266), MLK1 (T312)", sp|P80192|M3K9_HUMAN,,,T266t
+M3K9,312,MSAAGT[Pho]YAWMAPEVIR,"MLK2 (T266), MLK1 (T312)", sp|P80192|M3K9_HUMAN,,,T312t
+M3K11,277,T[Pho]TQMSAAGTYAWMAPEVIK,MLK3 (T277),sp|Q16584|M3K11_HUMAN,,,T277t
+M3KL4,303,MS[Pho]TAGTYAWMAPEVIK,MLK4 (S303),sp|Q5TCX8|M3KL4_HUMAN,,,S303s
+MLKL,358,TQTS[Pho]MSLGTTR,MLKL (S358),sp|Q8NB16|MLKL_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-mlkl-ser358-d6h3v-rabbit-mab/91689,might also bind the doubly phosphorylated version,S358s
+MLKL,360,TQTSMS[Pho]LGTTR,MLKL (S360),sp|Q8NB16|MLKL_HUMAN,,,S360s
+MKNK2,74,ATDS[Pho]FSGR,MNK2 (S74),sp|Q9HBH9|MKNK2_HUMAN,,,S74s
+STK16,197,C[Cam]TIS[Pho]YR,MPSK1 (S197),sp|O75716|STK16_HUMAN,,,S197s
+STK16,197,C[Cam]TIS[Pho]Y[Pho]R,MPSK1 (S197/Y198),sp|O75716|STK16_HUMAN,,,S197s
+STK16,198,C[Cam]TIS[Pho]Y[Pho]R,MPSK1 (S197/Y198),sp|O75716|STK16_HUMAN,,,Y198y
+STK16,185,QALT[Pho]LQDWAAQR,MPSK1 (T185),sp|O75716|STK16_HUMAN,,,T185t
+STK16,198,C[Cam]TISY[Pho]R,MPSK1 (Y198),sp|O75716|STK16_HUMAN,,,Y198y
+KS6A5,212,AYS[Pho]FC[Cam]GTIEYMAPDIVR,MSK1 (S212),sp|O75582|KS6A5_HUMAN,,,S212s
+STK24,190,NT[Pho]FVGTPFWMAPEVIK,"MST3 (T190), YSK1 (T174)",sp|Q9Y6E0|STK24_HUMAN,,,T190t
+STK24,174,NT[Pho]FVGTPFWMAPEVIK,"MST3 (T190), YSK1 (T174)",sp|Q9Y6E0|STK24_HUMAN,,,T174t
+STK25,190,NT[Pho]FVGTPFWMAPEVIK,"MST3 (T190), YSK1 (T174)", sp|O00506|STK25_HUMAN,,,T190t
+STK25,174,NT[Pho]FVGTPFWMAPEVIK,"MST3 (T190), YSK1 (T174)", sp|O00506|STK25_HUMAN,,,T174t
+MUSK,755,NIYSADY[Pho]YK,MuSK (Y755),sp|O15146|MUSK_HUMAN,,,Y755y
+NEK2,171,ILNHDTS[Pho]FAK,Nek2 (S171),sp|P51955|NEK2_HUMAN,,,S171s
+NEK2,170,ILNHDT[Pho]SFAK,Nek2 (T170),sp|P51955|NEK2_HUMAN,,,T170t
+NEK2,170,ILNHDT[Pho]S[Pho]FAK,Nek2 (T170/S171),sp|P51955|NEK2_HUMAN,,,T170t
+NEK2,171,ILNHDT[Pho]S[Pho]FAK,Nek2 (T170/S171),sp|P51955|NEK2_HUMAN,,,S171s
+NEK2,175,T[Pho]FVGTPYYMSPEQMNR,Nek2 (T175),sp|P51955|NEK2_HUMAN,,,T175t
+NEK2,179,TFVGT[Pho]PYYMSPEQMNR,Nek2 (T179),sp|P51955|NEK2_HUMAN,,,T179t
+NEK6,206,FFSSETTAAHS[Pho]LVGTPYYMSPER,Nek6 (S206),sp|Q9HC98|NEK6_HUMAN,,,S206s
+NEK6,202,FFSSETT[Pho]AAHSLVGTPYYMSPER,Nek6 (T202),sp|Q9HC98|NEK6_HUMAN,,,T202t
+NLK,298,HMT[Pho]QEVVTQYYR,NLK (T298),sp|Q9UBE8|NLK_HUMAN,,,T298t
+MK14,180,HTDDEMT[Pho]GYVATR,p38α (T180),sp|Q16539|MK14_HUMAN,,,T180t
+MK14,180,HTDDEMT[Pho]GY[Pho]VATR,p38α (T180/Y182),sp|Q16539|MK14_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p38-mapk-thr180-tyr182-d3f9-xp-rabbit-mab/4511,,T180t
+MK14,182,HTDDEMT[Pho]GY[Pho]VATR,p38α (T180/Y182),sp|Q16539|MK14_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p38-mapk-thr180-tyr182-d3f9-xp-rabbit-mab/4511,,Y182y
+MK14,182,HTDDEMTGY[Pho]VATR,p38α (Y182),sp|Q16539|MK14_HUMAN,,,Y182y
+MK11,180,QADEEMT[Pho]GYVATR,p38β (T180),sp|Q15759|MK11_HUMAN,,,T180t
+MK11,180,QADEEMT[Pho]GY[Pho]VATR,p38β (T180/Y182),sp|Q15759|MK11_HUMAN,,,T180t
+MK11,182,QADEEMT[Pho]GY[Pho]VATR,p38β (T180/Y182),sp|Q15759|MK11_HUMAN,,,Y182y
+MK11,182,QADEEMTGY[Pho]VATR,p38β (Y182),sp|Q15759|MK11_HUMAN,,,Y182y
+MK12,183,QADSEMT[Pho]GYVVTR,p38γ (T183),sp|P53778|MK12_HUMAN,,,T183t
+MK12,183,QADSEMT[Pho]GY[Pho]VVTR,p38γ (T183/Y185),sp|P53778|MK12_HUMAN,,,T183t
+MK12,185,QADSEMT[Pho]GY[Pho]VVTR,p38γ (T183/Y185),sp|P53778|MK12_HUMAN,,,Y185y
+MK12,185,QADSEMTGY[Pho]VVTR,p38γ (Y185),sp|P53778|MK12_HUMAN,,,Y185y
+MK13,180,HADAEMT[Pho]GYVVTR,p38δ (T180),sp|O15264|MK13_HUMAN,,,T180t
+MK13,180,HADAEMT[Pho]GY[Pho]VVTR,p38δ (T180/Y182),sp|O15264|MK13_HUMAN,,,T180t
+MK13,182,HADAEMT[Pho]GY[Pho]VVTR,p38δ (T180/Y182),sp|O15264|MK13_HUMAN,,,Y182y
+MK13,182,HADAEMTGY[Pho]VVTR,p38δ (Y182),sp|O15264|MK13_HUMAN,,,Y182y
+PAK1,427,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)",sp|Q13153|PAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T427t
+PAK1,406,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)",sp|Q13153|PAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T406t
+PAK1,440,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)",sp|Q13153|PAK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T440t
+PAK2,427,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)", sp|Q13177|PAK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T427t
+PAK2,406,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)", sp|Q13177|PAK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T406t
+PAK2,440,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)", sp|Q13177|PAK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T440t
+PAK3,427,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)", sp|O75914|PAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T427t
+PAK3,406,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)", sp|O75914|PAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T406t
+PAK3,440,STMVGT[Pho]PYWMAPEVVTR,"PAK1 (T427), PAK2 (T406), PAK3 (T440)", sp|O75914|PAK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak1-thr423-pak2-thr402-antibody/2601,"Antibody detects endogenous PAK1, PAK2 and PAK3 only when phosphorylated at Thr423, Thr402 and Thr421, respectively. The antibody does not cross-react with phosphorylated PAK4, PAK5 or PAK6. The antibody does cross-react with phospho-Mst1 (Thr183) or phospho-Mst2 (Thr180).",T440t
+PAK4,474,S[Pho]LVGTPYWMAPELISR,PAK4 (S474),sp|O96013|PAK4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak4-ser474-pak5-ser602-pak6-ser560-antibody/3241,"Antibody detects endogenous levels of PAK4, PAK5 and PAK6 only when phosphorylated at serine 474, 602, or 560, respectively. The antibody does not cross-react with phosphorylated PAK1, PAK2 or PAK3.",S474s
+PAK6,560,S[Pho]LVGTPYWMAPEVISR,"PAK6 (S560), PAK5 (S602)",sp|Q9NQU5|PAK6_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak4-ser474-pak5-ser602-pak6-ser560-antibody/3241,"Antibody detects endogenous levels of PAK4, PAK5 and PAK6 only when phosphorylated at serine 474, 602, or 560, respectively. The antibody does not cross-react with phosphorylated PAK1, PAK2 or PAK3.",S560s
+PAK6,602,S[Pho]LVGTPYWMAPEVISR,"PAK6 (S560), PAK5 (S602)",sp|Q9NQU5|PAK6_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak4-ser474-pak5-ser602-pak6-ser560-antibody/3241,"Antibody detects endogenous levels of PAK4, PAK5 and PAK6 only when phosphorylated at serine 474, 602, or 560, respectively. The antibody does not cross-react with phosphorylated PAK1, PAK2 or PAK3.",S602s
+PAK7,560,S[Pho]LVGTPYWMAPEVISR,"PAK6 (S560), PAK5 (S602)", sp|Q9P286|PAK7_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak4-ser474-pak5-ser602-pak6-ser560-antibody/3241,"Antibody detects endogenous levels of PAK4, PAK5 and PAK6 only when phosphorylated at serine 474, 602, or 560, respectively. The antibody does not cross-react with phosphorylated PAK1, PAK2 or PAK3.",S560s
+PAK7,602,S[Pho]LVGTPYWMAPEVISR,"PAK6 (S560), PAK5 (S602)", sp|Q9P286|PAK7_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pak4-ser474-pak5-ser602-pak6-ser560-antibody/3241,"Antibody detects endogenous levels of PAK4, PAK5 and PAK6 only when phosphorylated at serine 474, 602, or 560, respectively. The antibody does not cross-react with phosphorylated PAK1, PAK2 or PAK3.",S602s
+PGFRA,849,DIMHDSNY[Pho]VSK,PDGFRα (Y849),sp|P16234|PGFRA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pdgf-receptor-a-tyr849-pdgf-receptor-b-tyr857-c43e9-rabbit-mab/3170,This antibody may cross-react with other activated tyrosine kinases,Y849y
+PGFRB,857,DSNY[Pho]ISK,PDGFRβ (Y857),sp|P09619|PGFRB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pdgf-receptor-a-tyr849-pdgf-receptor-b-tyr857-c43e9-rabbit-mab/3170,This antibody may cross-react with other activated tyrosine kinases,Y857y
+PDPK1,241,ANS[Pho]FVGTAQYVSPELLTEK,"PDK1 (S241), {PDPK2P (S241)}",sp|O15530|PDPK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pdk1-ser241-c49h2-rabbit-mab/3438,,S241s
+PDPK1,241,ANS[Pho]FVGTAQYVSPELLTEK,"PDK1 (S241), {PDPK2P (S241)}",sp|O15530|PDPK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pdk1-ser241-c49h2-rabbit-mab/3438,,S241s
+PDPK2,241,ANS[Pho]FVGTAQYVSPELLTEK,"PDK1 (S241), {PDPK2P (S241)}", sp|Q6A1A2|PDPK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pdk1-ser241-c49h2-rabbit-mab/3438,,S241s
+PDPK2,241,ANS[Pho]FVGTAQYVSPELLTEK,"PDK1 (S241), {PDPK2P (S241)}", sp|Q6A1A2|PDPK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pdk1-ser241-c49h2-rabbit-mab/3438,,S241s
+CD11B,595,AYT[Pho]PVVVTLWYR,PITSLRE (T595),sp|P21127|CD11B_HUMAN,,,T595t
+CD11B,594,AY[Pho]TPVVVTLWYR,PITSLRE (Y594),sp|P21127|CD11B_HUMAN,,,Y594y
+CD11B,594,AY[Pho]T[Pho]PVVVTLWYR,PITSLRE (Y594/T595),sp|P21127|CD11B_HUMAN,,,Y594y
+CD11B,595,AY[Pho]T[Pho]PVVVTLWYR,PITSLRE (Y594/T595),sp|P21127|CD11B_HUMAN,,,T595t
+KAPCA,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)",sp|P17612|KAPCA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCA,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)",sp|P17612|KAPCA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCA,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)",sp|P17612|KAPCA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCB,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)", sp|P22694|KAPCB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCB,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)", sp|P22694|KAPCB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCB,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)", sp|P22694|KAPCB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCG,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)", sp|P22612|KAPCG_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCG,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)", sp|P22612|KAPCG_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCG,198,TWT[Pho]LC[Cam]GTPEYLAPEIILSK,"PKAα (T198), PKAβ (T198), PKAγ (T198)", sp|P22612|KAPCG_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pka-c-thr197-d45d3-rabbit-mab/5661,"Antibody detects endogenous levels of PKA C (-alpha, -beta and -gamma) only when phosphorylated at Thr197. This antibody does not cross-react with PKA C phosphorylated at other sites.",T198t
+KAPCA,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)",sp|P17612|KAPCA_HUMAN,,,T202t
+KAPCA,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)",sp|P17612|KAPCA_HUMAN,,,T202t
+KAPCA,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)",sp|P17612|KAPCA_HUMAN,,,T202t
+KAPCB,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)", sp|P22694|KAPCB_HUMAN,,,T202t
+KAPCB,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)", sp|P22694|KAPCB_HUMAN,,,T202t
+KAPCB,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)", sp|P22694|KAPCB_HUMAN,,,T202t
+KAPCG,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)", sp|P22612|KAPCG_HUMAN,,,T202t
+KAPCG,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)", sp|P22612|KAPCG_HUMAN,,,T202t
+KAPCG,202,TWTLC[Cam]GT[Pho]PEYLAPEIILSK,"PKAα (T202), PKAβ (T202), PKAγ (T202)", sp|P22612|KAPCG_HUMAN,,,T202t
+KPCA,497,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)",sp|P17252|KPCA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T497t
+KPCA,500,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)",sp|P17252|KPCA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T500t
+KPCA,514,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)",sp|P17252|KPCA_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T514t
+KPCB,497,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)", sp|P05771|KPCB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T497t
+KPCB,500,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)", sp|P05771|KPCB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T500t
+KPCB,514,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)", sp|P05771|KPCB_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T514t
+KPCG,497,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)", sp|P05129|KPCG_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T497t
+KPCG,500,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)", sp|P05129|KPCG_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T500t
+KPCG,514,T[Pho]FC[Cam]GTPDYIAPEIIAYQPYGK,"PKCα (T497), PKCβ (T500), PKCγ (T514)", sp|P05129|KPCG_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T514t
+KPCA,501,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)",sp|P17252|KPCA_HUMAN,,,T501t
+KPCA,504,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)",sp|P17252|KPCA_HUMAN,,,T504t
+KPCA,518,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)",sp|P17252|KPCA_HUMAN,,,T518t
+KPCB,501,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)", sp|P05771|KPCB_HUMAN,,,T501t
+KPCB,504,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)", sp|P05771|KPCB_HUMAN,,,T504t
+KPCB,518,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)", sp|P05771|KPCB_HUMAN,,,T518t
+KPCG,501,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)", sp|P05129|KPCG_HUMAN,,,T501t
+KPCG,504,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)", sp|P05129|KPCG_HUMAN,,,T504t
+KPCG,518,TFC[Cam]GT[Pho]PDYIAPEIIAYQPYGK,"PKCα (T501), PKCβ (T504), PKCγ (T518)", sp|P05129|KPCG_HUMAN,,,T518t
+KPCT,538,TNT[Pho]FC[Cam]GTPDYIAPEILLGQK,PKCθ (T538),sp|Q04759|KPCT_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-pkc-pan-zeta-thr410-190d10-rabbit-mab/2060,"Phospho-PKC (pan) (zeta Thr410) (190D10) Rabbit mAb detects endogenous levels of PKC alpha, beta I, beta II, gamma, delta, epsilon, eta, theta and iota isoforms only when phosphorylated at a residue homologous to threonine 410 of human PKCzeta.",T538t
+KPCD1,742,S[Pho]VVGTPAYLAPEVLR,"PKD1 (S742), PKD3 (S735)",sp|Q15139|KPCD1_HUMAN,,,S742s
+KPCD1,735,S[Pho]VVGTPAYLAPEVLR,"PKD1 (S742), PKD3 (S735)",sp|Q15139|KPCD1_HUMAN,,,S735s
+KPCD3,742,S[Pho]VVGTPAYLAPEVLR,"PKD1 (S742), PKD3 (S735)", sp|O94806|KPCD3_HUMAN,,,S742s
+KPCD3,735,S[Pho]VVGTPAYLAPEVLR,"PKD1 (S742), PKD3 (S735)", sp|O94806|KPCD3_HUMAN,,,S735s
+KPCD2,710,S[Pho]VVGTPAYLAPEVLLNQGYNR,PKD2 (S710),sp|Q9BZL6|KPCD2_HUMAN,,,S710s
+KPCD2,717,SVVGTPAY[Pho]LAPEVLLNQGYNR,PKD2 (Y717),sp|Q9BZL6|KPCD2_HUMAN,,,Y717y
+PKN2,816,TST[Pho]FC[Cam]GTPEFLAPEVLTETSYTR,PKN2/PRK2 (T816),sp|Q16513|PKN2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-prk1-thr774-prk2-thr816-antibody/2611,"Phospho-PRK1 (Thr774)/ PRK2 (Thr816) Antibody detects endogenous levels of PRK1 and PRK2 only when phosphorylated at Thr774 or Thr816, respectively. This antibody also detects PKC zeta and lambda when phosphorylated at Thr 410 and 403, respectively.",T816t
+PKN2,820,TSTFC[Cam]GT[Pho]PEFLAPEVLTETSYTR,PKN2/PRK2 (T820),sp|Q16513|PKN2_HUMAN,,,T820t
+PKN3,718,TST[Pho]FC[Cam]GTPEFLAPEVLTQEAYTR,PKN3 (T718),sp|Q6P5Z2|PKN3_HUMAN,,,T718t
+PKN3,722,TSTFC[Cam]GT[Pho]PEFLAPEVLTQEAYTR,PKN3 (T722),sp|Q6P5Z2|PKN3_HUMAN,,,T722t
+PLK1,210,T[Pho]LC[Cam]GTPNYIAPEVLSK,PLK1 (T210),sp|P53350|PLK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-plk1-thr210-d5h7-rabbit-mab/9062,,T210t
+PLK1,210,T[Pho]LC[Cam]GT[Pho]PNYIAPEVLSK,PLK1 (T210/T214),sp|P53350|PLK1_HUMAN,,,T210t
+PLK1,214,T[Pho]LC[Cam]GT[Pho]PNYIAPEVLSK,PLK1 (T210/T214),sp|P53350|PLK1_HUMAN,,,T214t
+PLK1,214,TLC[Cam]GT[Pho]PNYIAPEVLSK,PLK1 (T214),sp|P53350|PLK1_HUMAN,,,T214t
+PLK2,239,T[Pho]IC[Cam]GTPNYLSPEVLNK,PLK2 (T239),sp|Q9NYY3|PLK2_HUMAN,,,T239t
+FAK2,579,YIEDEDY[Pho]YK,PYK2/FAK2 (Y579),sp|Q14289|FAK2_HUMAN,,,Y579y
+FAK2,579,YIEDEDY[Pho]Y[Pho]K,PYK2/FAK2 (Y579/Y580),sp|Q14289|FAK2_HUMAN,,,Y579y
+FAK2,580,YIEDEDY[Pho]Y[Pho]K,PYK2/FAK2 (Y579/Y580),sp|Q14289|FAK2_HUMAN,,,Y580y
+FAK2,580,YIEDEDYY[Pho]K,PYK2/FAK2 (Y580),sp|Q14289|FAK2_HUMAN,,,Y580y
+RET,900,DVY[Pho]EEDSYVK,Ret (Y900),sp|P07949|RET_HUMAN,,,Y900y
+RET,900,DVY[Pho]EEDSY[Pho]VK,Ret (Y900/Y905),sp|P07949|RET_HUMAN,,,Y900y
+RET,905,DVY[Pho]EEDSY[Pho]VK,Ret (Y900/Y905),sp|P07949|RET_HUMAN,,,Y905y
+RET,905,DVYEEDSY[Pho]VK,Ret (Y905),sp|P07949|RET_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-ret-tyr905-antibody/3221,This antibody may cross-react with other activated receptor tyrosine kinases.,Y905y
+RK,21,GS[Pho]FDGSSSQPSR,RHODK/GRK (S21),sp|Q15835|RK_HUMAN,,,S21s
+RIPK1,161,IADLGLAS[Pho]FK,RIPK1 (S161),sp|Q13546|RIPK1_HUMAN,,,S161s
+RIPK2,176,MMSLS[Pho]QSR,RIPK2 (S176),sp|O43353|RIPK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-rip2-ser176-e1i9j-rabbit-mab/14397,This antibody also cross-reacts with unidentified proteins of approximately 25 kDa and 38 kDa in some cell lines.,S176s
+RON,1238,EY[Pho]YSVQQHR,Ron (Y1238),sp|Q04912|RON_HUMAN,,,Y1238y
+RON,1238,EY[Pho]Y[Pho]SVQQHR,Ron (Y1238/Y1239),sp|Q04912|RON_HUMAN,,,Y1238y
+RON,1239,EY[Pho]Y[Pho]SVQQHR,Ron (Y1238/Y1239),sp|Q04912|RON_HUMAN,,,Y1239y
+RON,1239,EYY[Pho]SVQQHR,Ron (Y1239),sp|Q04912|RON_HUMAN,,,Y1239y
+ROR1,645,EIYSADY[Pho]YR,ROR1 (Y645),sp|Q01973|ROR1_HUMAN,,,Y645y
+ROR2,646,EVYAADYY[Pho]K,ROR2 (Y646),sp|Q01974|ROR2_HUMAN,,,Y646y
+KS6A1,573,AENGLLMT[Pho]PC[Cam]YTANFVAPEVLK,"RSK1/p90RSK (T573), RSK2 (T577)",sp|Q15418|KS6A1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p90rsk-thr573-antibody/9346,,T573t
+KS6A1,577,AENGLLMT[Pho]PC[Cam]YTANFVAPEVLK,"RSK1/p90RSK (T573), RSK2 (T577)",sp|Q15418|KS6A1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p90rsk-thr573-antibody/9346,,T577t
+KS6A3,573,AENGLLMT[Pho]PC[Cam]YTANFVAPEVLK,"RSK1/p90RSK (T573), RSK2 (T577)", sp|P51812|KS6A3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p90rsk-thr573-antibody/9346,,T573t
+KS6A3,577,AENGLLMT[Pho]PC[Cam]YTANFVAPEVLK,"RSK1/p90RSK (T573), RSK2 (T577)", sp|P51812|KS6A3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-p90rsk-thr573-antibody/9346,,T577t
+MP2K4,257,LC[Cam]DFGISGQLVDS[Pho]IAK,SEK1/MAP2K4 (S257),sp|P45985|MP2K4_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-sek1-mkk4-ser257-c36c11-rabbit-mab/4514,,S257s
+SIK1,182,SGEPLST[Pho]WC[Cam]GSPPYAAPEVFEGK,SIK (T182),sp|P57059|SIK1_HUMAN,,,T182t
+SRMS,380,DDIY[Pho]SPSSSSK,Srm (Y380),sp|Q9H3Y6|SRMS_HUMAN,,,Y380y
+KSYK,525,ADENY[Pho]YK,Syk (Y525),sp|P43405|KSYK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-syk-tyr525-526-c87c1-rabbit-mab/2710,detects doubly phosphorylated version as well as both singly phosphorylated versions,Y525y
+KSYK,526,ADENYY[Pho]K,Syk (Y526),sp|P43405|KSYK_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-syk-tyr525-526-c87c1-rabbit-mab/2710,detects doubly phosphorylated version as well as both singly phosphorylated versions,Y526y
+KSYK,546,WYAPEC[Cam]INY[Pho]YK,Syk (Y546),sp|P43405|KSYK_HUMAN,,,Y546y
+M3K7,192,GS[Pho]AAWMAPEVFEGSNYSEK,TAK1 (S192),sp|O43318|M3K7_HUMAN,,,S192s
+TEC,519,YVLDDQY[Pho]TSSSGAK,TEC (Y519),sp|P42680|TEC_HUMAN,,,Y519y
+TESK1,220,EPLAVVGS[Pho]PYWMAPEVLR,TESK1 (S220),sp|Q15569|TESK1_HUMAN,,,S220s
+TESK2,219,LAVVGS[Pho]PFWMAPEVLR,TESK2 (S219),sp|Q96S53|TESK2_HUMAN,,,S219s
+E2AK4,1007,GEEVY[Pho]VK,"Tie1 (Y1007), GCN2 (Y70)",sp|Q9P2K8|E2AK4_HUMAN,,,Y1007y
+E2AK4,70,GEEVY[Pho]VK,"Tie1 (Y1007), GCN2 (Y70)",sp|Q9P2K8|E2AK4_HUMAN,,,Y70y
+TIE1,1007,GEEVY[Pho]VK,"Tie1 (Y1007), GCN2 (Y70)", sp|P35590|TIE1_HUMAN,,,Y1007y
+TIE1,70,GEEVY[Pho]VK,"Tie1 (Y1007), GCN2 (Y70)", sp|P35590|TIE1_HUMAN,,,Y70y
+TIE2,992,GQEVY[Pho]VK,Tie2 (Y992),sp|Q02763|TIE2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-tie2-tyr992-antibody/4221,,Y992y
+M3K8,290,GT[Pho]EIYMSPEVILC[Cam]R,Tpl2/COT (T290),sp|P41279|M3K8_HUMAN,,,T290t
+NTRK1,676,DIY[Pho]STDYYR,TrkA (Y676),sp|P04629|NTRK1_HUMAN,,,Y676y
+NTRK1,680,DIYSTDY[Pho]YR,TrkA (Y680),sp|P04629|NTRK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y680y
+NTRK1,681,DIYSTDYY[Pho]R,TrkA (Y681),sp|P04629|NTRK1_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y681y
+NTRK2,702,DVY[Pho]STDYYR,"TrkB (Y702), TrkC (Y705)",sp|Q16620|NTRK2_HUMAN,,,Y702y
+NTRK2,705,DVY[Pho]STDYYR,"TrkB (Y702), TrkC (Y705)",sp|Q16620|NTRK2_HUMAN,,,Y705y
+NTRK3,702,DVY[Pho]STDYYR,"TrkB (Y702), TrkC (Y705)", sp|Q16288|NTRK3_HUMAN,,,Y702y
+NTRK3,705,DVY[Pho]STDYYR,"TrkB (Y702), TrkC (Y705)", sp|Q16288|NTRK3_HUMAN,,,Y705y
+NTRK2,706,DVYSTDY[Pho]YR,"TrkB (Y706), TrkC (Y709)",sp|Q16620|NTRK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y706y
+NTRK2,709,DVYSTDY[Pho]YR,"TrkB (Y706), TrkC (Y709)",sp|Q16620|NTRK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y709y
+NTRK3,706,DVYSTDY[Pho]YR,"TrkB (Y706), TrkC (Y709)", sp|Q16288|NTRK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y706y
+NTRK3,709,DVYSTDY[Pho]YR,"TrkB (Y706), TrkC (Y709)", sp|Q16288|NTRK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y709y
+NTRK2,707,DVYSTDYY[Pho]R,"TrkB (Y707), TrkC (Y710)",sp|Q16620|NTRK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y707y
+NTRK2,710,DVYSTDYY[Pho]R,"TrkB (Y707), TrkC (Y710)",sp|Q16620|NTRK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y710y
+NTRK3,707,DVYSTDYY[Pho]R,"TrkB (Y707), TrkC (Y710)", sp|Q16288|NTRK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y707y
+NTRK3,710,DVYSTDYY[Pho]R,"TrkB (Y707), TrkC (Y710)", sp|Q16288|NTRK3_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-trka-tyr674-675-trkb-tyr706-707-c50f3-rabbit-mab/4621,Detects doubly phosphorylated version. The antibody may cross-react with a protein of ~150 kDa phosphorylated at an unknown tyrosine residue.,Y710y
+TITIN,9203,VAGS[Pho]QPITVAWYK,TTN (S9203),sp|Q8WZ42|TITIN_HUMAN,,,S9203s
+TITIN,9203,VAGS[Pho]QPIT[Pho]VAWYK,TTN (S9203/T9207),sp|Q8WZ42|TITIN_HUMAN,,,S9203s
+TITIN,9207,VAGS[Pho]QPIT[Pho]VAWYK,TTN (S9203/T9207),sp|Q8WZ42|TITIN_HUMAN,,,T9207t
+TITIN,9207,VAGSQPIT[Pho]VAWYK,TTN (T9207),sp|Q8WZ42|TITIN_HUMAN,,,T9207t
+TBRG1,8490,Y[Pho]TC[Cam]QIK,"TTN (Y8490), [TBRG1 (Y234)]",sp|Q3YBR2|TBRG1_HUMAN,,,Y8490y
+TBRG1,234,Y[Pho]TC[Cam]QIK,"TTN (Y8490), [TBRG1 (Y234)]",sp|Q3YBR2|TBRG1_HUMAN,,,Y234y
+TBRG1,8490,Y[Pho]TC[Cam]QIK,"TTN (Y8490), [TBRG1 (Y234)]", sp|Q3YBR2|TBRG1_HUMAN,,,Y8490y
+TBRG1,234,Y[Pho]TC[Cam]QIK,"TTN (Y8490), [TBRG1 (Y234)]", sp|Q3YBR2|TBRG1_HUMAN,,,Y234y
+TXK,420,YVLDDEY[Pho]VSSFGAK,TXK (Y420),sp|P42681|TXK_HUMAN,,,Y420y
+TYK2,10541,AVPEGHEY[Pho]YR,Tyk2 (1054),sp|P29597|TYK2_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-tyk2-tyr1054-1055-antibody/9321,detects doubly phosphorylated version,10541
+ULK3,176,GS[Pho]PLYMAPEMVC[Cam]QR,ULK3 (S176),sp|Q6PHR2|ULK3_HUMAN,,,S176s
+MLTK,155,IC[Cam]DFGAS[Pho]R,ZAK (S155),sp|Q9NYL2|MLTK_HUMAN,,,S155s
+ZAP70,492,ALGADDSY[Pho]YTAR,Zap70/SRK (Y492),sp|P43403|ZAP70_HUMAN,https://www.cellsignal.com/products/primary-antibodies/phospho-zap-70-tyr493-syk-tyr526-antibody/2704,Detects Y492. Also specific for Syk Y526. This antibody may cross-react with other activated tyrosine kinases.,Y492y
