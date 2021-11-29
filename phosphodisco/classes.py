@@ -13,7 +13,7 @@ from io import BytesIO
 from .constants import var_site_delimiter
 from .utils import norm_line_to_residuals, zscore
 from .constants import annotation_column_map, datatype_label
-from .parsers import read_fasta, read_phospho, read_protein, column_normalize
+from .parsers import read_fasta, read_phospho, read_protein, read_annotation, column_normalize
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
@@ -685,13 +685,15 @@ def druggability(self,module_num=None,interactions=None):
     Args: 
         module_num = Cluster numbers, must be in list form. 
         interactions = gene-drug interactions in .tsv or .csv format. If input is empty, the default is  a file from the DGidb database"
-    #"""
+    """
     
     #Read in list of interactions
     if interactions is None: #read in list of interactions taken from DGidb database
         interactions = BytesIO(pkgutil.get_data('phosphodisco', 'data/interactions-Jan2021-dgidb.tsv')
-        genes = interactions.iloc[:,0]
-    
+    else:
+        interactions = read_annotation(interactions)
+    genes = interactions.iloc[:,0]
+
     #define a list of druggable genes as a set 
     druggable_genes = set(genes)
     
