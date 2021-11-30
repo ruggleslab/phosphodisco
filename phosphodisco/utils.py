@@ -122,3 +122,29 @@ def zscore(df):
         Row-zscored DataFrame.
     """
     return df.subtract(df.mean(axis=1), axis=0).divide(df.std(axis=1), axis=0)
+
+
+def check_float(dataframe, column_name=None):
+    """
+    Checks if columns in a given dataframe have values that can be converted to floats
+    Args: 
+    dataframe: Pandas dataframe that you want to filter non-float values out of 
+    column_name: column of interest in dataframe
+    
+    Returns: 
+    A tuple consisting of column names, the non-float values (if applicable), a boolean value of either True or False depending on if your dataframe column has a non-float value
+
+    """
+    filteredvals=[] 
+    for val in dataframe[column_name]:
+        try:
+            float(val)
+        except ValueError:
+            filteredvals.append(val)
+    
+    if len(filteredvals)!= 0: 
+        return column_names, np.unique(filteredvals), False
+    else:
+        return column_names, np.unique(filteredvals), True
+    
+ 
