@@ -10,7 +10,7 @@ from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
 from io import BytesIO
 from .constants import var_site_delimiter
-from .utils import norm_line_to_residuals, zscore
+from .utils import norm_line_to_residuals, zscore, check_float
 from .constants import annotation_column_map, datatype_label
 from .parsers import read_fasta, read_phospho, read_protein, column_normalize
 from .annotation_association import (
@@ -467,10 +467,16 @@ class ProteomicsData:
             annotations,
             annotations.columns[column_types == 0]
         )
-
-        self.continuous_annotations = annotations[
-            annotations.columns[column_types == 1]
-        ].astype(float)
+        try: 
+       	    self.continuous_annotations = annotations[
+            annotations.columns[column_types == 1]].astype(float)
+        except ValueError: 
+	    for column in annotations.columns[column_types==1]:
+                if not (check_float(annotations, column)[2]):
+                        logging.error(f'{column} column cannot be converted to float, has the values:{check_float(annotations, column)[1][:10]}')
+                else: 
+                        pass
+       	    ValueError("Unable to convert columns to float")
         return self
 
     def calculate_annotation_association(
