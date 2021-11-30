@@ -689,7 +689,7 @@ def druggability(self,module_num=None,interactions=None):
     
     #Read in list of interactions
     if interactions is None: #read in list of interactions taken from DGidb database
-        interactions = BytesIO(pkgutil.get_data('phosphodisco', 'data/interactions-Jan2021-dgidb.tsv')
+        interactions = BytesIO(pkgutil.get_data('phosphodisco', 'data/interactions-Jan2021-dgidb.tsv'))
     else:
         interactions = read_annotation(interactions)
     genes = interactions.iloc[:,0]
@@ -716,7 +716,6 @@ def druggability(self,module_num=None,interactions=None):
 
 
 def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True):
-    #specify third argument = druggable or not 
     
     """
     Description: 
