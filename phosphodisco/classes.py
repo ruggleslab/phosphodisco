@@ -723,13 +723,13 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
         Can also find the top N (where N is a number over zero) regulators associated with each module
     
     Args: 
-        module_num= Module numbers of interest. Must be entered in list form 
+        module_num = Module numbers of interest. Must be entered in list form. Uses all modules if None.
         top_num = The number of regulators closely associated with the module, must be greater than 0. 
         only_druggable = True or False value, specifies whether you want only druggable  regulators returned.
         
     Modified attributes: 
-        self.druggable_regulators_df = gives you a dataframe of only druggable regulators. 
-        self.filtered_reg_df = returns a dataframe of regulators filtered by druggability, modules of interest
+        self.druggable_regulators_df = DataFrame of only druggable regulators. 
+        self.filtered_reg_df =  DataFrame of regulators filtered by druggability, modules of interest and top_num
     
     Returns: 
         self 
@@ -758,24 +758,25 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
     #find druggable regulators in regulator_coefficient dataframe
     self.druggable_regulators_df =  reg_coeff[reg_coeff.iloc[:,0].isin(druggable_regulator_list)]
    
-     
+    #select druggable or not 
     if only_druggable:
-        regulator_df = self.druggable_regulators_df.set_index(['geneSymbol','variableSites']).copy() #generalize this maybe? 
+        regulator_df = self.druggable_regulators_df.set_index(druggable_regulators_df.columns[:2]).copy()
     else:
-        regulator_df = reg_coeff.copy()
+        regulator_df = reg_coeff.copy().set_index(reg_coeff.columns[:2])
                                               
-   #Find top X in a given module
-
-    if module_num is not None: #module number and top number not entered
+    #select modules
+    if module_num is not None: 
         regulator_df = regulator_df.loc[:,module_num]
         
     column_list = regulator_df.columns
-        
+    
+    #select top_n regulators for each module
     if top_num is not None: 
         combined_top_regs  = set(
-        chain.from_iterable(set(regulator_df[x].nlargest(top_num).index) for x in 
-                    column_list)
-                            )
+                chain.from_iterable(
+                    set(regulator_df[x].nlargest(top_num).index) for x in column_list
+                    )
+                )
         regulator_df = regulator_df.loc[combined_top_regs, column_list]
         
         
@@ -792,19 +793,20 @@ def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_drugga
      It also calls on the find_druggable_regulators function and uses its output to create the heatmap
     
     Args:
-     module_num= Module numbers of interest. Must be entered in list form 
-     top_num = The number of regulators closely associated with the module, must be greater than 0. 
-     only_druggable = True or False value, specifies whether you want only druggable regulators returned.
+        module_num= Module numbers of interest. Must be entered in list form 
+        top_num = The number of regulators closely associated with the module, must be greater than 0. 
+        only_druggable = True or False value, specifies whether you want only druggable regulators returned.
     
     Modified attributes:
-    self.druggable_bool = returns series containing gene names, associated phosphosites and whether these genes are druggable are not. Druggable genes are "True", non-druggable genes are "False". This boolean series is used to construct the accompanying color bar for the heatmap. 
-    
+        self.druggable_bool = returns series containing gene names, associated phosphosites and whether these genes are druggable are not.
+                              Druggable genes are "True", non-druggable genes are "False". 
+                              This boolean series is used to construct the accompanying color bar for the heatmap. 
+    Returns:
+        druggability_map = seaborn.matrix.ClusterGrid
     """
     #Error statements
     if hasattr(self, 'regulator_coefficients')==False:
         raise AttributeError("Run .calculate_regulator_association()")
-    
-
 
     #call other function
     self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
@@ -831,7 +833,13 @@ def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_drugga
     
     
    
-    druggable_bool = pd.Series(data=regdf_copy.index.get_level_values(0).map(lambda row: (len(set(row.split('-')).intersection(druggable_genes)) > 0)),index = regdf.index,name = 'druggability')
+    druggable_bool = pd.Series(
+            data = regdf_copy.index.get_level_values(0).map(
+                lambda row: (len(set(row.split('-')).intersection(druggable_genes)) > 0)
+                ), #get rows with at least one druggable gene
+            index = regdf.index,
+            name = 'druggability'
+            )
     
     self.druggable_bool = druggable_bool
     
