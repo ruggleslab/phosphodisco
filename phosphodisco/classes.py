@@ -6,17 +6,18 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 import logging
+import pkgutil
 from typing import Iterable, Optional, Union
 from statsmodels.stats.multitest import multipletests
 from scipy.stats import spearmanr
 import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
-
+from io import BytesIO
 from .constants import var_site_delimiter
 from .utils import norm_line_to_residuals, zscore
 from .constants import annotation_column_map, datatype_label
-from .parsers import read_fasta, read_phospho, read_protein, column_normalize
+from .parsers import read_fasta, read_phospho, read_protein, read_annotation, column_normalize
 from .annotation_association import (
     binarize_categorical, continuous_score_association, categorical_score_association
 )
@@ -752,3 +753,180 @@ def prepare_data(
         clustering_parameters_for_modules=clustering_parameters_for_modules,
         possible_regulator_list=putative_regulator_list
     )
+
+
+def druggability(self,module_num=None,interactions=None):
+    
+    """
+    Finds druggable genes in a given module
+    Args: 
+        module_num = Cluster numbers, must be in list form. 
+        interactions = gene-drug interactions in .tsv or .csv format. If input is empty, the default is  a file from the DGidb database"
+    """
+    
+    #Read in list of interactions
+    if interactions is None: #read in list of interactions taken from DGidb database
+        interactions = BytesIO(pkgutil.get_data('phosphodisco', 'data/interactions-Jan2021-dgidb.tsv'))
+    else:
+        interactions = read_annotation(interactions)
+    genes = interactions.iloc[:,0]
+
+    #define a list of druggable genes as a set 
+    druggable_genes = set(genes)
+    
+    #throw error if no modules
+    if hasattr(self, 'modules') == False:
+        raise AttributeError("No modules assigned, run .assign_modules.")
+    
+   #define module genes
+    module_genes = self.modules.index.get_level_values(0)
+    self.druggable_module_genes = druggable_genes.intersection(module_genes)
+    self.druggable_module_genes_df = pd.DataFrame(self.modules.loc[self.druggable_module_genes])
+
+    if module_num is not None:
+        if isinstance(module_num, list):
+            dataframe = self.druggable_module_genes_df.reset_index()
+            self.druggable_module_genes_df = dataframe.loc[dataframe.iloc[:,2].isin(module_num)]
+            return self
+        else:
+            return self
+
+
+def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True):
+    
+    """
+    Description: 
+        This function helps find druggable regulators and is able to filter them by module. 
+        Can also find the top N (where N is a number over zero) regulators associated with each module
+    
+    Args: 
+        module_num = Module numbers of interest. Must be entered in list form. Uses all modules if None.
+        top_num = The number of regulators closely associated with the module, must be greater than 0. 
+        only_druggable = True or False value, specifies whether you want only druggable  regulators returned.
+        
+    Modified attributes: 
+        self.druggable_regulators_df = DataFrame of only druggable regulators. 
+        self.filtered_reg_df =  DataFrame of regulators filtered by druggability, modules of interest and top_num
+    
+    Returns: 
+        self 
+        
+    """
+    if hasattr(self, 'possible_regulator_data')==False:
+        raise AttributeError("No regulators nominated, run .collect_possible_regulators")
+
+    possible_regulator_list = self.possible_regulator_data.index.get_level_values(0)
+    druggable_genes = self.druggable_module_genes_df.iloc[:,0]
+    self.druggable_genes = druggable_genes
+    self.possible_reg_list = possible_regulator_list
+
+    if hasattr(self, 'regulator_coefficients')==False:
+        raise AttributeError("Run .calculate_regulator_association()")
+        
+    reg_coeff = proteomics_obj.regulator_coefficients.reset_index()
+
+    
+    #return a  list of only druggable regulators 
+    druggable_regulators_names = self.possible_regulator_data.loc[possible_regulator_list.intersection(druggable_genes)]
+    druggable_regulator_list = set(druggable_regulators_names.reset_index().iloc[:,0])
+    self.druggable_regulator_list = druggable_regulator_list
+    
+    
+    #find druggable regulators in regulator_coefficient dataframe
+    self.druggable_regulators_df =  reg_coeff[reg_coeff.iloc[:,0].isin(druggable_regulator_list)]
+   
+    #select druggable or not 
+    if only_druggable:
+        regulator_df = self.druggable_regulators_df.set_index(druggable_regulators_df.columns[:2]).copy()
+    else:
+        regulator_df = reg_coeff.copy().set_index(reg_coeff.columns[:2])
+                                              
+    #select modules
+    if module_num is not None: 
+        regulator_df = regulator_df.loc[:,module_num]
+        
+    column_list = regulator_df.columns
+    
+    #select top_n regulators for each module
+    if top_num is not None: 
+        combined_top_regs  = set(
+                chain.from_iterable(
+                    set(regulator_df[x].nlargest(top_num).index) for x in column_list
+                    )
+                )
+        regulator_df = regulator_df.loc[combined_top_regs, column_list]
+        
+        
+    self.filtered_reg_df = regulator_df
+
+    return self
+
+
+def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_druggable=True):
+    
+    """
+    Description: 
+     This function creates a heatmap displaying the association coefficients between nominated, druggable regulators and modules.
+     It also calls on the find_druggable_regulators function and uses its output to create the heatmap
+    
+    Args:
+        module_num= Module numbers of interest. Must be entered in list form 
+        top_num = The number of regulators closely associated with the module, must be greater than 0. 
+        only_druggable = True or False value, specifies whether you want only druggable regulators returned.
+    
+    Modified attributes:
+        self.druggable_bool = returns series containing gene names, associated phosphosites and whether these genes are druggable are not.
+                              Druggable genes are "True", non-druggable genes are "False". 
+                              This boolean series is used to construct the accompanying color bar for the heatmap. 
+    Returns:
+        druggability_map = seaborn.matrix.ClusterGrid
+    """
+    #Error statements
+    if hasattr(self, 'regulator_coefficients')==False:
+        raise AttributeError("Run .calculate_regulator_association()")
+
+    #call other function
+    self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
+    
+    regdf = self.filtered_reg_df
+    regdf_copy = self.filtered_reg_df.copy()
+    
+    #annotation for druggability 
+    druggable_or_not = []
+    
+    
+    #Druggability
+    druggable_genes = self.druggable_genes
+    #use druggable regulators not druggable genes in modules
+    for x in regdf.index.get_level_values(0):
+        if x in druggable_genes:
+            druggable_or_not.append(1)
+        else:
+            druggable_or_not.append(0)
+        
+        
+    self.druggable_or_not = druggable_or_not
+    regdf_copy['druggability'] = druggable_or_not
+    
+    
+   
+    druggable_bool = pd.Series(
+            data = regdf_copy.index.get_level_values(0).map(
+                lambda row: (len(set(row.split('-')).intersection(druggable_genes)) > 0)
+                ), #get rows with at least one druggable gene
+            index = regdf.index,
+            name = 'druggability'
+            )
+    
+    self.druggable_bool = druggable_bool
+    
+    druggable_colors = druggable_bool.map(dict(zip([False,True], sns.color_palette('husl',2))))
+    cmap = dict(zip(['not druggable','druggable'], sns.color_palette('husl',2)))
+    
+    #Heatmap
+    legend_TN  = [mpatches.Patch(color=c,label=l) for l,c in cmap.items()]  
+  
+    #center heatmap at 
+    druggability_map = sns.clustermap(regdf, row_colors=druggable_colors, cmap="coolwarm")
+    l2=druggability_map.ax_heatmap.legend(loc='center',bbox_to_anchor=(1.8,1.2),handles=legend_TN,frameon=True, prop={'size':15})
+    return druggability_map
