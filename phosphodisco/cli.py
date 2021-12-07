@@ -29,16 +29,20 @@ def _make_parser(fun=None, help_text=None):
     )
     if fun == 'generate_config':
         parser.add_argument(
-                "--config_path", default='phdc_custom_config.yml', type=pathlib.Path, help=''
+                "--config_path", default='phdc_custom_config.yml', type=pathlib.Path, 
+                help='path where config should be output'
         )        
         parser.add_argument(
-                "--phospho", type=pathlib.Path, required=True, help=''
+                "--template", default=0, choices=[0,1], 
+                help='which config template to use - 0 was used for phosphodisco publication, 1 contains additional clustering methods (LouvainCluster and LeidenCluster)'
+        )        
+        parser.add_argument(
+                "--phospho", type=pathlib.Path, required=True, 
+                help='path to phospho file'
         )
         parser.add_argument(
-                "--protein", type=pathlib.Path, required=True, help=''
-        )
-        parser.add_argument(
-                "--output_prefix", type=str, default='phdc', help=''
+                "--protein", type=pathlib.Path, required=True, 
+                help='path to protein file'
         )
         parser.add_argument(
                 "--min_common_values", type=int, default=6, help=''
@@ -50,7 +54,7 @@ def _make_parser(fun=None, help_text=None):
                 "--na_frac_threshold", type=float, default=0.25, help=''
         )
 
-    elif == 'run':
+    elif fun == 'run':
         parser.add_argument(
                 "--config-file", type=pathlib.Path, help=''
         )
@@ -81,7 +85,8 @@ def generate_config():
     help_text="""Generates a config file to be used by phdc_run."""
     parser = _make_parser(fun='generate_config', help_text=help_text)
     args = parser.parse_args()
-    config_template = BytesIO(pkgutil.get_data('phosphodisco', 'data/config-custom.yml')) 
+    config_template_dict = {0:'data/config-custom_template0.yml', 1:'data/config-custom_template1.yml'}
+    config_template = BytesIO(pkgutil.get_data('phosphodisco', config_template_dict[args.template])) 
     with open(config_template, 'r') as fh:
         template_yml = oyaml.load(fh, Loader=oyaml.FullLoader)
     template_yml['input_phospho'] = args.phospho
@@ -97,9 +102,6 @@ def generate_config():
     with open(args.config_path, 'w') as fh:
         fh.write(oyaml.dump(template_yml))
 
-# read in config template
-# modify config template
-    pass
 
 def _main(args: Optional[List[str]] = None):
     if args is None:
