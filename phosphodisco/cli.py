@@ -3,8 +3,13 @@ import sys
 import logging
 import argparse
 import yaml
+import oyaml
 import numpy as np
 import phosphodisco
+import pathlib
+from io import BytesIO
+import pkgutil
+
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -14,49 +19,87 @@ logging.basicConfig(
 logger = logging.getLogger('PhosphoDisco')
 
 
-def _make_parser():
-    parser = argparse.ArgumentParser(prog="phosphodisco", description="")
+def _make_parser(fun=None, help_text=None):
+    """
+    Makes a parser for the clis.
+    """
+    parser = argparse.ArgumentParser(prog="phosphodisco", description="", help=help_text)
     parser.add_argument(
         "--version", "-v", action="version", version="%s" % phosphodisco.__version__
     )
-    parser.add_argument(
-        "phospho", type=str, help=''
-    )
-    parser.add_argument(
-        "protein", type=str, help=''
-    )
-    parser.add_argument(
-        "--output_prefix", type=str, default='phdc', help=''
-    )
-    parser.add_argument(
-        "--min_common_values", help=''
-    )
-    parser.add_argument(
-        "--normed_phospho", type=str, help=''
-    )
-    parser.add_argument(
-        "--top_stdev_percent", type=float, default=100, help=''
-    )
-    parser.add_argument(
-        "--modules", type=str, help=''
-    )
-    parser.add_argument(
-        "--stop_before_modules", action='store_true', help=''
-    )
-    parser.add_argument(
-        "--putative_regulator_list", type=str, help=''
-    )
-    parser.add_argument(
-        "--annotations", type=str, help=''
-    )
-    parser.add_argument(
-        "--annotation_column_types", type=str, help=''
-    )
-    parser.add_argument(
-        "--additional_kwargs_yml", type=str, help=''
-    )
+    if fun == 'generate_config':
+        parser.add_argument(
+                "--config_path", default='phdc_custom_config.yml', type=pathlib.Path, help=''
+        )        
+        parser.add_argument(
+                "--phospho", type=pathlib.Path, required=True, help=''
+        )
+        parser.add_argument(
+                "--protein", type=pathlib.Path, required=True, help=''
+        )
+        parser.add_argument(
+                "--output_prefix", type=str, default='phdc', help=''
+        )
+        parser.add_argument(
+                "--min_common_values", type=int, default=6, help=''
+        )
+        parser.add_argument(
+                 "--top_stdev_quantile", type=float, default=0.5, help=''
+        )
+        parser.add_argument(
+                "--na_frac_threshold", type=float, default=0.25, help=''
+        )
+
+    elif == 'run':
+        parser.add_argument(
+                "--config-file", type=pathlib.Path, help=''
+        )
+        parser.add_argument(
+                "--cores", type=int, default=3, help=''
+        )
+        parser.add_argument(
+                "--cluster-config", type=pathlib.Path, help=''
+        )
+# snakemake --snakefile phdc.smk --cores 3 -n --configfile config-custom.yml --cluster-config cluster.json
+
     return parser
 
+def run():
+    """
+    Runs the snakemake phosphodisco workflow from the command line.
+    """
+    help_text="""Runs the snakemake phosphodisco workflow from the command line."""
+    parser = _make_parser(fun='run', help_text=help_text)
+    args = parser.parse_args()
+
+    pass
+
+def generate_config():
+    """
+    Makes a copy of the config template and modifies it according to the flags.
+    """
+    help_text="""Generates a config file to be used by phdc_run."""
+    parser = _make_parser(fun='generate_config', help_text=help_text)
+    args = parser.parse_args()
+    config_template = BytesIO(pkgutil.get_data('phosphodisco', 'data/config-custom.yml')) 
+    with open(config_template, 'r') as fh:
+        template_yml = oyaml.load(fh, Loader=oyaml.FullLoader)
+    template_yml['input_phospho'] = args.phospho
+    template_yml['input_protein'] = args.protein
+    template_yml['std_quantile_threshold'] = args.top_stdev_quantile
+    template_yml['min_common_vals'] = args.min_common_values
+    template_yml['na_frac_threshold'] = args.na_frac_threshold
+    # warnings in case user mistypes phospho/protein paths:
+    for field, path in {'phospho':args.phospho, 'protein':args.protein}.items():
+        if not pathlib.Path(path).exists()
+            logger.warning(f'The following {field} path does not exist: {path}')
+    # write new custom config to file
+    with open(args.config_path, 'w') as fh:
+        fh.write(oyaml.dump(template_yml))
+
+# read in config template
+# modify config template
+    pass
 
 def _main(args: Optional[List[str]] = None):
     if args is None:

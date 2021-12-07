@@ -1,0 +1,133 @@
+# input_protein_phospho_data_folder: /gpfs/data/ruggleslab/pancan/LSCC/lscc-v3.2-data-freeze
+input_phospho: /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/ccrcc/ccrcc-phospho_tumors_with_dups.csv
+# matched_tumors_and_normals_prot-normed_indiv_by_nat_tum_and_lscc-v3.2_vs_luad-v3.0-phospho_0.75frac-no-na.top50frac_stdev_filt_3_levels.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/ccrcc/ccrcc-phospho_tumors_with_dups.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/lscc/lscc-v3.2-ubiquitylomics-ratio-norm-NArm-tumors.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/lssc_vs_luad/lscc-v3.2_vs_luad-v3.0-phospho_non_smokers.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/lssc_vs_luad/lscc-v3.2_vs_luad-v3.0-phospho_kras_mutants.csv
+# matched_normals_lscc-v3.2_vs_luad-v3.0-phospho.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/luad/luad-v3.0-phospho-dedup.csv
+# /gpfs/data/ruggleslab/pancan/LSCC/lscc-v3.2-data-freeze/lscc-v3.2-phosphoproteome-ratio-norm-NArm.gct
+# phospho_regex: r'.*\d$'
+input_protein: /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/ccrcc/ccrcc-prot_tumors_with_dups.csv
+# matched_tumors_and_normal_lscc-v3.2_vs_luad-v3.0-prot.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/ccrcc/ccrcc-prot_tumors_with_dups.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/lscc/lscc-v3.2-proteome-ratio-norm-NArm-tumors.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/lssc_vs_luad/lscc-v3.2_vs_luad-v3.0-protein_non_smokers.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/lssc_vs_luad/lscc-v3.2_vs_luad-v3.0-protein_kras_mutants.csv
+# matched_normals_lscc-v3.2_vs_luad-v3.0-protein.csv
+# /gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/luad/luad-v3.0-protein-dedup.csv
+# /gpfs/data/ruggleslab/pancan/LSCC/lscc-v3.2-data-freeze/lscc-v3.2-proteome-ratio-norm-NArm.gct
+na_frac_threshold: 0.25 
+std_quantile_threshold: 0.5 
+min_common_vals: 6
+
+gold_standards: {}
+output_folder: 'clustering'
+intermediates_folder: 'clustering_intermediates'
+clustering_results: 'clustering'
+clusterer_kwargs: {}
+generate_parameters_addtl_kwargs: {}
+
+evaluations: ['silhouette_score',
+ 'calinski_harabasz_score',
+ 'davies_bouldin_score',
+ 'smallest_largest_clusters_ratio',
+ 'number_of_clusters',
+ 'smallest_cluster_size',
+ 'largest_cluster_size']
+screeplot_evals: ['silhouette_score',
+ 'calinski_harabasz_score',
+ 'davies_bouldin_score',
+ 'smallest_largest_clusters_ratio',
+ 'number_of_clusters',
+ 'smallest_cluster_size',
+ 'largest_cluster_size']
+
+eval_kwargs: {}
+
+metric_to_choose_best: ''
+metric_to_compare_labels: adjusted_rand_score
+compare_samples: false
+
+output_kwargs:
+  evaluations:
+    index_col: [0]
+  labels:
+    index_col: [0, 1]
+heatmap_kwargs: {}
+
+optimization_parameters:
+  HDBSCAN:
+    min_cluster_size: &id002
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+  KMeans: &id001
+    n_clusters:
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 26
+      - 27
+      - 28
+      - 29
+      - 30
+      - 31
+      - 32
+      - 33
+      - 34
+      - 35
+      - 36
+      - 37
+      - 38
+      - 39
+      - 40
+      - 41
+      - 42
+      - 43
+      - 44
+      - 45
+      - 46
+      - 47
+      - 48
+      - 49
+      - 50
+  MiniBatchKMeans: *id001
+  NMFCluster: *id001
+#   LouvainCluster:
+#     adjacency_method:
+#     - MNN
+#     - CNN
+#     k: &id004
+#     - 20
+#     - 40
+#     - 80
+#     resolution: &id003
+#     - 0.4
+#     - 0.6
+#     - 0.8
+#     - 1.0
+#     - 1.2
+#     - 1.4
+#   LeidenCluster:
+#     adjacency_method:
+#     - SNN
+#     - CNN
+#     k: *id004
+#     resolution: *id003
