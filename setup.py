@@ -31,8 +31,8 @@ setuptools.setup(
     package_data={"phosphodisco": files},
     entry_points = {
         'console_scripts': [
-            'phdc_run:phosphodisco.cli:run',
-            'phdc_generate_config:phosphodisco.cli:generate_config'
+            'phdc_run=phosphodisco.cli:run',
+            'phdc_generate_config=phosphodisco.cli:generate_config'
             ]
         },
     packages=setuptools.find_packages()
