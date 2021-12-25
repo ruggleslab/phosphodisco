@@ -137,3 +137,56 @@ def calculate_motif_enrichment(
         module_ps[module] = ps
 
     return module_ps
+
+def aa_similarity(
+        seq_df: DataFrame
+        ):
+    """
+    Calculates inverse Hamming distance for all pairwise combinations of phospho sites.
+    
+    Args:
+        seq_df: DataFrame with phosphosite, module and sequence information for each phosphosite.
+                Columns in order (order, not name sensitive): geneSymbol, variableSites, module, sequence
+
+    Returns: Dictionary of dataframes. Keys are module labels. Values are dataframes with inverse
+             Hamming distances for pairwise comparisons between phosphosites.
+    """
+##### copied and pasted code below #### 
+    seq_df = seq_df.drop_duplicates(
+            subset=seq_df.columns[:2]
+            ).reset_index()
+    seq_labels = {}
+    for x,row in labels_seq.iterrows():
+        sites = row['variableSites'].split()
+        for i, seq in enumerate(str(row['sequences']).split(',')):
+            label = '{}-{}'.format(row['geneSymbol'], sites[i])
+                                    seq_labels.update({seq:label})
+    for cluster, chunk in seq_df.groupby(seq_df.columns[3]):
+        if cluster==-1:
+            pass
+        else:
+            aas = [aa for aa in proteomics_obj.module_sequences[cluster]]
+            edit_distance = {
+                pair:sum(
+                    [pair[0][i]==pair[1][i] for i in range(min(len(pair[0]), len(pair[1])))]
+                ) for pair in product(aas, aas)
+            } 
+            edit_distance = pd.DataFrame(edit_distance.values(), index=edit_distance.keys()).unstack()
+            axes = []
+            for i in edit_distance.index:
+                label = seq_labels[i]
+                axes.append(label)
+            edit_distance.index = axes
+            edit_distance.columns = axes
+    
+            fig_len = 0.5*len(edit_distance)
+            fig_width = 0.4*len(edit_distance)
+    
+            fig = plt.figure(figsize = (fig_len, fig_width))
+            sns.heatmap(edit_distance, xticklabels = edit_distance.columns, yticklabels = edit_distance.index)
+            plt.title('Cluster %s' % cluster)
+        #     plt.savefig('heatmap.edit_distance.cluster%s.pdf' % cluster)
+            plt.show()
+            plt.close()
+    
+ 
