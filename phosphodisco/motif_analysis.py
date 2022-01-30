@@ -224,31 +224,4 @@ def aa_overlap_from_df(
         aas['aa_name2'] = aas[dup_col_rename[gene_symbol_col]] + '-' + aas[dup_col_rename[variable_site_aa_col]]
         aas = aas.pivot(index='aa_name1', columns='aa_name2', values='aa_overlap')
         module_aa_sim_dfs_dict.update({module:aas})
-    return module_aa_sim_dfs_dict 
-
-def plot_aa_overlap(
-        module_overlap_df_dict: dict,
-        save_path: Optional[str]=None
-        ):
-    """
-    Plots aa_overlap heatmap for each module.
-    Args:
-        module_overlap_df_dict: dictionary, output of aa_overlap_from_df
-                                 keys are modules, values are DataFrames of aa_overlap scores for each
-                                 pair of phosphosites within the module
-        save_fig:               path to folder where pdfs of plots should be saved.
-                                saves no plots if None.
-    Returns:
-        None
-    """
-    for module, module_df in module_overlap_df_dict.items():  
-        fig_len = 0.5*module_df.shape[0]
-        fig_width = 0.4*module_df.shape[1]
-
-        fig = plt.figure(figsize = (fig_len, fig_width))
-        sns.heatmap(module_df, xticklabels = module_df.columns, yticklabels = module_df.index)
-        plt.title(f'Cluster {module}')
-        if save_path is not None:
-            plt.savefig(Path(save_path) / Path(f'heatmap.aa_overlap.module{module}.pdf'))
-    plt.show()
-    plt.close()
+    return module_aa_sim_dfs_dict

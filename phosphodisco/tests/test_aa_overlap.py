@@ -1,4 +1,4 @@
-mport pandas as pd, numpy as np, seaborn as sns, phosphodisco as phdc
+import pandas as pd, numpy as np, seaborn as sns, phosphodisco as phdc
 
 modules=pd.read_csv(
 '/gpfs/data/ruggleslab/phosphodisco/datasets/harmonized_sets/clustering/lssc_vs_luad/matched_tumors_and_normals_prot-normed_indiv_by_nat_tum_and_lscc-v3.2_vs_luad-v3.0-phospho_0.75frac-no-na.top50frac_stdev_filt_3_levels_0.75frac-no-na.top50frac_stdev.corr/clustering_intermediates/HDBSCAN;min_cluster_size-9_labels.txt',
@@ -63,6 +63,7 @@ seq_df
 
 proteomics_obj.collect_aa_sequences(seq_df, aa_seqs, 'HDBSCAN;min_cluster_size-9', n_flanking=7, var_sites_aa_col='variable_sites_names')
 print('Calculating aa_overlap')
-module_overlap_df_dict = phdc.motif_analysis.aa_overlap_from_df(proteomics_obj.module_seq_df, module_col='HDBSCAN;min_cluster_size-9')
+proteomics_obj.analyze_aa_overlap()
+#module_overlap_df_dict = phdc.motif_analysis.aa_overlap_from_df(proteomics_obj.module_seq_df, module_col='HDBSCAN;min_cluster_size-9')
 print('Plotting now')
-phdc.motif_analysis.plot_aa_overlap(module_overlap_df_dict=module_overlap_df_dict, save_path='lmao')
+phdc.visualize.visualize_aa_overlap(module_overlap_df_dict=proteomics_obj.module_overlap_df_dict, save_path='lmao')

@@ -7,4 +7,5 @@ variable_site_col = 'variable_sites'
 variable_site_aa_col = 'variable_sites_names'
 seq_col = 'aas'
 gene_symbol_col = 'gene_symbol'
+module_name_col = 'module'
 

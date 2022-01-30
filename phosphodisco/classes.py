@@ -15,7 +15,7 @@ from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
 from io import BytesIO
 from .utils import norm_line_to_residuals, zscore
-from .constants import var_site_delimiter, protein_id_col, variable_site_col, seq_col, variable_site_aa_col, gene_symbol_col
+from .constants import var_site_delimiter, protein_id_col, variable_site_col, seq_col, variable_site_aa_col, gene_symbol_col, module_name_col
 from .constants import annotation_column_map, datatype_label
 from .parsers import read_fasta, read_phospho, read_protein, read_annotation, column_normalize
 from .annotation_association import (
@@ -24,7 +24,7 @@ from .annotation_association import (
 from .nominate_regulators import (
     collapse_possible_regulators, calculate_regulator_coefficients,calculate_regulator_corr
 )
-from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment, df_to_aa_seqs
+from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment, df_to_aa_seqs, aa_overlap_from_df
 from .gene_ontology_analysis import enrichr_per_module, ptm_per_module
 
 
@@ -577,6 +577,7 @@ class ProteomicsData:
         module_aas = make_module_sequence_dict(module_df, fasta, module_col, n_flanking)
         module_seq_df = module_df.copy() 
         module_seq_df[seq_col] = df_to_aa_seqs(module_df, fasta, n_flanking)
+        module_seq_df = module_seq_df.rename(columns={module_col:module_name_col})
         if var_sites_aa_col is not None:
             module_seq_df[variable_site_aa_col] = module_seq_df[var_sites_aa_col].copy()
         else:
@@ -609,6 +610,18 @@ class ProteomicsData:
             background_aas=self.background_sequences,
         )
         self.module_aa_enrichment = ps
+        return self
+
+    def analyze_aa_overlap(
+            self,
+    ):
+        """
+        Calculates for each pair of phosphosites within each module for how many positions
+        they are within each module for how many positions they are the same.
+        """
+        if not hasattr(self, 'module_seq_df'):
+            raise ValueError(f'Please run self.collect_aa_sequences first./nThis will create self.module_seq_df which is what analyze_aa_overlap requires.')
+        self.module_overlap_df_dict = aa_overlap_from_df(self.module_seq_df, module_col = module_name_col)
         return self
 
     def calculate_go_set_enrichment(
