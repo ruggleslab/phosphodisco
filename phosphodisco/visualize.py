@@ -1,4 +1,5 @@
 from .classes import ProteomicsData
+from pathlib import Path
 from pandas import DataFrame
 import pandas as pd
 import numpy as np
@@ -269,3 +270,32 @@ def visualize_set_enrichment(
             plt.title('Cluster %s GO terms, FDR %s' % (module, pval_cutoff))
             if save_prefix:
                 plt.savefig('%s.barplot.enrichment.pdf')
+
+def visualize_aa_overlap(
+        module_overlap_df_dict: dict,
+        save_path: Optional[str]=None
+        ):
+    """
+    Plots aa_overlap heatmap for each module.
+    Args:
+        module_overlap_df_dict: dictionary, output of motif_analysis.aa_overlap_from_df
+                                which can be called via ProteomicsData.analyze_aa_overlap
+                                keys are modules, values are DataFrames of 
+                                aa_overlap scores for each pair of phosphosites
+                                within the module
+        save_fig:               path to folder where pdfs of plots should be saved.
+                                saves no plots if None.
+    Returns:
+        None
+    """
+    for module, module_df in module_overlap_df_dict.items():  
+        fig_len = 0.5*module_df.shape[0]
+        fig_width = 0.4*module_df.shape[1]
+
+        fig = plt.figure(figsize = (fig_len, fig_width))
+        sns.heatmap(module_df, xticklabels = module_df.columns, yticklabels = module_df.index)
+        plt.title(f'Module {module}')
+        if save_path is not None:
+            plt.savefig(Path(save_path) / Path(f'heatmap.aa_overlap.module{module}.pdf'))
+    plt.show()
+    plt.close()

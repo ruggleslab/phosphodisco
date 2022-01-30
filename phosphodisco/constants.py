@@ -4,4 +4,8 @@ datatype_label = 'datatype_label'
 var_site_delimiter = ','
 protein_id_col = 'protein_id'
 variable_site_col = 'variable_sites'
+variable_site_aa_col = 'variable_sites_names'
 seq_col = 'aas'
+gene_symbol_col = 'gene_symbol'
+module_name_col = 'module'
+

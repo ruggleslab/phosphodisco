@@ -1,9 +1,13 @@
 from collections import Counter
+from itertools import product
+from pathlib import Path
+from typing import Union, Optional
 from pandas import DataFrame
 import pandas as pd, numpy as np
 from scipy.stats import fisher_exact
-from .constants import var_site_delimiter, protein_id_col, variable_site_col, seq_col
-
+import matplotlib.pyplot as plt
+import seaborn as sns
+from .constants import var_site_delimiter, protein_id_col, variable_site_col, seq_col, gene_symbol_col, variable_site_aa_col
 
 def find_aa_seqs(
         aa_seq: str,
@@ -87,7 +91,8 @@ def make_module_sequence_dict(
     Returns: Dictionary like {"module A": ['seq1', 'seq2']}
 
     """
-    IDs_df[seq_col] = df_to_aa_seqs(IDs_df, fasta_dict, n_flanking)
+    IDs_df = IDs_df.copy()
+    IDs_df[seq_col] = df_to_aa_seqs(IDs_df, fasta_dict, n_flanking).copy()
     d = IDs_df.groupby(module_col)[seq_col].agg(lambda col: var_site_delimiter.join(col)).to_dict()
     return {k: v.split(var_site_delimiter) for k, v in d.items()}
 
@@ -137,3 +142,86 @@ def calculate_motif_enrichment(
         module_ps[module] = ps
 
     return module_ps
+
+def aa_overlap(
+        seq1, seq2
+        ):
+    """
+    Calculates the amount of positions that are the same between two iterables.
+    If the iterables do not have the same length, only compares up to the length of the shorter iterable.
+    Args:
+        seq1: iterable
+        seq2: iterable
+
+    Returns:
+        overlap: int 
+    """
+    overlap = sum(
+            i[0]==i[1] for i in zip(seq1, seq2)
+            )
+    return overlap
+
+def aa_overlap_from_df(
+        seq_df: DataFrame,
+        module_col: str
+        ):
+    f"""
+    Calculates inverse Hamming distance for all pairwise combinations of phospho sites.
+    
+    Args:
+        seq_df:     DataFrame where each row is a phosphosite. 
+                    Created by classes.ProteomicsData.collect_aa_sequences --> module_seq_df attribute
+                    Contains phosphosite, module and sequence information in each row.
+                    Column names: '{gene_symbol_col}', '{variable_site_aa_col}', module_col, '{seq_col}'
+                    '{gene_symbol_col}' contains the gene symbol in each row.
+                    '{variable_site_aa_col}' contains variable site indeces in comma-separated format, 
+                    e.g. "S203s,T208t' - these will be used for labeling in plots
+                    '{seq_col}' column with comma-separated peptide sequences
+        module_col: column in seq_df that contains module labels.
+    Returns: Dictionary of DataFrames. Keys are module labels. Values are dataframes with inverse
+             aa_overlap for pairwise comparisons between phosphosites.
+    """
+    ### Uses ProteomicsData.module_seq_df for seq_df
+    ### format of module_seq_df (col order not deterministic):
+    ### site_name_col, variable_site_col, variable_site_aa_col,
+    ### protein_id_col, module_col, seq_col, gene_symbol_col
+    seq_df = seq_df.copy()
+    # Need to split variable sites with multiple potential phosphorylations into separate sites, i.e.
+    # 'S204s,T208t' turns into two sites. We need to do this for both variable_site_aa_col and seq_col
+    seq_df[variable_site_aa_col] = seq_df[variable_site_aa_col].str.split(',')
+    seq_df[seq_col] = seq_df[seq_col].str.split(',')
+    seq_df['seq_var_site_col'] = seq_df.apply(
+            lambda row: list(zip(row[variable_site_aa_col], row[seq_col])),
+            axis=1
+            )
+    seq_df = seq_df.explode('seq_var_site_col')
+    seq_df[variable_site_aa_col] = seq_df['seq_var_site_col'].str.get(0)
+    seq_df[seq_col] = seq_df['seq_var_site_col'].str.get(1)
+    seq_df = seq_df.drop_duplicates(subset=[variable_site_aa_col, gene_symbol_col, module_col])
+    # potentially add filtering against seqs with too many '_' 
+    # which can happen if the given protein_id was not correct. 
+    module_aa_sim_dfs_dict = {}
+    relevant_cols = [variable_site_aa_col, gene_symbol_col, seq_col]
+    dup_col_rename = {col:(col + '_1') for col in relevant_cols}
+    for module, chunk in seq_df.groupby(module_col):
+        aas = chunk[relevant_cols]
+        #constructing a df that has all pairwise combinations of rows in chunk
+        aas = pd.concat(
+                [
+                    pd.concat(row) for row in product(
+                        (i[1] for i in aas.iterrows()),
+                        (i[1] for i in aas.rename(columns=dup_col_rename).iterrows())
+                        )
+                    ],
+                axis=1
+                ).T.reset_index()
+        # calculating overlap for each pair, and consolidating gene symbol and variable site into a single col
+        aas['aa_overlap'] = aas.apply(
+                lambda row: aa_overlap(row[seq_col], row[dup_col_rename[seq_col]]), 
+                axis=1
+                )
+        aas['aa_name1'] = aas[gene_symbol_col] + '-' + aas[variable_site_aa_col]
+        aas['aa_name2'] = aas[dup_col_rename[gene_symbol_col]] + '-' + aas[dup_col_rename[variable_site_aa_col]]
+        aas = aas.pivot(index='aa_name1', columns='aa_name2', values='aa_overlap')
+        module_aa_sim_dfs_dict.update({module:aas})
+    return module_aa_sim_dfs_dict

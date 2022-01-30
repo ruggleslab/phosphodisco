@@ -14,8 +14,8 @@ import hypercluster
 from hypercluster.constants import param_delim, val_delim
 import sklearn.impute
 from io import BytesIO
-from .constants import var_site_delimiter
 from .utils import norm_line_to_residuals, zscore
+from .constants import var_site_delimiter, protein_id_col, variable_site_col, seq_col, variable_site_aa_col, gene_symbol_col, module_name_col
 from .constants import annotation_column_map, datatype_label
 from .parsers import read_fasta, read_phospho, read_protein, read_annotation, column_normalize
 from .annotation_association import (
@@ -24,7 +24,7 @@ from .annotation_association import (
 from .nominate_regulators import (
     collapse_possible_regulators, calculate_regulator_coefficients,calculate_regulator_corr
 )
-from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment, df_to_aa_seqs
+from .motif_analysis import make_module_sequence_dict, calculate_motif_enrichment, df_to_aa_seqs, aa_overlap_from_df
 from .gene_ontology_analysis import enrichr_per_module, ptm_per_module
 
 
@@ -529,42 +529,64 @@ class ProteomicsData:
             all_sites_modules_df,
             fasta: Union[dict, str],
             module_col,
+            var_sites_aa_col: Union[str, None] = None,
             n_flanking: int = 7
     ):
-        """Method for collecting flanking amino acid sequences around modification sites. Used
+        f"""Method for collecting flanking amino acid sequences around modification sites. Used
         for motif analysis, and rigorously comparing modules across datasets or to gold standard
         sets such as with PTM-ssGSEA
 
         Args:
-            all_sites_modules_df: DataFrame of variable site locations for each phosphosite. The
-                                  Structure of this df is very strict. It must have a column called 'protein_id' which
-                                  will match the name of proteins in the fasta file. It must have a column called
-                                  'variable_sites' which contains a ',' separated list of variable sites integers.
+            all_sites_modules_df: DataFrame where each row is a phosphosite. Structure of this df is very strict.
+                                  columns: ['{protein_id_col}', '{variable_site_col}', '{gene_symbol_col}', module_col]
+                                  '{protein_id_col}' will match the name of proteins in the fasta file. 
+                                  '{variable_site_col}' contains a ',' separated list of variable sites integers.
                                   NB: these must be integers, so variable sites like 'S225s T227t' must be converted to
-                                  '225,227'. In addition this must contain a column with the module labels for each
-                                  site, the name of which you specify below.
+                                  '225,227'.
+                                  '{gene_symbol_col}' contains the gene symbol 
+                                  In addition this must contain a column with the module labels for each
+                                  site, the name of which you specify with module_col.
             
             fasta:                Fasta file with protein sequences that match with isoform specifier in the
                                   all_sites_modules_df. 
-                                  Can also pass a dictionary in format {isoform specifier:protein sequence}.
+                                  Can also pass a dictionary in format {'{isoform specifier:protein sequence}'}.
             
             module_col:           The name of the column in all_sites_modules_df which contains module
                                   labels per site.
+            var_sites_aa_col:     The name of the column in all_sites_modules_df which contains the 
+                                  amino acid(s) and position of the variable site(s), e.g. 'S225s,T227t'.
+                                  These names are used for plotting purposes, so are optional.
+                                  '{variable_site_col}' will be used instead if not provided.
                                   
             n_flanking:           Number of flanking amino acids to collect. Minimum is 7, so that it can
                                   be used for PTM-ssGSEA.
 
-        Returns: self with module_sequences and background_sequences attributes.
+        Returns: self with module_sequences, module_seq_df and background_sequences attributes.
 
         """
         if isinstance(fasta, str):
             fasta = read_fasta(fasta)
+        #Checking columns of module_df:
+        required_cols = {protein_id_col, variable_site_col, variable_site_aa_col, module_col}
+        given_cols = set(all_sites_modules_df.columns)
+        if not required_cols <= given_cols:
+            logging.warning(f'The following columns were expected but not found in all_sites_module_df:\n{required_cols.difference(given_cols)}')
 
         n_flanking = max(7, n_flanking)
         module_df = all_sites_modules_df.loc[all_sites_modules_df[module_col] != -1, :]
         module_aas = make_module_sequence_dict(module_df, fasta, module_col, n_flanking)
-        self.module_sequences = module_aas
-        self.background_sequences = var_site_delimiter.join(
+        module_seq_df = module_df.copy() 
+        module_seq_df[seq_col] = df_to_aa_seqs(module_df, fasta, n_flanking)
+        module_seq_df = module_seq_df.rename(columns={module_col:module_name_col})
+        if var_sites_aa_col is not None:
+            module_seq_df[variable_site_aa_col] = module_seq_df[var_sites_aa_col].copy()
+        else:
+            module_seq_df[variable_site_aa_col] = module_seq_df[variable_site_col].copy()
+        self.module_sequences = module_aas # module:sequences dict
+        self.module_seq_df = module_seq_df # df for aa similarity calcs
+### format of module_seq_df (col order not deterministic):
+### variable_site_col, var_sites_aa_col, protein_id_col, module_col, seq_col
+        self.background_sequences = var_site_delimiter.join( # list of background sequences
             df_to_aa_seqs(all_sites_modules_df, fasta, n_flanking)
         ).split(var_site_delimiter)
         return self
@@ -588,6 +610,18 @@ class ProteomicsData:
             background_aas=self.background_sequences,
         )
         self.module_aa_enrichment = ps
+        return self
+
+    def analyze_aa_overlap(
+            self,
+    ):
+        """
+        Calculates for each pair of phosphosites within each module for how many positions
+        they are within each module for how many positions they are the same.
+        """
+        if not hasattr(self, 'module_seq_df'):
+            raise ValueError(f'Please run self.collect_aa_sequences first./nThis will create self.module_seq_df which is what analyze_aa_overlap requires.')
+        self.module_overlap_df_dict = aa_overlap_from_df(self.module_seq_df, module_col = module_name_col)
         return self
 
     def calculate_go_set_enrichment(
