@@ -1,0 +1,115 @@
+input_phospho: /some/path/goes/here/phospho.csv
+input_protein: /some/path/goes/here/protein.csv
+na_frac_threshold: 0.25 
+std_quantile_threshold: 0.5 
+min_common_vals: 6
+
+gold_standards: {}
+output_folder: 'clustering'
+intermediates_folder: 'clustering_intermediates'
+clustering_results: 'clustering'
+clusterer_kwargs: {}
+generate_parameters_addtl_kwargs: {}
+
+evaluations: ['silhouette_score',
+ 'calinski_harabasz_score',
+ 'davies_bouldin_score',
+ 'smallest_largest_clusters_ratio',
+ 'number_of_clusters',
+ 'smallest_cluster_size',
+ 'largest_cluster_size']
+screeplot_evals: ['silhouette_score',
+ 'calinski_harabasz_score',
+ 'davies_bouldin_score',
+ 'smallest_largest_clusters_ratio',
+ 'number_of_clusters',
+ 'smallest_cluster_size',
+ 'largest_cluster_size']
+
+eval_kwargs: {}
+
+metric_to_choose_best: ''
+metric_to_compare_labels: adjusted_rand_score
+compare_samples: false
+
+output_kwargs:
+  evaluations:
+    index_col: [0]
+  labels:
+    index_col: [0, 1]
+heatmap_kwargs: {}
+
+optimization_parameters:
+  HDBSCAN:
+    min_cluster_size: &id002
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+  KMeans: &id001
+    n_clusters:
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 26
+      - 27
+      - 28
+      - 29
+      - 30
+      - 31
+      - 32
+      - 33
+      - 34
+      - 35
+      - 36
+      - 37
+      - 38
+      - 39
+      - 40
+      - 41
+      - 42
+      - 43
+      - 44
+      - 45
+      - 46
+      - 47
+      - 48
+      - 49
+      - 50
+  MiniBatchKMeans: *id001
+  NMFCluster: *id001
+#   LouvainCluster:
+#     adjacency_method:
+#     - MNN
+#     - CNN
+#     k: &id004
+#     - 20
+#     - 40
+#     - 80
+#     resolution: &id003
+#     - 0.4
+#     - 0.6
+#     - 0.8
+#     - 1.0
+#     - 1.2
+#     - 1.4
+#   LeidenCluster:
+#     adjacency_method:
+#     - SNN
+#     - CNN
+#     k: *id004
+#     resolution: *id003

@@ -3,8 +3,14 @@ import sys
 import logging
 import argparse
 import yaml
+import oyaml
 import numpy as np
 import phosphodisco
+import pathlib
+import importlib
+from io import BytesIO
+import pkgutil
+import subprocess
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -14,48 +20,123 @@ logging.basicConfig(
 logger = logging.getLogger('PhosphoDisco')
 
 
-def _make_parser():
-    parser = argparse.ArgumentParser(prog="phosphodisco", description="")
+def _make_parser(fun=None, help_text=None):
+    """
+    Makes a parser for the clis.
+    """
+    parser = argparse.ArgumentParser(prog="phosphodisco", description=help_text)
     parser.add_argument(
         "--version", "-v", action="version", version="%s" % phosphodisco.__version__
     )
-    parser.add_argument(
-        "phospho", type=str, help=''
-    )
-    parser.add_argument(
-        "protein", type=str, help=''
-    )
-    parser.add_argument(
-        "--output_prefix", type=str, default='phdc', help=''
-    )
-    parser.add_argument(
-        "--min_common_values", help=''
-    )
-    parser.add_argument(
-        "--normed_phospho", type=str, help=''
-    )
-    parser.add_argument(
-        "--top_stdev_percent", type=float, default=100, help=''
-    )
-    parser.add_argument(
-        "--modules", type=str, help=''
-    )
-    parser.add_argument(
-        "--stop_before_modules", action='store_true', help=''
-    )
-    parser.add_argument(
-        "--putative_regulator_list", type=str, help=''
-    )
-    parser.add_argument(
-        "--annotations", type=str, help=''
-    )
-    parser.add_argument(
-        "--annotation_column_types", type=str, help=''
-    )
-    parser.add_argument(
-        "--additional_kwargs_yml", type=str, help=''
-    )
+    if fun == 'generate_config':
+        parser.add_argument(
+                "--config_path", default='phdc_custom_config.yml', type=pathlib.Path, 
+                help='path where config should be output'
+        )        
+        parser.add_argument(
+                "--template", default=0, choices=[0,1], type=int,
+                help='which config template to use - 0 was used for phosphodisco publication, 1 contains additional clustering methods (LouvainCluster and LeidenCluster)'
+        )        
+        parser.add_argument(
+                "--phospho", type=pathlib.Path, required=True, 
+                help='path to phospho file'
+        )
+        parser.add_argument(
+                "--protein", type=pathlib.Path, required=True, 
+                help='path to protein file'
+        )
+        parser.add_argument(
+                "--min_common_values", type=int, default=6, help=''
+        )
+        parser.add_argument(
+                 "--top_stdev_quantile", type=float, default=0.5, help=''
+        )
+        parser.add_argument(
+                "--na_frac_threshold", type=float, default=0.25, help=''
+        )
+
+    elif fun == 'run':
+        parser.add_argument(
+                "--config_file", type=pathlib.Path, required=True,
+                help='path to snakemake config file to be used by pipeline. Use phdc_generate_config to geneerate one from a template'
+        )
+        parser.add_argument(
+                "--cores", type=int, default=3, 
+                help='how many cores to use. default=3'
+        )
+        parser.add_argument(
+                "--jobs", type=int, default=20, 
+                help='how many jobs to run at a time. default=20'
+        )
+        parser.add_argument(
+                "--cluster_config", type=pathlib.Path, 
+                help='snakemake cluster config file'
+        )
+        parser.add_argument(
+                "--dry_run", action='store_const', const='-n', default='',
+                help='perform a dry-run of the pipeline, i.e. just print what would be run'
+        )
+        parser.add_argument(
+                "--cluster_submit_command", default='',
+                help='cluster submit command to feed to snakemake. Will run in local mode if not provided.\nslurm example:\n"sbatch --mem={cluster.mem} -t {cluster.time} -o {cluster.output} --cpus-per-task {cluster.cpus-per-task}"'
+        )
+        
+
+# snakemake --snakefile phdc.smk --cores 3 -n --configfile config-custom.yml --cluster-config cluster.json
+
     return parser
+
+def run():
+    """
+    Runs the snakemake phosphodisco workflow from the command line.
+    """
+    help_text="""Runs the snakemake phosphodisco workflow from the command line."""
+    logger.info('run()\n'+ help_text)
+    parser = _make_parser(fun='run', help_text=help_text)
+    args = parser.parse_args()
+    phdc_path = importlib.util.find_spec('phosphodisco')
+    phdc_path = pathlib.Path(phdc_path.origin).parent
+    snakefile = phdc_path / 'phdc.smk'
+    snakemake_cmd = [
+        'snakemake', 
+        '--snakefile', snakefile, 
+        '--cores', str(args.cores), 
+        '--configfile', args.config_file,
+        args.dry_run,
+        f'--cluster-config {args.cluster_config}' if args.cluster_config else '',     
+        f"--cluster '{args.cluster_submit_command}'" if args.cluster_submit_command else '',
+        f"-j {args.jobs}" if args.jobs else '',
+
+    ]
+    snakemake_cmd = list(filter(lambda it: it!='', snakemake_cmd))
+    logger.info(' '.join(['command run:\n'] + [str(i) for i in snakemake_cmd]))
+    subprocess.run(
+        ' '.join([str(i) for i in snakemake_cmd]),
+        shell=True
+    )
+
+def generate_config():
+    """
+    Makes a copy of the config template and modifies it according to the flags.
+    """
+    help_text="""Generates a config file to be used by phdc_run."""
+    parser = _make_parser(fun='generate_config', help_text=help_text)
+    args = parser.parse_args()
+    config_template_dict = {0:'data/config-custom_template0.yml', 1:'data/config-custom_template1.yml'}
+    config_template = BytesIO(pkgutil.get_data('phosphodisco', config_template_dict[args.template])) 
+    template_yml = oyaml.load(config_template, Loader=oyaml.FullLoader)
+    template_yml['input_phospho'] = str(args.phospho)
+    template_yml['input_protein'] = str(args.protein)
+    template_yml['std_quantile_threshold'] = args.top_stdev_quantile
+    template_yml['min_common_vals'] = args.min_common_values
+    template_yml['na_frac_threshold'] = args.na_frac_threshold
+    # warnings in case user mistypes phospho/protein paths:
+    for field, path in {'phospho':args.phospho, 'protein':args.protein}.items():
+        if not pathlib.Path(path).exists():
+            logger.warning(f'The following {field} path does not exist: {path}')
+    # write new custom config to file
+    with open(args.config_path, 'w') as fh:
+        fh.write(oyaml.dump(template_yml))
 
 
 def _main(args: Optional[List[str]] = None):

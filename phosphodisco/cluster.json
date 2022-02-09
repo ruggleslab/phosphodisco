@@ -1,0 +1,46 @@
+{
+    "__default__": {
+        "job-name": "snakemake",
+        "time": "2-23:59:59",
+        "mem": 1G,
+        "partition": "cpu_medium",
+        "cpus-per-task": 1,
+        "output": "logs/slurm/%j.log",
+        "error": "logs/slurm/%j.err"
+    },
+    "run_clusterer": {
+        "job-name": "clusterer",
+        "time": "11:59:59",
+        "mem": 32G,
+        "partition": "cpu_short",
+        "cpus-per-task": 8,
+        "output": "logs/slurm/cluster-%j.log",
+        "error": "logs/slurm/cluster-%j.err"
+    },
+    "run_evaluation": {
+        "job-name": "evaluate",
+        "time": "11:59:59",
+        "mem": 16G,
+        "partition": "cpu_short",
+        "output": "logs/slurm/evaluate-%j.log",
+        "error": "logs/slurm/evaluate-%j.err"
+    },
+    "compare_labels": {
+        "job-name": "compare_labels",
+        "time": "11:59:59",
+        "mem": 32G,
+        "cpus-per-task": 2,
+        "partition": "cpu_short",
+        "output": "logs/slurm/compare_labels-%j.log",
+        "error": "logs/slurm/compare_labels-%j.err"
+    },
+    "compare_samples": {
+        "job-name": "compare_samples",
+        "time": "11:59:59",
+        "mem": 48G,
+        "cpus-per-task": 2,
+        "partition": "cpu_short",
+        "output": "logs/slurm/compare_samples-%j.log",
+        "error": "logs/slurm/compare_samples-%j.err"
+    }
+}
