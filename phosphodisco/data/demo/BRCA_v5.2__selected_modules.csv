@@ -1,4 +1,4 @@
-,,HDBSCAN;min_cluster_size-4
+gene_symbol,variable_sites_names,HDBSCAN;min_cluster_size-4
 ACTN1,S6s ,12
 BAZ2A,S1783s ,63
 BRCA2,S93s ,63

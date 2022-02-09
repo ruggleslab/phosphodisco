@@ -7,7 +7,7 @@ from phosphodisco.nominate_regulators import (
     calculate_regulator_coefficients
 )
 from phosphodisco import (
-    visualize, classes, constants, nominate_regulators, parsers, utils, annotation_association
+    visualize, classes, constants, nominate_regulators, parsers, utils, annotation_association, demo_datasets
 )
 
 __version__ = "v0.0.1"
