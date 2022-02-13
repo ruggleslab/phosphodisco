@@ -34,8 +34,8 @@ def _make_parser(fun=None, help_text=None):
                 help='path where config should be output'
         )        
         parser.add_argument(
-                "--template", default=0, choices=[0,1], type=int,
-                help='which config template to use - 0 was used for phosphodisco publication, 1 contains additional clustering methods (LouvainCluster and LeidenCluster)'
+                "--template", default=0, choices=[0, 1, 2], type=int,
+                help='which config template to use - 0 was used for phosphodisco publication, 1 contains additional clustering methods (LouvainCluster and LeidenCluster), 2 is the template used for the demo/tutorial'
         )        
         parser.add_argument(
                 "--phospho", type=pathlib.Path, required=True, 
@@ -122,14 +122,24 @@ def generate_config():
     help_text="""Generates a config file to be used by phdc_run."""
     parser = _make_parser(fun='generate_config', help_text=help_text)
     args = parser.parse_args()
-    config_template_dict = {0:'data/config-custom_template0.yml', 1:'data/config-custom_template1.yml'}
+    config_template_dict = {
+            0:'data/config-custom_template0.yml', 
+            1:'data/config-custom_template1.yml',
+            2:'data/config-custom_template2.yml'
+            }
     config_template = BytesIO(pkgutil.get_data('phosphodisco', config_template_dict[args.template])) 
     template_yml = oyaml.load(config_template, Loader=oyaml.FullLoader)
-    template_yml['input_phospho'] = str(args.phospho)
-    template_yml['input_protein'] = str(args.protein)
-    template_yml['std_quantile_threshold'] = args.top_stdev_quantile
-    template_yml['min_common_vals'] = args.min_common_values
-    template_yml['na_frac_threshold'] = args.na_frac_threshold
+    if args.template == 2:
+        # template 2 is used for the demo
+        # only the paths have to be set, everything else is set in the template already
+        template_yml['input_phospho'] = pathlib.Path(__file__).parent / 'data' / 'demo' / 'BRCA_v5.2__selected_phospho.csv'
+        template_yml['input_protein'] = pathlib.Path(__file__).parent / 'data' / 'demo' / 'BRCA_v5.2__selected_protein.csv'
+    else:
+        template_yml['input_phospho'] = str(args.phospho)
+        template_yml['input_protein'] = str(args.protein)
+        template_yml['std_quantile_threshold'] = args.top_stdev_quantile
+        template_yml['min_common_vals'] = args.min_common_values
+        template_yml['na_frac_threshold'] = args.na_frac_threshold
     # warnings in case user mistypes phospho/protein paths:
     for field, path in {'phospho':args.phospho, 'protein':args.protein}.items():
         if not pathlib.Path(path).exists():

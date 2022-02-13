@@ -1,0 +1,59 @@
+input_phospho: /some/path/goes/here/phospho.csv
+input_protein: /some/path/goes/here/protein.csv
+na_frac_threshold: 0.25 
+std_quantile_threshold: 0.5 
+min_common_vals: 6
+
+gold_standards: {}
+output_folder: 'clustering'
+intermediates_folder: 'clustering_intermediates'
+clustering_results: 'clustering'
+clusterer_kwargs: {}
+generate_parameters_addtl_kwargs: {}
+
+evaluations: ['silhouette_score',
+ 'calinski_harabasz_score',
+ 'davies_bouldin_score',
+ 'smallest_largest_clusters_ratio',
+ 'number_of_clusters',
+ 'smallest_cluster_size',
+ 'largest_cluster_size']
+screeplot_evals: ['silhouette_score',
+ 'calinski_harabasz_score',
+ 'davies_bouldin_score',
+ 'smallest_largest_clusters_ratio',
+ 'number_of_clusters',
+ 'smallest_cluster_size',
+ 'largest_cluster_size']
+
+eval_kwargs: {}
+
+metric_to_choose_best: ''
+metric_to_compare_labels: adjusted_rand_score
+compare_samples: false
+
+output_kwargs:
+  evaluations:
+    index_col: [0]
+  labels:
+    index_col: [0, 1]
+heatmap_kwargs: {}
+
+optimization_parameters:
+  HDBSCAN:
+    min_cluster_size: &id002
+      - 2
+      - 4
+      - 8
+      - 16
+  KMeans: &id001
+    n_clusters:
+      - 20
+      - 25
+      - 30
+      - 35
+      - 40
+      - 45
+      - 50
+  MiniBatchKMeans: *id001
+  NMFCluster: *id001
