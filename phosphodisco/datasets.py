@@ -16,7 +16,11 @@ def list_datasets(path=''):
     data_folder = Path(__file__).parent / 'data' / path
     return os.listdir(data_folder)
 
-def load_data(dataset:str, parser=pd.read_csv, **parser_kwargs):
+def load_data(
+        dataset:str, 
+        parser=pd.read_csv, 
+        **parser_kwargs
+        ):
     f"""
     Loads available demo datasets and returns it as a DataFrame.
     arguments:
