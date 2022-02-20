@@ -28,10 +28,9 @@ def load_data(
     returns:
         data: DataFrame with loaded dataset.
     """
-    try:
-        data_handle = BytesIO(pkgutil.get_data('phosphodisco', f'data/{dataset}'))
-    except:
-        raise ValueError(f'{dataset} is not one of the available demo datasets. {list_datasets()}')
-    data = parser(data_handle, **parser_kwargs)
+    data_path = Path(__file__).parent / 'data' / dataset
+    if not data_path.exists():
+        raise ValueError(f'{dataset} is not one of the available datasets in the provided path. {list_datasets(str(data_path.parent))}')
+    data = parser(str(data_path), **parser_kwargs)
     return data
 
