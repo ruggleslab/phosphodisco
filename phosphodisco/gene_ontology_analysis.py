@@ -7,6 +7,7 @@ from .datasets import load_data
 from .utils import multiple_tests_na
 from typing import Union
 
+
 def enrichr_per_module(
         modules: Series,
         background_gene_list,
@@ -80,10 +81,10 @@ def ptm_per_module(
         for k, v in ptm_set_gmt.items()
     }
     ptm_set_gmt = {k: v for k, v in ptm_set_gmt.items() if len(v) >= 2}
-
-    if len(list(module_seq_dict.values())[0]) < 15:
+    
+    if len(list(module_seq_dict.values())[0][0]) < 15:
         raise ValueError('Module sequences must be at least 15 AAs long')
-    if len(list(module_seq_dict.values())[0]) > 15:
+    if len(list(module_seq_dict.values())[0][0]) > 15:
         module_seq_dict = {
             k: [seq[int((len(seq)/2-0.5)-7): int((len(seq)/2-0.5)+8)]
                 for seq in v] for k, v in module_seq_dict.items()
