@@ -618,6 +618,8 @@ class ProteomicsData:
         """
         Calculates for each pair of phosphosites within each module for how many positions
         they are within each module for how many positions they are the same.
+        returns:
+            self with .module_overlap_df_dict attribute
         """
         if not hasattr(self, 'module_seq_df'):
             raise ValueError(f'Please run self.collect_aa_sequences first./nThis will create self.module_seq_df which is what analyze_aa_overlap requires.')
