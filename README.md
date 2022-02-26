@@ -1,9 +1,32 @@
 # PhosphoDisco (PhDc)
 A python package for finding co-regulated phospho sites from phosphoproteomics and proteomics data.   
-***docs to come***
+
 
 ## Description
 PhDc uses optimized clustering to find co-regulated phosphosite modules. Then, PhDc uses protein and phosphoprotein abundance data from kinases and phosphatases to nominate module regulators. It can also use sample annotation data to identify modules significantly correlated with clinical variables. 
+
+## Tutorial
+You can find the [tutorial jupyter notebook](tutorial/phosphodisco_tutorial.ipynb) in the tutorial folder.
+To get started, follow these steps:
+1. Clone the repo:
+`git clone git@github.com:ruggleslab/phosphodisco.git`
+2. Set up the environment needed to run the notebook. We will use [mamba](https://mamba.readthedocs.io/en/latest/) for this, which is a drop-in replacement for conda:
+```
+conda install -c conda-forge mamba
+mamba env create -f phosphodisco/env.yml -p phdc_env
+```
+3. Activate the environment and install phosphodisco
+```
+conda activate phdc_env/
+cd phosphodisco
+python setup.py develop
+```
+4. Start jupyter lab and check out the notebook:
+```
+cd tutorial
+jupyter lab
+```
+The tutorial will run you through the major steps in running the phosphodisco pipeline.
 
 
 ### PhDc can perform pre-processing steps:
