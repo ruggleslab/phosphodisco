@@ -618,6 +618,8 @@ class ProteomicsData:
         """
         Calculates for each pair of phosphosites within each module for how many positions
         they are within each module for how many positions they are the same.
+        returns:
+            self with .module_overlap_df_dict attribute
         """
         if not hasattr(self, 'module_seq_df'):
             raise ValueError(f'Please run self.collect_aa_sequences first./nThis will create self.module_seq_df which is what analyze_aa_overlap requires.')
@@ -652,13 +654,14 @@ class ProteomicsData:
 
     def calculate_ptm_set_enrichment(
             self,
-            ptm_set_gmt: str = 'data/ptm.sig.db.all.flanking.human.v1.9.0.gmt'
+            ptm_set_gmt: Union[str, dict] = 'human'
     ):
         """Uses a hypergeometric test to calculate enrichment for known ptm sets from PTM-ssGSEA
         gmt files. Must have the module_sequences and background_sequences attributes to run.
 
         Args:
-            ptm_set_gmt: Path to gmt file with ptm sets.
+            ptm_set_gmt: 'human', 'rat', 'mouse', path to gmt file with ptm sets or 
+                         dict as it would be supplied by parser.read_gmt.
 
         Returns: self with ptm_enrichment attribute.
 

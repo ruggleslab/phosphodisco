@@ -3,7 +3,9 @@ from pandas import Series, DataFrame
 from gseapy import enrichr
 import scipy.stats
 from .parsers import read_gmt
+from .datasets import load_data
 from .utils import multiple_tests_na
+from typing import Union
 
 
 def enrichr_per_module(
@@ -46,9 +48,9 @@ def enrichr_per_module(
 
 
 def ptm_per_module(
-        module_seq_dict,
-        background_seqs,
-        ptm_set_gmt: str = 'data/ptm.sig.db.all.flanking.human.v1.9.0.gmt'
+        module_seq_dict: dict,
+        background_seqs: list,
+        ptm_set_gmt: Union[str, dict] = 'human'
 ):
     """Calculates enrichment for each PTM-ssGSEA set per module via hypergeometric test.
 
@@ -57,22 +59,32 @@ def ptm_per_module(
         peptide seqs as values.
         background_seqs: List of all peptide seqs that could have ended up in modules, i.e. sites
         that went into the clustering algorithm.
-        ptm_set_gmt: Path to gmt file with PTM-ssGSEA sets to compare against.
+        ptm_set_gmt: str ath to gmt file with PTM-ssGSEA sets to compare against.
 
     Returns: Dictionary with keys are module names, values are DataFrames with set enrichment
     results per module.
 
     """
-    ptm_set_gmt = read_gmt(ptm_set_gmt)
+    ptm_set_refs = {
+            'human':'ptm.sig.db.all.flanking.human.v1.9.0.gmt',
+            'rat':'ptm.sig.db.all.flanking.rat.v1.9.0.gmt',
+            'mouse':'ptm.sig.db.all.flanking.mouse.v1.9.0.gmt',
+            }
+    if type(ptm_set_gmt) == str:
+        if ptm_set_gmt in ptm_set_refs.keys():
+            ptm_set_gmt = ptm_set_refs[ptm_set_gmt]
+            ptm_set_gmt = load_data(ptm_set_gmt, parser=read_gmt)
+        else:
+            ptm_set_gmt = read_gmt(ptm_set_gmt)
     ptm_set_gmt = {
         k: {item for item in v.items() if item[0] in background_seqs}
         for k, v in ptm_set_gmt.items()
     }
     ptm_set_gmt = {k: v for k, v in ptm_set_gmt.items() if len(v) >= 2}
-
-    if len(list(module_seq_dict.values())[0]) < 15:
+    
+    if len(list(module_seq_dict.values())[0][0]) < 15:
         raise ValueError('Module sequences must be at least 15 AAs long')
-    if len(list(module_seq_dict.values())[0]) > 15:
+    if len(list(module_seq_dict.values())[0][0]) > 15:
         module_seq_dict = {
             k: [seq[int((len(seq)/2-0.5)-7): int((len(seq)/2-0.5)+8)]
                 for seq in v] for k, v in module_seq_dict.items()
