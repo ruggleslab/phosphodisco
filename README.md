@@ -9,7 +9,9 @@ PhDc uses optimized clustering to find co-regulated phosphosite modules. Then, P
 You can find the [tutorial jupyter notebook](tutorial/phosphodisco_tutorial.ipynb) in the tutorial folder.
 To get started, follow these steps:
 1. Clone the repo:
-`git clone git@github.com:ruggleslab/phosphodisco.git`
+```
+git clone https://github.com/ruggleslab/phosphodisco.git
+```
 2. Set up the environment needed to run the notebook. We will use [mamba](https://mamba.readthedocs.io/en/latest/) for this, which is a drop-in replacement for conda:
 ```
 conda install -c conda-forge mamba
