@@ -498,8 +498,12 @@ class ProteomicsData:
 
         Returns: self with annotation_association, annotation_association_rval and annotation_association_FDR attributes
             annotation_association:      DataFrame with pvalues
-            annotation_association_rval: DataFrame with rvalues
+            annotation_association_rval: DataFrame with rvalues - these depend on what cat_method and cont_method was used,
+                                         i.e. the respective test-statistic. 
             annotation_association_FDR:  DataFrame with FDR corrected pvalues
+        
+        Reminder that direct comparison between categorical and continuous annotations for annotation_association_rval 
+        and annotation_association_FDR is difficult, as different tests are being used.
 
         """
 

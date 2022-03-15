@@ -139,14 +139,16 @@ def categorical_score_association(
         cat_method = 'RRA'
     scores = module_scores.copy()
     results = pd.DataFrame(index=scores.index)
-
+    rvals = results.copy()
+    pvals = results.copy()
+    
     indname = annotations.index.name
     if indname is None:
         indname = 'index'
 
     compare_fn = lambda row: categorial_methods[cat_method](
         row[temp[True]], row[temp[False]], **test_kws
-    )[1]
+    )
     for col in annotations.columns:
         temp = annotations[col].reset_index()
         temp = temp.groupby(col)[indname].apply(list)
@@ -154,7 +156,10 @@ def categorical_score_association(
             compare_fn,
             axis=1
         )
-    return results
+        rvals[col] = results[col].str.get(0)
+        pvals[col] = results[col].str.get(1)
+
+    return rvals, pvals
 
 
 def continuous_score_association(
@@ -177,12 +182,16 @@ def continuous_score_association(
 
     scores = module_scores.reindex(annotations.index, axis=1)
     results = pd.DataFrame(index=scores.index)
+    rvals = results.copy()
+    pvals = results.copy()
     for col in annotations.columns:
         results[col] = scores.apply(
-            lambda row: corr_na(annotations[col], row, corr_method=cont_method)[1],
+            lambda row: corr_na(annotations[col], row, corr_method=cont_method),
             axis=1
         )
-    return results
+        rvals[col] = results[col].str.get(0)
+        pvals[col] = results[col].str.get(1)
+    return rvals, pvals
 
 
 
