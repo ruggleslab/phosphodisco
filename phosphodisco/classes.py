@@ -496,24 +496,32 @@ class ProteomicsData:
             **multitest_kwargs: Additional keyword arguments to pass to the multipletests
             function. Default method is benjamini hochberg procedure.
 
-        Returns: self with annotation_association and annotation_association_FDR attributes
+        Returns: self with annotation_association, annotation_association_rval and annotation_association_FDR attributes
+            annotation_association:      DataFrame with pvalues
+            annotation_association_rval: DataFrame with rvalues
+            annotation_association_FDR:  DataFrame with FDR corrected pvalues
 
         """
 
-        cont = continuous_score_association(
+        #cont = continuous_score_association(
+        cont_rval, cont_pval = continuous_score_association(
             self.continuous_annotations,
             self.module_scores,
             cont_method
         )
         cat_annots = self.categorical_annotations
 
-        cat = categorical_score_association(
+        #cat = categorical_score_association(
+        cat_rval, cat_pval = categorical_score_association(
             cat_annots,
             self.module_scores,
             cat_method
         )
-        annotation_association = pd.concat([cont, cat], join='outer', axis=1)
+        annotation_association = pd.concat([cont_pval, cat_pval], join='outer', axis=1)
         self.annotation_association = annotation_association
+
+        annotation_association_rval = pd.concat([cont_rval, cat_rval], join='outer', axis=1)
+        self.annotation_association_rval = annotation_association_rval
 
         multitest_kwargs['method'] = multitest_kwargs.get('method', 'fdr_bh')
         fdr = annotation_association.apply(
