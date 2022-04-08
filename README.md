@@ -17,6 +17,8 @@ git clone https://github.com/ruggleslab/phosphodisco.git
 conda install -c conda-forge mamba
 mamba env create -f phosphodisco/env.yml -p phdc_env
 ```
+If this step is stuck after `Looking for: ['bioservices', 'cython', 'gseapy', 'hdbscan', 'hypercluster', 'jupyterlab', 'logomaker', "matplotlib[version='<3.2']", 'numpy', 'oyaml', 'pandas', 'pip', 'scikit-learn', 'seaborn', 'snakemake']`, try editing your .condarc file and removing `-defaults` from the channels list.
+
 3. Activate the environment and install phosphodisco
 ```
 conda activate phdc_env/
