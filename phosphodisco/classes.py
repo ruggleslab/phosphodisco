@@ -538,12 +538,12 @@ class ProteomicsData:
 
         Args:
             all_sites_modules_df: DataFrame where each row is a phosphosite. Structure of this df is very strict.
-                                  columns: ['{protein_id_col}', '{variable_site_col}', '{gene_symbol_col}', module_col]
-                                  '{protein_id_col}' will match the name of proteins in the fasta file. 
-                                  '{variable_site_col}' contains a ',' separated list of variable sites integers.
+                                  columns: ['protein_id', 'variable_sites', 'gene_symbol',module_col]
+                                  'protein_id' will match the name of proteins in the fasta file. 
+                                  'variable_sites' contains a ',' separated list of variable sites integers.
                                   NB: these must be integers, so variable sites like 'S225s T227t' must be converted to
                                   '225,227'.
-                                  '{gene_symbol_col}' contains the gene symbol 
+                                  'gene_symbol' contains the gene symbol 
                                   In addition this must contain a column with the module labels for each
                                   site, the name of which you specify with module_col.
             
@@ -556,7 +556,7 @@ class ProteomicsData:
             var_sites_aa_col:     The name of the column in all_sites_modules_df which contains the 
                                   amino acid(s) and position of the variable site(s), e.g. 'S225s,T227t'.
                                   These names are used for plotting purposes, so are optional.
-                                  '{variable_site_col}' will be used instead if not provided.
+                                  'variable_sites' will be used instead if not provided.
                                   
             n_flanking:           Number of flanking amino acids to collect. Minimum is 7, so that it can
                                   be used for PTM-ssGSEA.
