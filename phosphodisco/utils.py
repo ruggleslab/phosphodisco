@@ -122,3 +122,13 @@ def zscore(df):
         Row-zscored DataFrame.
     """
     return df.subtract(df.mean(axis=1), axis=0).divide(df.std(axis=1), axis=0)
+
+def missing_and_stdev_filter(df, na_frac_threshold=0.25, std_quantile_threshold = 0.5):
+    """
+    Performs standard deviation and missingness filtering by dropping columns that have more than 25% NAs and 
+    keeping values that are in the 50th percentile and up of standard deviation from the mean
+    
+    """
+    df_filt = df.loc[df.isnull().sum(axis=1)<df.shape[1]*na_frac_threshold]
+    df_filt = df_filt.loc[df_filt.std(axis=1)>np.quantile(df_filt.std(axis=1), std_quantile_threshold)]
+    return df_filt
