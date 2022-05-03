@@ -829,7 +829,7 @@ def druggability(self,module_num=None,interactions=None):
             return self
 
 
-def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True):
+def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=True, interactions=None):
     
     """
     Description: 
@@ -840,7 +840,7 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
         module_num = Module numbers of interest. Must be entered in list form. Uses all modules if None.
         top_num = The number of regulators closely associated with the module, must be greater than 0. 
         only_druggable = True or False value, specifies whether you want only druggable  regulators returned.
-        
+        interactions = gene-drug interactions in .tsv or .csv format. If input is empty, the default is  a file from the DGidb database
     Modified attributes: 
         self.druggable_regulators_df = DataFrame of only druggable regulators. 
         self.filtered_reg_df =  DataFrame of regulators filtered by druggability, modules of interest and top_num
@@ -849,6 +849,9 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
         self 
         
     """
+    if hasattr(self, 'druggable_module_genes')==False:
+	proteomics_obj.druggability(self, module_num=module_num, interactions=None)	
+	
     if hasattr(self, 'possible_regulator_data')==False:
         raise AttributeError("No regulators nominated, run .collect_possible_regulators")
 
@@ -923,7 +926,8 @@ def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_drugga
         raise AttributeError("Run .calculate_regulator_association()")
 
     #call other function
-    self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
+    if hasattr(self,'filtered_reg_df')==False:
+    	self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
     
     regdf = self.filtered_reg_df
     regdf_copy = self.filtered_reg_df.copy()
