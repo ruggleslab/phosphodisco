@@ -18,6 +18,8 @@ def get_group_indices(annotations, columns=None,  threshold=10):
     returns:
         groups_dict: dict where groups are keys, and sample IDs are values
     """
+    if (not columns) and (annotations is not None):
+        return None
     if not columns:
         columns = annotations.columns
     per_group_counts = annotations.loc[:, columns].value_counts()
@@ -34,6 +36,8 @@ def group_prefixes_from_inds(groups_dict):
     """
     Takes in a groups_dict created by get_group_indices, and returns a list of sanitized group prefixes for file names.
     """
+    if not groups_dict:
+        return None
     return [
         '_'.join(
             "".join(x for x in annot if x.isalnum()) 
@@ -41,13 +45,23 @@ def group_prefixes_from_inds(groups_dict):
         ) 
         for group in groups_dict.keys()
     ]    
+def mock_annots():
+    """
+    In case the user does not provide annots, this function will instead generate a
+    mock annotation DataFrame with one column.
+    """
+    prot_cols = pd.read_csv(config['input_protein'], index_col=[0,1], nrows=3).columns
+    phospho_cols = pd.read_csv(config['input_phospho'], index_col=[0], nrows=3).columns
+    common_cols = prot_cols.intersection(phospho_cols)
+    mock_annots = pd.DataFrame(index=common_cols).assign(all='all')
+    return mock_annots
 
 ## Make two lists:
 ##    - list of group-prefixes for normalizing
 ##    - list of group-prefixes for filtering
 
 ## Making list of group-prefixes for normalizing phospho
-annots = pd.read_csv(config.get('sample_annotations_csv'), index_col=[0]) if config.get('sample_annotations_csv') else None
+annots = pd.read_csv(config.get('sample_annotations_csv'), index_col=[0]) if config.get('sample_annotations_csv') else mock_annots()
 norm_cols = config.get('sample_annot_cols_for_normalization')
 norm_group_inds_dict = get_group_indices(annotations=annots, columns=norm_cols)
 norm_group_prefixes = group_prefixes_from_inds(norm_group_inds_dict)
