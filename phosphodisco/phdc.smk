@@ -18,16 +18,19 @@ def get_group_indices(annotations, columns=None,  threshold=10):
     returns:
         groups_dict: dict where groups are keys, and sample IDs are values
     """
-    if (not columns) and (annotations is not None):
-        return None
-    if not columns:
-        columns = annotations.columns
+    #if (not columns) and (annotations is None):
+    #    return None
+#    print(f"##########################\nannotations\n{annotations}\ncolumns\n{columns}")
+    if columns is None:
+        columns = annotations.columns.to_list()
     per_group_counts = annotations.loc[:, columns].value_counts()
     groups_dict = dict()
     for group in per_group_counts.index:
         if per_group_counts.loc[group] < threshold:
             continue
         group_inds = annotations.loc[:,columns].reset_index()
+
+        # print(f"##########################\nannotations\n{annotations}\ncolumns\n{columns}\ngroup_inds\n{group_inds}\n##########################")
         group_inds = group_inds.set_index(columns).loc[group].iloc[:,0].values
         groups_dict.update({group:group_inds})
     return groups_dict
@@ -37,7 +40,7 @@ def group_prefixes_from_inds(groups_dict):
     Takes in a groups_dict created by get_group_indices, and returns a list of sanitized group prefixes for file names.
     """
     if not groups_dict:
-        return None
+        return ['all']
     return [
         '_'.join(
             "".join(x for x in annot if x.isalnum()) 
@@ -62,9 +65,10 @@ def mock_annots():
 
 ## Making list of group-prefixes for normalizing phospho
 annots = pd.read_csv(config.get('sample_annotations_csv'), index_col=[0]) if config.get('sample_annotations_csv') else mock_annots()
+annots_given = config.get('sample_annotations_csv') is not None
 norm_cols = config.get('sample_annot_cols_for_normalization')
 norm_group_inds_dict = get_group_indices(annotations=annots, columns=norm_cols)
-norm_group_prefixes = group_prefixes_from_inds(norm_group_inds_dict)
+norm_group_prefixes = group_prefixes_from_inds(norm_group_inds_dict) 
 #print('norm_group_prefixes', norm_group_prefixes)
 
 ## Making list of group-prefixes for filtering normalized phospho
@@ -207,8 +211,11 @@ rule split_phospho_and_prot:
 # split data set into the datasets to be normalized. The multi-level filtering stuff will come after normalizing
         phospho = pd.read_csv(input.clean_phospho, index_col=[0,1])
         protein = pd.read_csv(input.clean_protein, index_col=[0])
-        annots = pd.read_csv(config['sample_annotations_csv'], index_col=[0])
-        norm_cols = config['sample_annot_cols_for_normalization']
+        if annots_given:
+            annots = pd.read_csv(config['sample_annotations_csv'], index_col=[0])
+        else:
+            annots = mock_annots()
+        norm_cols = config.get('sample_annot_cols_for_normalization')
         group_inds = get_group_indices(annotations=annots, columns=norm_cols)
 #creating the path for the directory first, bc pd.DataFrame.to_csv won't do it
         splits_folder=f'split_phospho/{phospho_prefix}' # maybe add sample_annots as a prefix as well?
@@ -314,18 +321,18 @@ rule correlate_phospho:
         corr_phospho=f"corr_phospho/{phospho_prefix}_{1-na_frac_threshold:.2f}frac-no-na.top{std_quantile_threshold*100:.0f}frac_stdev.corr.csv"
     run:
         normed_phospho = pd.read_csv(input.combined_phospho, index_col=[0,1])
-        print(normed_phospho.shape)
+        #print(normed_phospho.shape)
         normed_phospho = normed_phospho.loc[
             normed_phospho.isnull().sum(axis=1)<
             normed_phospho.shape[1]*na_frac_threshold
         ]
-        print(normed_phospho.shape)
+        #print(normed_phospho.shape)
         normed_phospho = normed_phospho.loc[
             normed_phospho.std(axis=1)>
             np.quantile(normed_phospho.std(axis=1), std_quantile_threshold)
         ]
         normed_phospho.to_csv(output.filt_phospho)
-        print(normed_phospho.shape)
+        #print(normed_phospho.shape)
         phospho_corr = normed_phospho.transpose().corr()
         phospho_corr = phospho_corr.fillna(0)
         phospho_corr.columns = ['%s-%s' % (a, b) for a, b in phospho_corr.columns]
