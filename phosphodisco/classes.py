@@ -850,8 +850,7 @@ def find_druggable_regulators(self,module_num=None,top_num=None, only_druggable=
         
     """
     if hasattr(self, 'druggable_module_genes')==False:
-	proteomics_obj.druggability(self, module_num=module_num, interactions=None)	
-	
+        proteomics_obj.druggability(self, module_num=module_num, interactions=None)
     if hasattr(self, 'possible_regulator_data')==False:
         raise AttributeError("No regulators nominated, run .collect_possible_regulators")
 
@@ -927,7 +926,7 @@ def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_drugga
 
     #call other function
     if hasattr(self,'filtered_reg_df')==False:
-    	self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
+        self.find_druggable_regulators(module_num=module_num,top_num=top_num, only_druggable=only_druggable)
     
     regdf = self.filtered_reg_df
     regdf_copy = self.filtered_reg_df.copy()
