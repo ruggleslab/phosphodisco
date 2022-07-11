@@ -1,5 +1,7 @@
 input_phospho: /some/path/goes/here/phospho.csv
 input_protein: /some/path/goes/here/protein.csv
+sample_annotations_csv: null
+sample_annot_cols_for_normalization: null
 na_frac_threshold: 0.25 
 std_quantile_threshold: 0.5 
 min_common_vals: 6

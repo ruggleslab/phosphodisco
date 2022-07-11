@@ -46,6 +46,14 @@ def _make_parser(fun=None, help_text=None):
                 help='path to protein file'
         )
         parser.add_argument(
+                "--sample_table", type=pathlib.Path, default=None,
+                help='path to a sample annotation table csv file. First column has sample ids.'
+        )
+        parser.add_argument(
+                "--sample_columns", nargs='+', default=None,
+                help='which columns from sample annotation table to use. Will use all cols if none provided.'
+        )
+        parser.add_argument(
                 "--min_common_values", type=int, default=6, help=''
         )
         parser.add_argument(
@@ -140,6 +148,10 @@ def generate_config():
         template_yml['std_quantile_threshold'] = args.top_stdev_quantile
         template_yml['min_common_vals'] = args.min_common_values
         template_yml['na_frac_threshold'] = args.na_frac_threshold
+       #add sample table and sample columns info 
+        template_yml['sample_annotations_csv'] = str(args.sample_table) if args.sample_table is not None else None
+        template_yml['sample_annot_cols_for_normalization'] = args.sample_columns
+
     # warnings in case user mistypes phospho/protein paths:
     for field, path in {'phospho':args.phospho, 'protein':args.protein}.items():
         if not pathlib.Path(path).exists():
