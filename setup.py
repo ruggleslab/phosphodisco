@@ -1,17 +1,17 @@
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("README_pypi.md", "r") as fh:
     long_description = fh.read()
 files = ["data/*"]
 setuptools.setup(
     name="phosphodisco",
     version="0.0.1",
-    author="Lili Blumenberg, Ruggles Lab",
-    author_email="lili.blumenberg@gmail.com",
+    author="Tobias Schraink, Ruggles Lab",
+    author_email="tschraink@gmail.com",
     description="A package for phosphorylation module discovery and analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/liliblu/phosphodisco",
+    url="https://github.com/ruggleslab/phosphodisco",
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",
