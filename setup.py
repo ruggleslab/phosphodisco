@@ -26,7 +26,12 @@ setuptools.setup(
         "seaborn >= 0.9.0",
         "scikit-learn >= 0.22.0",
         "statsmodels >= 0.11.0",
-        "hypercluster >= 0.1.13"
+        "hypercluster >= 0.1.13",
+        "oyaml >= 1.0",
+        "logomaker >= 0.8",
+        "snakemake >= 7.8.5",
+        "hdbscan >= 0.8.28",
+        "cython >= 0.29.30" 
     ],
     package_data={"phosphodisco": files},
     entry_points = {
