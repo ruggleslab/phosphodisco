@@ -165,8 +165,6 @@ class ProteomicsData:
         features[datatype_label] = 1
 
         data = pd.concat([target, features])
-
-        target.append(features)
         data = data.set_index(datatype_label, append=True)
         data.index = data.index.swaplevel(0, 1)
         data = data.transpose()
