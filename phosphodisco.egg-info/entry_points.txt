@@ -1,0 +1,3 @@
+[console_scripts]
+phdc_generate_config = phosphodisco.cli:generate_config
+phdc_run = phosphodisco.cli:run

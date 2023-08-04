@@ -9,10 +9,10 @@ from typing import Union
 
 
 def enrichr_per_module(
-        modules: Series,
-        background_gene_list,
-        gene_sets: str = 'GO_Biological_Process_2018',
-        **enrichr_kws
+    modules: Series,
+    background_gene_list,
+    gene_sets: str = "GO_Biological_Process_2018",
+    **enrichr_kws,
 ):
     """Runs gseapy.enrichr on genes in each module.
 
@@ -32,25 +32,27 @@ def enrichr_per_module(
             gene_list=genes,
             gene_sets=gene_sets,
             background=background_gene_list,
-            **enrichr_kws
+            **enrichr_kws,
         )
-        res = res.results[[
-            'Gene_set',
-            'Genes',
-            'Overlap',
-            'Odds Ratio',
-            'P-value',
-            'Adjusted P-value',
-            'Term'
-        ]].set_index('Term')
+        res = res.results[
+            [
+                "Gene_set",
+                "Genes",
+                "Overlap",
+                "Odds Ratio",
+                "P-value",
+                "Adjusted P-value",
+                "Term",
+            ]
+        ].set_index("Term")
         results[module] = res
     return results
 
 
 def ptm_per_module(
-        module_seq_dict: dict,
-        background_seqs: list,
-        ptm_set_gmt: Union[str, dict] = 'human'
+    module_seq_dict: dict,
+    background_seqs: list,
+    ptm_set_gmt: Union[str, dict] = "human",
 ):
     """Calculates enrichment for each PTM-ssGSEA set per module via hypergeometric test.
 
@@ -66,10 +68,10 @@ def ptm_per_module(
 
     """
     ptm_set_refs = {
-            'human':'ptm.sig.db.all.flanking.human.v1.9.0.gmt',
-            'rat':'ptm.sig.db.all.flanking.rat.v1.9.0.gmt',
-            'mouse':'ptm.sig.db.all.flanking.mouse.v1.9.0.gmt',
-            }
+        "human": "ptm.sig.db.all.flanking.human.v1.9.0.gmt",
+        "rat": "ptm.sig.db.all.flanking.rat.v1.9.0.gmt",
+        "mouse": "ptm.sig.db.all.flanking.mouse.v1.9.0.gmt",
+    }
     if type(ptm_set_gmt) == str:
         if ptm_set_gmt in ptm_set_refs.keys():
             ptm_set_gmt = ptm_set_refs[ptm_set_gmt]
@@ -81,13 +83,16 @@ def ptm_per_module(
         for k, v in ptm_set_gmt.items()
     }
     ptm_set_gmt = {k: v for k, v in ptm_set_gmt.items() if len(v) >= 2}
-    
+
     if len(list(module_seq_dict.values())[0][0]) < 15:
-        raise ValueError('Module sequences must be at least 15 AAs long')
+        raise ValueError("Module sequences must be at least 15 AAs long")
     if len(list(module_seq_dict.values())[0][0]) > 15:
         module_seq_dict = {
-            k: [seq[int((len(seq)/2-0.5)-7): int((len(seq)/2-0.5)+8)]
-                for seq in v] for k, v in module_seq_dict.items()
+            k: [
+                seq[int((len(seq) / 2 - 0.5) - 7) : int((len(seq) / 2 - 0.5) + 8)]
+                for seq in v
+            ]
+            for k, v in module_seq_dict.items()
         }
     background_seqs = set(background_seqs)
     M = len(background_seqs)
@@ -97,13 +102,7 @@ def ptm_per_module(
         seqs = set(seqs)
         N = len(seqs)
         module_results = pd.DataFrame(
-            columns=[
-                'Site_set',
-                'Sites',
-                'Overlap',
-                'P-value',
-                'Term'
-            ]
+            columns=["Site_set", "Sites", "Overlap", "P-value", "Term"]
         )
         for term, sites in ptm_set_gmt.items():
             sites = dict(sites)
@@ -112,19 +111,20 @@ def ptm_per_module(
             x = len(overlap)
             overlap = [sites[seq] for seq in overlap]
             pval = scipy.stats.hypergeom.sf(x, M, n, N, loc=1)
-            line = pd.Series({
-                'Site_set':','.join(sites.values()),
-                'Sites': ','.join(overlap),
-                'Overlap': x,
-                'P-value': pval,
-                'Term':term
+            line = pd.Series(
+                {
+                    "Site_set": ",".join(sites.values()),
+                    "Sites": ",".join(overlap),
+                    "Overlap": x,
+                    "P-value": pval,
+                    "Term": term,
                 },
-                name=term
+                name=term,
             )
             module_results = module_results.append(line)
-        module_results['Adjusted P-value'] = multiple_tests_na(
-            module_results['P-value'], method='fdr_bh'
+        module_results["Adjusted P-value"] = multiple_tests_na(
+            module_results["P-value"], method="fdr_bh"
         )
-        results[module] = module_results.set_index('Term')
+        results[module] = module_results.set_index("Term")
 
     return results

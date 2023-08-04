@@ -7,8 +7,7 @@ from .utils import corr_na, zscore
 
 
 def collapse_possible_regulators(
-        reg_data: DataFrame,
-        corr_threshold: float = 0.95
+    reg_data: DataFrame, corr_threshold: float = 0.95
 ) -> DataFrame:
     """Uses mean to collapse rows of possible regulator data that are highly correlated. Slightly
     chaotic, since it just averages two at a time based on iterating through a dictionary. Use
@@ -24,16 +23,19 @@ def collapse_possible_regulators(
     """
     reg_data = zscore(reg_data)
     corr = reg_data.transpose().corr()
-    
+
     high_corr_inds = corr.index[((corr > corr_threshold).sum(axis=1) > 1)]
     low_corr_inds = corr.index.difference(high_corr_inds)
     high_corr_data = reg_data.loc[high_corr_inds, :]
     low_corr_data = reg_data.loc[low_corr_inds, :]
     if len(high_corr_inds) == 0:
         return low_corr_data
-    corr = corr.mask(
-        np.tril(np.ones(corr.shape)).astype(np.bool)
-    ).mask(~(corr > corr_threshold)).dropna(how='all').dropna(how='all', axis=1)
+    corr = (
+        corr.mask(np.tril(np.ones(corr.shape)).astype(np.bool))
+        .mask(~(corr > corr_threshold))
+        .dropna(how="all")
+        .dropna(how="all", axis=1)
+    )
     corr = corr.stack(level=[0, 1])
 
     while corr.shape[0] > 0:
@@ -41,19 +43,25 @@ def collapse_possible_regulators(
             a, b, c, d = i
             if (a, b) in high_corr_data.index and (c, d) in high_corr_data.index:
                 inds_to_mean = [(a, b), (c, d)]
-                
+
                 others_ab = [
-                    (d, e, f, g) for d, e, f, g in corr.index 
-                    if (d, e) is (a, b) or (f, g) is (a, b) 
+                    (d, e, f, g)
+                    for d, e, f, g in corr.index
+                    if (d, e) is (a, b) or (f, g) is (a, b)
                 ]
-                others_ab = [(f, g) if (d, e) == (a, b) else (d, e) for d, e, f, g in others_ab]
+                others_ab = [
+                    (f, g) if (d, e) == (a, b) else (d, e) for d, e, f, g in others_ab
+                ]
                 inds_to_mean.extend(
-                    [(e, f) for e, f in others_ab
-                     if ((e, f, c, d) in high_corr_data.index)
-                     or ((c, d, e, f) in high_corr_data.index)]
+                    [
+                        (e, f)
+                        for e, f in others_ab
+                        if ((e, f, c, d) in high_corr_data.index)
+                        or ((c, d, e, f) in high_corr_data.index)
+                    ]
                 )
-            
-                name = ('%s-%s' %(a, c), '%s-%s' % (b, d))
+
+                name = ("%s-%s" % (a, c), "%s-%s" % (b, d))
                 high_corr_data = high_corr_data.append(
                     pd.Series(high_corr_data.loc[inds_to_mean, :].mean(), name=name)
                 )
@@ -66,22 +74,25 @@ def collapse_possible_regulators(
         if len(high_corr_inds) == 0:
             return low_corr_data
         high_corr_data = high_corr_data.loc[high_corr_inds, :]
-        corr = corr.mask(
-            np.tril(np.ones(corr.shape)).astype(np.bool)
-        ).mask(~(corr > corr_threshold)).dropna(how='all').dropna(how='all', axis=1)
+        corr = (
+            corr.mask(np.tril(np.ones(corr.shape)).astype(np.bool))
+            .mask(~(corr > corr_threshold))
+            .dropna(how="all")
+            .dropna(how="all", axis=1)
+        )
         corr = corr.stack(level=[0, 1])
 
     return low_corr_data
 
 
 def calculate_regulator_coefficients(
-        reg_data: DataFrame,
-        module_scores: DataFrame,
-        scale_data: bool = True,
-        model: str = 'linear',
-        regularization_values: Optional[Iterable] = None,
-        cv_fold: int = 5,
-        **model_kwargs
+    reg_data: DataFrame,
+    module_scores: DataFrame,
+    scale_data: bool = True,
+    model: str = "linear",
+    regularization_values: Optional[Iterable] = None,
+    cv_fold: int = 5,
+    **model_kwargs,
 ) -> DataFrame:
     """Calculates linear model coefficients between regulator data and module scores.
 
@@ -104,28 +115,27 @@ def calculate_regulator_coefficients(
 
     """
     if regularization_values is None:
-        regularization_values = [5 ** i for i in range(-5, 5)]
+        regularization_values = [5**i for i in range(-5, 5)]
 
-    if model not in ['linear', 'sigmoid']:
+    if model not in ["linear", "sigmoid"]:
         raise ValueError(
-            'Model %s not in accepted models: %s' % (model, ','.join(['linear', 'sigmoid']))
+            "Model %s not in accepted models: %s"
+            % (model, ",".join(["linear", "sigmoid"]))
         )
 
     features = reg_data.transpose().values
     targets = module_scores.transpose().values
-    if model == 'sigmoid':
-        targets = -np.log2(1+(2**-targets))
+    if model == "sigmoid":
+        targets = -np.log2(1 + (2**-targets))
     if scale_data:
         features = preprocessing.scale(features, copy=True)
         targets = preprocessing.scale(targets, copy=True)
-        
-    model_kwargs.update({'cv': cv_fold, 'alphas':regularization_values})
+
+    model_kwargs.update({"cv": cv_fold, "alphas": regularization_values})
     model = linear_model.RidgeCV(**model_kwargs)
     model.fit(features, targets)
     weights = pd.DataFrame(
-        model.coef_,
-        index=module_scores.index,
-        columns=reg_data.index
+        model.coef_, index=module_scores.index, columns=reg_data.index
     ).transpose()
     scores = pd.Series(
         model.score(features, targets),
@@ -135,9 +145,7 @@ def calculate_regulator_coefficients(
 
 
 def calculate_regulator_corr(
-        reg_data: DataFrame,
-        module_scores: DataFrame,
-        **model_kwargs
+    reg_data: DataFrame, module_scores: DataFrame, **model_kwargs
 ):
     """Calculates the correlation between possible regulators and module scores.
 
@@ -154,7 +162,9 @@ def calculate_regulator_corr(
     rs = pd.DataFrame(index=reg_data.index)
     ps = pd.DataFrame(index=reg_data.index)
     for i, row in module_scores.iterrows():
-        res = reg_data.apply(lambda r: pd.Series(corr_na(row, r, **model_kwargs)), axis=1)
+        res = reg_data.apply(
+            lambda r: pd.Series(corr_na(row, r, **model_kwargs)), axis=1
+        )
         rs[i] = res.iloc[:, 0]
         ps[i] = res.iloc[:, 1]
     return rs, ps

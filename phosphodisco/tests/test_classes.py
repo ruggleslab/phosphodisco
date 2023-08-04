@@ -20,15 +20,15 @@ def test_classes_regulators():
     # proteomics.assign_modules()
     proteomics.assign_modules(
         pd.DataFrame(
-            {'test;param-1': [np.random.randint(0, 4) for i in range(30)]},
-            index=proteomics.normed_phospho.index
+            {"test;param-1": [np.random.randint(0, 4) for i in range(30)]},
+            index=proteomics.normed_phospho.index,
         )
     )
 
     proteomics.calculate_module_scores()
     regs = list(set(phospho.sample(3).index.get_level_values(0)))
     proteomics.collect_possible_regulators(regs, corr_threshold=0.98)
-    proteomics.calculate_regulator_association(model='linear', cv_fold=2)
+    proteomics.calculate_regulator_association(model="linear", cv_fold=2)
     return proteomics
 
 
@@ -38,24 +38,25 @@ def test_classes_annotations():
     ).normalize_phospho_by_protein()
     proteomics.assign_modules(
         pd.DataFrame(
-            {'test;param-1': [np.random.randint(0, 4) for i in range(30)]},
-            index=proteomics.normed_phospho.index
+            {"test;param-1": [np.random.randint(0, 4) for i in range(30)]},
+            index=proteomics.normed_phospho.index,
         )
     )
     annotations = pd.DataFrame(
-            {
-                'cat1': ['A', 'B', 'A', 'B'],
-                'cat2': ['A', 'B', 'B', 'C'],
-                'cont1': [0.115, 0.01, 0.3, 0.9],
-                'cont2': [-1, -2.5, np.nan, 1]
-            },
-            index=proteomics.protein.columns
+        {
+            "cat1": ["A", "B", "A", "B"],
+            "cat2": ["A", "B", "B", "C"],
+            "cont1": [0.115, 0.01, 0.3, 0.9],
+            "cont2": [-1, -2.5, np.nan, 1],
+        },
+        index=proteomics.protein.columns,
     )
     proteomics.calculate_module_scores()
-    proteomics.add_annotations(annotations, pd.Series(['categorical', 0, 'continuous', 1]))
+    proteomics.add_annotations(
+        annotations, pd.Series(["categorical", 0, "continuous", 1])
+    )
     proteomics.calculate_annotation_association()
     return proteomics
-
 
 
 # phospho = phdc.read_phospho('/Users/lili/dropbox_lili/phosphodisco/results/brca-combined-v4.0-phosphoproteome'

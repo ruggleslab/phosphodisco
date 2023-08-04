@@ -34,9 +34,9 @@ def heatmap(
     leg_pos: str = "right",
     leg_ax=None,
     leg_kws: Optional[dict] = None,
-    **sns_kws
+    **sns_kws,
 ):
-    """ Class to plot categorical heatmap using seaborn.
+    """Class to plot categorical heatmap using seaborn.
 
     Parameters
     ----------

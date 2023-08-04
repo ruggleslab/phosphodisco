@@ -9,12 +9,12 @@ from scipy.stats import pearsonr, spearmanr
 
 
 def norm_line_to_residuals(
-        ph_line: Iterable,
-        prot_line: Iterable,
-        regularization_values: Optional[Iterable] = None,
-        cv: Optional[int] = None,
-        prevent_negative_coefficients: bool = True,
-        **ridgecv_kwargs
+    ph_line: Iterable,
+    prot_line: Iterable,
+    regularization_values: Optional[Iterable] = None,
+    cv: Optional[int] = None,
+    prevent_negative_coefficients: bool = True,
+    **ridgecv_kwargs,
 ) -> Series:
     """Uses CV and regularized linear regression to calculate residuals, representing
     protein-normalized phospho values for one line of data each.
@@ -35,7 +35,7 @@ def norm_line_to_residuals(
 
     """
     if regularization_values is None:
-        regularization_values = [5 ** i for i in range(-5, 5)]
+        regularization_values = [5**i for i in range(-5, 5)]
     if cv is None:
         cv = 3
 
@@ -47,8 +47,8 @@ def norm_line_to_residuals(
     features = prot_line[nonull].values.reshape(-1, 1)
     labels = ph_line[nonull].values
 
-    ridgecv_kwargs['alphas'] = regularization_values
-    ridgecv_kwargs['cv'] = cv
+    ridgecv_kwargs["alphas"] = regularization_values
+    ridgecv_kwargs["cv"] = cv
     model = RidgeCV(**ridgecv_kwargs).fit(features, labels)
     if prevent_negative_coefficients and (model.coef_[0] <= 0):
         return pd.Series(np.empty(len(ph_line)), ph_line.index)
@@ -89,7 +89,7 @@ def not_na(array):
     return ~np.isnan(array)
 
 
-def corr_na(array1, array2, corr_method: str = 'spearmanr', **addl_kws):
+def corr_na(array1, array2, corr_method: str = "spearmanr", **addl_kws):
     """Correlation method that tolerates missing values. Can take pearsonr or spearmanr.
 
     Args:
@@ -101,10 +101,10 @@ def corr_na(array1, array2, corr_method: str = 'spearmanr', **addl_kws):
     Returns: R and p-value from correlation of 2 vectors.
 
     """
-    if corr_method not in ['pearsonr', 'spearmanr']:
+    if corr_method not in ["pearsonr", "spearmanr"]:
         raise ValueError(
-            'Method %s is a valid correlation method, must be: %s'
-            % (corr_method, ','.join(['pearsonr', 'spearmanr']))
+            "Method %s is a valid correlation method, must be: %s"
+            % (corr_method, ",".join(["pearsonr", "spearmanr"]))
         )
     nonull = np.logical_and(not_na(array1), not_na(array2))
     if sum(nonull) > 2:
@@ -123,12 +123,15 @@ def zscore(df):
     """
     return df.subtract(df.mean(axis=1), axis=0).divide(df.std(axis=1), axis=0)
 
-def missing_and_stdev_filter(df, na_frac_threshold=0.25, std_quantile_threshold = 0.5):
+
+def missing_and_stdev_filter(df, na_frac_threshold=0.25, std_quantile_threshold=0.5):
     """
-    Performs standard deviation and missingness filtering by dropping columns that have more than 25% NAs and 
+    Performs standard deviation and missingness filtering by dropping columns that have more than 25% NAs and
     keeping values that are in the 50th percentile and up of standard deviation from the mean
-    
+
     """
-    df_filt = df.loc[df.isnull().sum(axis=1)<df.shape[1]*na_frac_threshold]
-    df_filt = df_filt.loc[df_filt.std(axis=1)>np.quantile(df_filt.std(axis=1), std_quantile_threshold)]
+    df_filt = df.loc[df.isnull().sum(axis=1) < df.shape[1] * na_frac_threshold]
+    df_filt = df_filt.loc[
+        df_filt.std(axis=1) > np.quantile(df_filt.std(axis=1), std_quantile_threshold)
+    ]
     return df_filt

@@ -25,7 +25,13 @@ from .constants import (
     module_name_col,
 )
 from .constants import annotation_column_map, datatype_label
-from .parsers import read_fasta, read_phospho, read_protein, read_annotation, column_normalize
+from .parsers import (
+    read_fasta,
+    read_phospho,
+    read_protein,
+    read_annotation,
+    column_normalize,
+)
 from .annotation_association import (
     binarize_categorical,
     continuous_score_association,
@@ -94,7 +100,9 @@ class ProteomicsData:
             min_common_values = 6
         self.min_values_in_common = min_common_values
 
-        common_prots = list(set(phospho.index.get_level_values(0).intersection(protein.index)))
+        common_prots = list(
+            set(phospho.index.get_level_values(0).intersection(protein.index))
+        )
         common_samples = phospho.columns.intersection(protein.columns)
         self.phospho = phospho.reindex(common_samples, axis=1)
         self.protein = protein.reindex(common_samples, axis=1)
@@ -103,7 +111,9 @@ class ProteomicsData:
         self.clustering_parameters_for_modules = clustering_parameters_for_modules
         self.possible_regulator_list = possible_regulator_list
 
-        logging.info("Phospho and protein data have %s proteins in common" % len(common_prots))
+        logging.info(
+            "Phospho and protein data have %s proteins in common" % len(common_prots)
+        )
         logging.info(
             "Phospho and protein data have %s samples in common, re-indexed to only common "
             "samples." % len(common_samples)
@@ -115,7 +125,9 @@ class ProteomicsData:
 
         normalizable_rows = common_phospho.index[
             (
-                (np.logical_and(common_phospho.notnull(), common_prot.notnull())).sum(axis=1)
+                (np.logical_and(common_phospho.notnull(), common_prot.notnull())).sum(
+                    axis=1
+                )
                 >= min_common_values
             )
         ]
@@ -185,7 +197,9 @@ class ProteomicsData:
         self.normed_phospho = residuals
         return self
 
-    def impute_missing_values(self, imputation_method: Optional[str] = None, **imputer_kwargs):
+    def impute_missing_values(
+        self, imputation_method: Optional[str] = None, **imputer_kwargs
+    ):
         """Imputes missing values in the normed_phospho data. Needed if you are going to
         use this raw table for machine learning purposes, or for visualizing with
         visualize_modules, since that uses hierarchical clustering to order the heatmaps.
@@ -266,7 +280,8 @@ class ProteomicsData:
                 clss = parameters.pop(0)
                 parameters.append("clusterer%s%s" % (val_delim, clss))
                 parameters = {
-                    s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1] for s in parameters
+                    s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1]
+                    for s in parameters
                 }
                 self.clustering_parameters_for_modules = parameters
             except AttributeError:
@@ -282,7 +297,9 @@ class ProteomicsData:
                 % len(self.normed_phospho)
             )
             data_for_clustering = self.normed_phospho.transpose().corr()
-            no_na_cols = data_for_clustering.columns[~data_for_clustering.isnull().any()]
+            no_na_cols = data_for_clustering.columns[
+                ~data_for_clustering.isnull().any()
+            ]
             data_for_clustering = data_for_clustering.loc[no_na_cols, no_na_cols]
 
         mac = (
@@ -308,7 +325,9 @@ class ProteomicsData:
             parameters = self.modules.name.split(param_delim)
             clss = parameters.pop(0)
             parameters.append("clusterer%s%s" % (val_delim, clss))
-            parameters = {s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1] for s in parameters}
+            parameters = {
+                s.split(val_delim, 1)[0]: s.split(val_delim, 1)[1] for s in parameters
+            }
             self.clustering_parameters_for_modules = parameters
         except AttributeError:
             logging.error(
@@ -335,9 +354,9 @@ class ProteomicsData:
             abundances = zscore(abundances)
         self.module_scores = abundances.groupby(self.modules).agg("mean")
         if self.module_scores.isnull().sum().sum() > 0:
-            module_scores = sklearn.impute.KNNImputer(**knn_imputer_kwargs).fit_transform(
-                self.module_scores.transpose()
-            )
+            module_scores = sklearn.impute.KNNImputer(
+                **knn_imputer_kwargs
+            ).fit_transform(self.module_scores.transpose())
             self.module_scores = pd.DataFrame(
                 module_scores.transpose(),
                 index=self.module_scores.index,
@@ -376,7 +395,9 @@ class ProteomicsData:
             possible_regulator_list = self.possible_regulator_list
         self.possible_regulator_list = possible_regulator_list
 
-        subset = self.protein.loc[self.protein.index.intersection(possible_regulator_list), :]
+        subset = self.protein.loc[
+            self.protein.index.intersection(possible_regulator_list), :
+        ]
         if self.phospho.index.name is None:
             ind_name = "variableSites"
         else:
@@ -386,7 +407,10 @@ class ProteomicsData:
         subset = subset.set_index(ind_name, append=True)
         possible_regulator_data = subset.append(
             self.phospho.loc[
-                self.phospho.index.get_level_values(0).intersection(possible_regulator_list), :
+                self.phospho.index.get_level_values(0).intersection(
+                    possible_regulator_list
+                ),
+                :,
             ]
         )
         if corr_threshold <= 1:
@@ -410,7 +434,9 @@ class ProteomicsData:
         )
         return self
 
-    def calculate_regulator_association(self, method: str = "correlation", **model_kwargs):
+    def calculate_regulator_association(
+        self, method: str = "correlation", **model_kwargs
+    ):
         """Calculate the association between each module score and each feature associated with
         possible regulators.
 
@@ -446,7 +472,9 @@ class ProteomicsData:
             )
         return self
 
-    def add_annotations(self, annotations: DataFrame, column_types: Union[list, Series]):
+    def add_annotations(
+        self, annotations: DataFrame, column_types: Union[list, Series]
+    ):
         """Adds sample annotations.
 
         Args:
@@ -461,7 +489,10 @@ class ProteomicsData:
         Returns: self with annotations attributes.
 
         """
-        if "categorical_annotations" in self.__dict__ or "continuous_annotations" in self.__dict__:
+        if (
+            "categorical_annotations" in self.__dict__
+            or "continuous_annotations" in self.__dict__
+        ):
             logging.warning("Overwriting annotation data")
         self.annotations = annotations
 
@@ -475,7 +506,9 @@ class ProteomicsData:
                 "Only %s samples in common between annotations and normed_phospho. Must be more "
                 "than 1 sample in common. " % len(ncommon)
             )
-        logging.info("Annotations have %s samples in common with normed_phospho" % ncommon)
+        logging.info(
+            "Annotations have %s samples in common with normed_phospho" % ncommon
+        )
         annotations = annotations.reindex(common_samples)
 
         column_types = column_types.astype(str).replace(annotation_column_map)
@@ -490,9 +523,9 @@ class ProteomicsData:
             annotations, annotations.columns[column_types == 0]
         )
 
-        self.continuous_annotations = annotations[annotations.columns[column_types == 1]].astype(
-            float
-        )
+        self.continuous_annotations = annotations[
+            annotations.columns[column_types == 1]
+        ].astype(float)
         return self
 
     def calculate_annotation_association(
@@ -577,7 +610,12 @@ class ProteomicsData:
         if isinstance(fasta, str):
             fasta = read_fasta(fasta)
         # Checking columns of module_df:
-        required_cols = {protein_id_col, variable_site_col, variable_site_aa_col, module_col}
+        required_cols = {
+            protein_id_col,
+            variable_site_col,
+            variable_site_aa_col,
+            module_col,
+        }
         given_cols = set(all_sites_modules_df.columns)
         if not required_cols <= given_cols:
             logging.warning(
@@ -593,14 +631,18 @@ class ProteomicsData:
         if var_sites_aa_col is not None:
             module_seq_df[variable_site_aa_col] = module_seq_df[var_sites_aa_col].copy()
         else:
-            module_seq_df[variable_site_aa_col] = module_seq_df[variable_site_col].copy()
+            module_seq_df[variable_site_aa_col] = module_seq_df[
+                variable_site_col
+            ].copy()
         self.module_sequences = module_aas  # module:sequences dict
         self.module_seq_df = module_seq_df  # df for aa similarity calcs
         ### format of module_seq_df (col order not deterministic):
         ### variable_site_col, var_sites_aa_col, protein_id_col, module_col, seq_col
-        self.background_sequences = var_site_delimiter.join(  # list of background sequences
-            df_to_aa_seqs(all_sites_modules_df, fasta, n_flanking)
-        ).split(var_site_delimiter)
+        self.background_sequences = (
+            var_site_delimiter.join(  # list of background sequences
+                df_to_aa_seqs(all_sites_modules_df, fasta, n_flanking)
+            ).split(var_site_delimiter)
+        )
         return self
 
     def analyze_aa_sequences(
@@ -643,7 +685,10 @@ class ProteomicsData:
         return self
 
     def calculate_go_set_enrichment(
-        self, background_gene_list, gene_sets: str = "GO_Biological_Process_2018", **enrichr_kws
+        self,
+        background_gene_list,
+        gene_sets: str = "GO_Biological_Process_2018",
+        **enrichr_kws,
     ):
         """Uses enrichr from the gseapy package to calculate gene set enrichments for genes in
         each module.
@@ -690,11 +735,15 @@ class ProteomicsData:
                               level 0 is the gene identifier and level 1 is a PTM-site identifier
         """
         if kin_act_phosphosites is None:  # read in dataframe if none is given
-            kin_act_data = BytesIO(pkgutil.get_data("phosphodisco", "data/kin_act_loops.csv"))
+            kin_act_data = BytesIO(
+                pkgutil.get_data("phosphodisco", "data/kin_act_loops.csv")
+            )
             kin_act_phosphosites = pd.read_csv(kin_act_data, index_col=[0, 1])
         # Extract indices
         phospho_inds = self.phospho.index.to_frame().copy()
-        phospho_inds.iloc[:, 1] = phospho_inds.iloc[:, 1].str.split()  # get  first column
+        phospho_inds.iloc[:, 1] = phospho_inds.iloc[
+            :, 1
+        ].str.split()  # get  first column
         phospho_inds = phospho_inds.explode(phospho_inds.columns[1])  # get column name
 
         # Rename and swap index and columns, so we can overlap the new index with the kinase activation loop index
@@ -708,10 +757,14 @@ class ProteomicsData:
             phospho_inds["variableSites_exploded"].str.extract(r"(\d+)").astype(int)
         )
         phospho_inds = phospho_inds.reset_index()
-        phospho_inds = phospho_inds.set_index(["geneSymbol_exploded", "variableSites_numerical"])
+        phospho_inds = phospho_inds.set_index(
+            ["geneSymbol_exploded", "variableSites_numerical"]
+        )
 
         # Fetch phosphodata from overlapping indices
-        kin_act_index_overlap = kin_act_phosphosites.index.intersection(phospho_inds.index)
+        kin_act_index_overlap = kin_act_phosphosites.index.intersection(
+            phospho_inds.index
+        )
         # phospho_inds.columns
         phospho_inds_overlap = (
             phospho_inds.loc[kin_act_index_overlap]
@@ -722,10 +775,14 @@ class ProteomicsData:
         kin_act_loop_phospho_data = self.phospho.loc[phospho_inds_overlap]
         self.kin_act_loop_phospho_data = kin_act_loop_phospho_data
         if self.kin_act_loop_phospho_data.shape[0] == 0:
-            warn("No phosphosites overlapped with the set of kinase activation loop phosphosites")
+            warn(
+                "No phosphosites overlapped with the set of kinase activation loop phosphosites"
+            )
         return self
 
-    def correlate_kinase_activation_loop_phosphosites_with_module_scores(self, na_frac=None):
+    def correlate_kinase_activation_loop_phosphosites_with_module_scores(
+        self, na_frac=None
+    ):
         """
         Correlates kinase activation loop phosphosite data with module scores using the Spearman correlation coefficient.
         Will try to run the necessary functions in case module_scores or kin_act_loop_phospho_data haven't been set by calculate_module_scores and extract_kinase_activation_loop_phosphosites yet. P-values are multiple-testing corrected with FDR (Benjamini Hochberg method).
@@ -761,7 +818,9 @@ class ProteomicsData:
             .dropna(thresh=3)
             .apply(
                 lambda phos_sites_row: self.module_scores.apply(
-                    lambda scores_row: spearmanr(phos_sites_row, scores_row, nan_policy="omit"),
+                    lambda scores_row: spearmanr(
+                        phos_sites_row, scores_row, nan_policy="omit"
+                    ),
                     axis=1,
                 ),
                 axis=1,
@@ -775,9 +834,13 @@ class ProteomicsData:
             .melt(ignore_index=False, var_name="module", value_name="p-value")
             .reset_index()
         )
-        pvals_melted["adj_pval"] = multipletests(pvals_melted["p-value"], method="fdr_bh")[1]
+        pvals_melted["adj_pval"] = multipletests(
+            pvals_melted["p-value"], method="fdr_bh"
+        )[1]
         self.kin_act_phospho_module_score_pvals = pvals_melted.pivot_table(
-            columns="module", values="adj_pval", index=pvals_melted.columns[[0, 1]].to_list()
+            columns="module",
+            values="adj_pval",
+            index=pvals_melted.columns[[0, 1]].to_list(),
         )
 
         return self
@@ -832,7 +895,6 @@ def prepare_data(
 
 
 def druggability(self, module_num=None, interactions=None):
-
     """
     Finds druggable genes in a given module
     Args:
@@ -859,12 +921,16 @@ def druggability(self, module_num=None, interactions=None):
     # define module genes
     module_genes = self.modules.index.get_level_values(0)
     self.druggable_module_genes = druggable_genes.intersection(module_genes)
-    self.druggable_module_genes_df = pd.DataFrame(self.modules.loc[self.druggable_module_genes])
+    self.druggable_module_genes_df = pd.DataFrame(
+        self.modules.loc[self.druggable_module_genes]
+    )
 
     if module_num is not None:
         if isinstance(module_num, list):
             dataframe = self.druggable_module_genes_df.reset_index()
-            self.druggable_module_genes_df = dataframe.loc[dataframe.iloc[:, 2].isin(module_num)]
+            self.druggable_module_genes_df = dataframe.loc[
+                dataframe.iloc[:, 2].isin(module_num)
+            ]
             return self
         else:
             return self
@@ -873,7 +939,6 @@ def druggability(self, module_num=None, interactions=None):
 def find_druggable_regulators(
     self, module_num=None, top_num=None, only_druggable=True, interactions=None
 ):
-
     """
     Description:
         This function helps find druggable regulators and is able to filter them by module.
@@ -895,7 +960,9 @@ def find_druggable_regulators(
     if hasattr(self, "druggable_module_genes") == False:
         proteomics_obj.druggability(self, module_num=module_num, interactions=None)
     if hasattr(self, "possible_regulator_data") == False:
-        raise AttributeError("No regulators nominated, run .collect_possible_regulators")
+        raise AttributeError(
+            "No regulators nominated, run .collect_possible_regulators"
+        )
 
     possible_regulator_list = self.possible_regulator_data.index.get_level_values(0)
     druggable_genes = self.druggable_module_genes_df.iloc[:, 0]
@@ -915,7 +982,9 @@ def find_druggable_regulators(
     self.druggable_regulator_list = druggable_regulator_list
 
     # find druggable regulators in regulator_coefficient dataframe
-    self.druggable_regulators_df = reg_coeff[reg_coeff.iloc[:, 0].isin(druggable_regulator_list)]
+    self.druggable_regulators_df = reg_coeff[
+        reg_coeff.iloc[:, 0].isin(druggable_regulator_list)
+    ]
 
     # select druggable or not
     if only_druggable:
@@ -934,7 +1003,9 @@ def find_druggable_regulators(
     # select top_n regulators for each module
     if top_num is not None:
         combined_top_regs = set(
-            chain.from_iterable(set(regulator_df[x].nlargest(top_num).index) for x in column_list)
+            chain.from_iterable(
+                set(regulator_df[x].nlargest(top_num).index) for x in column_list
+            )
         )
         regulator_df = regulator_df.loc[combined_top_regs, column_list]
 
@@ -943,8 +1014,9 @@ def find_druggable_regulators(
     return self
 
 
-def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_druggable=True):
-
+def druggable_regulator_heatmap(
+    self, module_num=None, top_num=None, only_druggable=True
+):
     """
     Description:
      This function creates a heatmap displaying the association coefficients between nominated, druggable regulators and modules.
@@ -1000,15 +1072,23 @@ def druggable_regulator_heatmap(self, module_num=None, top_num=None, only_drugga
 
     self.druggable_bool = druggable_bool
 
-    druggable_colors = druggable_bool.map(dict(zip([False, True], sns.color_palette("husl", 2))))
+    druggable_colors = druggable_bool.map(
+        dict(zip([False, True], sns.color_palette("husl", 2)))
+    )
     cmap = dict(zip(["not druggable", "druggable"], sns.color_palette("husl", 2)))
 
     # Heatmap
     legend_TN = [mpatches.Patch(color=c, label=l) for l, c in cmap.items()]
 
     # center heatmap at
-    druggability_map = sns.clustermap(regdf, row_colors=druggable_colors, cmap="coolwarm")
+    druggability_map = sns.clustermap(
+        regdf, row_colors=druggable_colors, cmap="coolwarm"
+    )
     l2 = druggability_map.ax_heatmap.legend(
-        loc="center", bbox_to_anchor=(1.8, 1.2), handles=legend_TN, frameon=True, prop={"size": 15}
+        loc="center",
+        bbox_to_anchor=(1.8, 1.2),
+        handles=legend_TN,
+        frameon=True,
+        prop={"size": 15},
     )
     return druggability_map

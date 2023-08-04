@@ -31,14 +31,14 @@ setuptools.setup(
         "logomaker >= 0.8",
         "snakemake >= 7.8.5",
         "hdbscan >= 0.8.28",
-        "cython >= 0.29.30" 
+        "cython >= 0.29.30",
     ],
     package_data={"phosphodisco": files},
-    entry_points = {
-        'console_scripts': [
-            'phdc_run=phosphodisco.cli:run',
-            'phdc_generate_config=phosphodisco.cli:generate_config'
-            ]
-        },
-    packages=setuptools.find_packages()
+    entry_points={
+        "console_scripts": [
+            "phdc_run=phosphodisco.cli:run",
+            "phdc_generate_config=phosphodisco.cli:generate_config",
+        ]
+    },
+    packages=setuptools.find_packages(),
 )
