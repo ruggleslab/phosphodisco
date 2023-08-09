@@ -51,6 +51,10 @@ from .motif_analysis import (
 from .gene_ontology_analysis import enrichr_per_module, ptm_per_module
 
 
+def print_it():
+    print("nyoom")
+
+
 class ProteomicsData:
     def __init__(
         self,
@@ -98,12 +102,14 @@ class ProteomicsData:
 
         if min_common_values is None:
             min_common_values = 6
+
         self.min_values_in_common = min_common_values
 
         common_prots = list(
             set(phospho.index.get_level_values(0).intersection(protein.index))
         )
         common_samples = phospho.columns.intersection(protein.columns)
+
         self.phospho = phospho.reindex(common_samples, axis=1)
         self.protein = protein.reindex(common_samples, axis=1)
         self.common_prots = common_prots
@@ -119,8 +125,9 @@ class ProteomicsData:
             "samples." % len(common_samples)
         )
 
-        common_phospho = self.phospho.loc[common_prots, :]
+        common_phospho = self.phospho.loc[common_prots]
         common_prot = self.protein.reindex(common_phospho.index.get_level_values(0))
+
         common_prot.index = common_phospho.index
 
         normalizable_rows = common_phospho.index[
