@@ -42,7 +42,7 @@ def norm_line_to_residuals(
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     nonull = np.logical_and(~np.isnan(ph_line), ~np.isnan(prot_line))
     if sum(nonull) < cv:
-        return pd.Series(np.empty(len(ph_line)), ph_line.index)
+        return pd.Series(np.empty(len(ph_line)) * np.nan, ph_line.index)
 
     features = prot_line[nonull].values.reshape(-1, 1)
     labels = ph_line[nonull].values
@@ -51,7 +51,7 @@ def norm_line_to_residuals(
     ridgecv_kwargs["cv"] = cv
     model = RidgeCV(**ridgecv_kwargs).fit(features, labels)
     if prevent_negative_coefficients and (model.coef_[0] <= 0):
-        return pd.Series(np.empty(len(ph_line)), ph_line.index)
+        return pd.Series(np.empty(len(ph_line)) * np.nan, ph_line.index)
 
     prediction = model.predict(features)
     residuals = labels - prediction

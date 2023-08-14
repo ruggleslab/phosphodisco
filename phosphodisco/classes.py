@@ -130,6 +130,7 @@ class ProteomicsData:
         ]
 
         self.normalizable_rows = normalizable_rows
+
         logging.info(
             "There are %s rows with at least %s non-null values in both phospho and protein"
             % (len(normalizable_rows), min_common_values)
@@ -141,6 +142,7 @@ class ProteomicsData:
 
         if (annotations is not None) and (column_types is not None):
             self.add_annotations(annotations, column_types)
+
         elif annotations is not None:
             self.annotations = annotations
 
@@ -191,6 +193,7 @@ class ProteomicsData:
             axis=1,
         )
         residuals.columns = target.index
+
         self.normed_phospho = residuals
         return self
 
