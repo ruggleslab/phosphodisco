@@ -48,7 +48,9 @@ from .motif_analysis import (
     df_to_aa_seqs,
     aa_overlap_from_df,
 )
-from .gene_ontology_analysis import enrichr_per_module, ptm_per_module
+
+# from .gene_ontology_analysis import enrichr_per_module, ptm_per_module
+from .gene_ontology_analysis import ptm_per_module
 
 
 class ProteomicsData:
