@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas import Series, DataFrame
-from gseapy import enrichr
+
+# from gseapy import enrichr
 import scipy.stats
 from .parsers import read_gmt
 from .datasets import load_data
@@ -8,45 +9,45 @@ from .utils import multiple_tests_na
 from typing import Union
 
 
-def enrichr_per_module(
-    modules: Series,
-    background_gene_list,
-    gene_sets: str = "GO_Biological_Process_2018",
-    **enrichr_kws,
-):
-    """Runs gseapy.enrichr on genes in each module.
+# def enrichr_per_module(
+#     modules: Series,
+#     background_gene_list,
+#     gene_sets: str = "GO_Biological_Process_2018",
+#     **enrichr_kws,
+# ):
+#     """Runs gseapy.enrichr on genes in each module.
 
-    Args:
-        modules: Module Series with sites as the index.
-        background_gene_list: List of all unique genes that could have ended up in modules.
-        gene_sets: Which gene sets to use. See for options http://amp.pharm.mssm.edu/Enrichr/#stats
-        **enrichr_kws: Additional keyword args for gseapy.enrichr()
+#     Args:
+#         modules: Module Series with sites as the index.
+#         background_gene_list: List of all unique genes that could have ended up in modules.
+#         gene_sets: Which gene sets to use. See for options http://amp.pharm.mssm.edu/Enrichr/#stats
+#         **enrichr_kws: Additional keyword args for gseapy.enrichr()
 
-    Returns: Dictionary of DataFrames with module names as keys and enrichr results as values.
+#     Returns: Dictionary of DataFrames with module names as keys and enrichr results as values.
 
-    """
-    results = {}
-    for module, genes in modules.groupby(modules).groups.items():
-        genes = list(set([i[0] for i in genes]))
-        res = enrichr(
-            gene_list=genes,
-            gene_sets=gene_sets,
-            background=background_gene_list,
-            **enrichr_kws,
-        )
-        res = res.results[
-            [
-                "Gene_set",
-                "Genes",
-                "Overlap",
-                "Odds Ratio",
-                "P-value",
-                "Adjusted P-value",
-                "Term",
-            ]
-        ].set_index("Term")
-        results[module] = res
-    return results
+#     """
+#     results = {}
+#     for module, genes in modules.groupby(modules).groups.items():
+#         genes = list(set([i[0] for i in genes]))
+#         res = enrichr(
+#             gene_list=genes,
+#             gene_sets=gene_sets,
+#             background=background_gene_list,
+#             **enrichr_kws,
+#         )
+#         res = res.results[
+#             [
+#                 "Gene_set",
+#                 "Genes",
+#                 "Overlap",
+#                 "Odds Ratio",
+#                 "P-value",
+#                 "Adjusted P-value",
+#                 "Term",
+#             ]
+#         ].set_index("Term")
+#         results[module] = res
+#     return results
 
 
 def ptm_per_module(
@@ -88,10 +89,7 @@ def ptm_per_module(
         raise ValueError("Module sequences must be at least 15 AAs long")
     if len(list(module_seq_dict.values())[0][0]) > 15:
         module_seq_dict = {
-            k: [
-                seq[int((len(seq) / 2 - 0.5) - 7) : int((len(seq) / 2 - 0.5) + 8)]
-                for seq in v
-            ]
+            k: [seq[int((len(seq) / 2 - 0.5) - 7) : int((len(seq) / 2 - 0.5) + 8)] for seq in v]
             for k, v in module_seq_dict.items()
         }
     background_seqs = set(background_seqs)
@@ -101,9 +99,7 @@ def ptm_per_module(
     for module, seqs in module_seq_dict.items():
         seqs = set(seqs)
         N = len(seqs)
-        module_results = pd.DataFrame(
-            columns=["Site_set", "Sites", "Overlap", "P-value", "Term"]
-        )
+        module_results = pd.DataFrame(columns=["Site_set", "Sites", "Overlap", "P-value", "Term"])
         for term, sites in ptm_set_gmt.items():
             sites = dict(sites)
             n = len(sites)

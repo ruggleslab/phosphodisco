@@ -195,6 +195,7 @@ class ProteomicsData:
         residuals.columns = target.index
 
         self.normed_phospho = residuals
+
         return self
 
     def impute_missing_values(self, imputation_method: Optional[str] = None, **imputer_kwargs):
@@ -660,31 +661,31 @@ class ProteomicsData:
         )
         return self
 
-    def calculate_go_set_enrichment(
-        self,
-        background_gene_list,
-        gene_sets: str = "GO_Biological_Process_2018",
-        **enrichr_kws,
-    ):
-        """Uses enrichr from the gseapy package to calculate gene set enrichments for genes in
-        each module.
+    # def calculate_go_set_enrichment(
+    #     self,
+    #     background_gene_list,
+    #     gene_sets: str = "GO_Biological_Process_2018",
+    #     **enrichr_kws,
+    # ):
+    #     """Uses enrichr from the gseapy package to calculate gene set enrichments for genes in
+    #     each module.
 
-        Args:
-            background_gene_list: List of all genes from sites used to identify modules.
-            gene_sets: Name of gene sets to use, see enrichr for possibilities:
-            http://amp.pharm.mssm.edu/Enrichr/#stats
-            **enrichr_kws: Additional keyword args to pass to gseapy.enrichr.
+    #     Args:
+    #         background_gene_list: List of all genes from sites used to identify modules.
+    #         gene_sets: Name of gene sets to use, see enrichr for possibilities:
+    #         http://amp.pharm.mssm.edu/Enrichr/#stats
+    #         **enrichr_kws: Additional keyword args to pass to gseapy.enrichr.
 
-        Returns: self with go_enrichment attribute.
+    #     Returns: self with go_enrichment attribute.
 
-        """
-        self.go_enrichment = enrichr_per_module(
-            self.modules,
-            background_gene_list=background_gene_list,
-            gene_sets=gene_sets,
-            **enrichr_kws,
-        )
-        return self
+    #     """
+    #     self.go_enrichment = enrichr_per_module(
+    #         self.modules,
+    #         background_gene_list=background_gene_list,
+    #         gene_sets=gene_sets,
+    #         **enrichr_kws,
+    #     )
+    #     return self
 
     def calculate_ptm_set_enrichment(self, ptm_set_gmt: Union[str, dict] = "human"):
         """Uses a hypergeometric test to calculate enrichment for known ptm sets from PTM-ssGSEA
